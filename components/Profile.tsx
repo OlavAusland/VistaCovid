@@ -8,7 +8,7 @@ export function ProfileView()
 {
     return (
         <View style={profileStyle.container}> 
-            <Text>Profile</Text>
+            <Text style={{alignSelf:'center'}}>Profile</Text>
         </View>
     );
 }
