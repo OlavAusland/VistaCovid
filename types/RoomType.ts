@@ -1,10 +1,15 @@
+export type GraphData = {
+    time: string,
+    value: number
+}
+
 export type Room = {
     patientId: string,
     roomNumber: string,
     lastUpdated: string | undefined,
-    heartRate: Array<Object> | undefined,
-    breathingRate: Array<Object> | undefined,
-    bloodPressure: Array<Object> | undefined,
-    oxygenLevel: Array<Object> | undefined,
-    notes: Array<Object> | undefined
+    heartRate: Array<GraphData> | undefined,
+    breathingRate: Array<GraphData> | undefined,
+    bloodPressure: Array<GraphData> | undefined,
+    oxygenLevel: Array<GraphData> | undefined,
+    notes: Array<GraphData> | undefined
 }

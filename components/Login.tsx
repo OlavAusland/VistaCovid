@@ -16,6 +16,8 @@ export function LoginView()
     const [user, setUser] = useState({email:'', password:''});
     const [error, setError] = useState<string>('');
 
+    useEffect(() => {navigation.navigate('VistaCovid', {screen:'Room'});}, []);
+
     const handleLogin = async() => {
         await signInWithEmailAndPassword(getAuth(), user.email, user.password).then((res) => {
             console.log('Successfully Logged In!');

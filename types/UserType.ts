@@ -1,5 +1,5 @@
 export enum Roles {
-    ADMIN,
+    ADMIN,                      
     DOCTOR,
     NURSE,
     NONE
