@@ -64,3 +64,13 @@ export const getRooms = async () => {
         console.log(err);
     });
 }
+
+// ASSIGNMENTS - 
+// ! DISCHARGE PATIENT
+/*
+export const assignRoom = async(room_id: string, patient_id: string){
+    await setDoc(doc(db, 'Rooms', room_id), {
+        patientId: patient_id,
+
+}
+*/
