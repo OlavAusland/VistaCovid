@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StackParameters, TabParameters } from './types/NavigationTypes';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+//Views
+import { RegisterView } from './components/Register';
+import { ProfileView } from './components/Profile';
+import { LoginView } from './components/Login';
+import { RoomView } from './components/Room';
+
+//Navigation
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+const Stack = createNativeStackNavigator<StackParameters>();
+const Tab = createMaterialTopTabNavigator<TabParameters>();
+
+function VistaCovid(){
+  return(
+    <Tab.Navigator>
+      <Tab.Screen name="Profile" component={ProfileView}/>
+      <Tab.Screen name="Room" component={RoomView}/>
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'> 
+        <Stack.Screen name="VistaCovid" component={VistaCovid}/>
+        <Stack.Screen name="Login" component={LoginView}/>
+        <Stack.Screen name="Register" component={RegisterView}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
