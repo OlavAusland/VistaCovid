@@ -1,10 +1,11 @@
-import { View, Text, ScrollView, Button} from 'react-native';
+import { View, Text, ScrollView, Button, TouchableOpacity} from 'react-native';
 import { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
 import { Room } from '../types/RoomType';
 import { Patient } from '../types/PatientType';
 
-import { LineGraph } from './room/graph';
+import { LineGraph } from './room/Graph';
+import { GraphModal } from './room/GraphModal';
 
 import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
 import { profileStyle } from '../styles/ProfileStyles';
@@ -15,11 +16,11 @@ export function RoomView()
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
 
+    const [modal, setModal] = useState(false)
+
     useEffect(() => {
         const getRoomData = async () => {
-            console.log('Getting Room: ');
             await getRoom('awDdlNKxiCpMsHqsE2Rh').then(async(res) => {
-                console.log(res);
                 setRoom(res);
                 setFetching(false);
                 if(res !== undefined){await getPatientData(res);}
@@ -31,7 +32,6 @@ export function RoomView()
             
             if(id !== undefined){
                 await getPatient(id).then((res) => {
-                    console.log(res);
                     setPatient(res);
                 }).catch((err) => {console.log(err);});
             }
@@ -53,14 +53,38 @@ export function RoomView()
     }else{
         return(
             <View style={roomStyle.container}>
+                <GraphModal visible={modal} setModal={setModal} />
                 <View style={roomStyle.header}>
                     <Text style={roomStyle.headerText} >Room: {room?.roomNumber}</Text>
                     <Text style={{fontSize:20}}>Patient: {patient?.firstname} {patient?.lastname}</Text>
                 </View>
-                <ScrollView style={{flex:6}} contentContainerStyle={roomStyle.body}>
-                    <View>
-                        <Text style={{fontSize:30, textDecorationLine:'underline'}}>Heart Rate:</Text>
-                        <LineGraph room={room}/>
+                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                    <TouchableOpacity style={{flexBasis:'50%', backgroundColor:'#9DD4FB', height:30}}>
+                        <Text style={{alignSelf:'center', fontWeight:'bold'}}>Graphs</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flexBasis:'50%', backgroundColor:'#9DD4FB', height:30}}>
+                        <Text style={{alignSelf:'center', fontWeight:'bold'}}>Notes</Text>
+                    </TouchableOpacity>
+                </View>
+                <ScrollView contentContainerStyle={roomStyle.body}>
+                    <View style={roomStyle.graphContainer}>
+                        <LineGraph data={room?.heartRate} name={'Heart Rate'}/>
+                    </View>
+                    <View style={roomStyle.graphContainer}>
+                        <LineGraph data={room?.bloodPressure} name={'Blood Pressure'}/>
+                    </View>
+                    <View style={roomStyle.graphContainer}>
+                        <LineGraph data={room?.oxygenLevel}  name={'Oxygen Level'}/>
+                    </View>
+                    <View style={{width:'90%'}}>
+                        { room?.notes?.map((res) => {
+                            return(
+                                <View style={roomStyle.noteContainer}>
+                                    <Text style={{fontWeight:'bold', fontSize:25, textDecorationLine:'underline'}}>Role: {res.role}</Text>
+                                    <Text>{res.role}: {res.note}</Text>
+                                </View>
+                            )
+                        })}
                     </View>
                 </ScrollView>
             </View>

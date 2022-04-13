@@ -20,7 +20,7 @@ export function LoginView()
     const [user, setUser] = useState<LoginInfo>({displayPassword: true} as LoginInfo);
     const [error, setError] = useState<string>('');
 
-    //useEffect(() => {navigation.navigate('VistaCovid', {screen:'Room'});}, []);
+    useEffect(() => {navigation.navigate('VistaCovid', {screen:'Room'});}, []);
 
     useEffect(() => {console.log(user.displayPassword)}, [user.displayPassword])
 

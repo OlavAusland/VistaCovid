@@ -1,26 +1,27 @@
 import { LineChart } from 'react-native-chart-kit';
 import { LineChartData } from '../../types/GraphTypes';
-
+import { TouchableOpacity, Dimensions, Platform} from 'react-native';
 import { Room, GraphData} from '../../types/RoomType';
 
 export const LineGraph = (props: any) => {
 
-    console.log(props.room)
-    const xData = props.room?.heartRate?.map((res: GraphData) => {return res.time});
-    const yData = props.room?.heartRate?.map((res: GraphData) => {return res.value});
+    const xData = props.data?.map((res: GraphData) => {return res.time});
+    const yData = props.data?.map((res: GraphData) => {return res.value});
 
     return(
-        <LineChart
+        <TouchableOpacity>
+            <LineChart
             data={{
-            labels: xData ? xData : [],
-            datasets: [
-                {
-                    data: yData ? yData : [],
-                }
-            ]
+                labels: xData ? xData : [],
+                datasets: [
+                    {
+                        data: yData ? yData : [],
+                    }
+                ],
+                legend: [props.name]
             }}
-            width={600} // from react-native
-            height={300}
+            width={Platform.OS === 'android' ? Dimensions.get('window').width / 1.1 : 600} // from react-native
+            height={200}
             xAxisLabel='s'
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
@@ -44,5 +45,6 @@ export const LineGraph = (props: any) => {
                 borderRadius: 16,
             }}
         />
+        </TouchableOpacity>
     )
 }
