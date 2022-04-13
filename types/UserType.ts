@@ -17,3 +17,8 @@ export type User = {
     address: string | undefined,
     city: string | undefined,
 }
+
+export type LoginInfo = {
+    email: string | undefined,
+    password: string | undefined
+}

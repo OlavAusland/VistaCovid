@@ -40,6 +40,15 @@ export const deletePatient = async(id: string) => {
     });
 }
 
+export const getPatient = async (id: string) => {
+    await getDoc(doc(db, 'Patients', id)).then((res) => {
+        console.log(res);
+        return res.data();
+    }).catch((err) => {
+        console.log(err);
+    });
+};
+
 // ROOMS
 
 export const addRoom = async (room: Room) => {
