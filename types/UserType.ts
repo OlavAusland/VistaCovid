@@ -19,6 +19,7 @@ export type User = {
 }
 
 export type LoginInfo = {
-    email: string | undefined,
-    password: string | undefined
+    email: string,
+    password: string,
+    displayPassword: boolean
 }
