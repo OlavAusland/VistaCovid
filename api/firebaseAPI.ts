@@ -2,7 +2,7 @@ import { db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
-import { Patient } from "../domain/PatientType";
+import { FolkeregisterPatient } from "../domain/PatientType";
 
 // USERS
 
@@ -24,7 +24,7 @@ export const deleteUser = async(id: string) => {
 
 // Patients
 
-export const addPatient = async (user: Patient) => {
+export const addPatient = async (user: FolkeregisterPatient) => {
     await addDoc(collection(db, 'Patients'), user).then((res) => {
         console.log(res);
     }).catch((err) => {
