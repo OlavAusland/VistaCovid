@@ -1,0 +1,79 @@
+import { Patient } from "../../domain/PatientType"
+
+
+export const mapDataToPatient = (data: FolkeregisterDto): Patient => {
+    console.log(data);
+    if (data.person.adressebeskyttelse[0].graderingsnivå  === "ugradert") {
+        return {
+            firstname: data.person.personnavn[0].fornavn,
+            lastname: data.person.personnavn[0].etternavn,
+            ssn: data.person.identifikasjonsnummer[0].fødselsEllerDNnummer,
+            gender: data.person.kjønn[0].kjønn,
+            address:data.person.bostedsadresse[0].vegadresse.adressenavn,
+            housenumber: data.person.bostedsadresse[0].vegadresse.adressenummer,
+            city: data.person.bostedsadresse[0].vegadresse.poststed,
+            coAddress: data.person.bostedsadresse[0].vegadresse.coAdressenavn,
+            gradering: data.person.adressebeskyttelse[0].graderingsnivå
+        }
+
+    }
+    else{
+        return {
+            firstname: data.person.personnavn[0].fornavn,
+            lastname: data.person.personnavn[0].etternavn,
+            ssn: data.person.identifikasjonsnummer[0].fødselsEllerDNnummer,
+            gender: data.person.kjønn[0].kjønn,
+            address: "",
+            housenumber: "",
+            city: "",
+            coAddress: "",
+            gradering: ""
+    }
+}
+   
+}
+
+interface FolkeregisterDto {
+    person: PersonDto;
+}
+
+interface PersonDto {
+    personnavn: PersonnavnDto[];
+    adressebeskyttelse: AdressebeskyttelseDto[];
+    kjønn: KjønnDto[];
+    identifikasjonsnummer: IdentifikasjonDto[];
+    bostedsadresse: BostedsadresseDto[];
+}
+
+interface PersonnavnDto {
+    fornavn: string;
+    mellomnavn: string;
+    etternavn: string;
+}
+
+interface AdressebeskyttelseDto {
+    graderingsnivå: string;
+}
+
+interface KjønnDto {
+    kjønn: string;
+}
+
+interface IdentifikasjonDto {
+    status: string;
+    fødselsEllerDNnummer: string;
+    identifikatortype: string;
+}
+
+interface BostedsadresseDto {
+    vegadresse: VegadresseDto;
+}
+interface VegadresseDto { 
+    kommunenummer: string;
+    bruksenhetsnummer: string;
+    bruksenhetstype: string;
+    adressenavn: string;
+    adressenummer: string;
+    poststed: string;
+    coAdressenavn: string;
+}

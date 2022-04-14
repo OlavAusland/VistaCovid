@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, Button} from 'react-native';
 import { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
-import { Room } from '../types/RoomType';
+import { Room } from '../domain/RoomType';
 
 import { LineGraph } from './room/graph';
 

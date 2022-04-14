@@ -2,8 +2,9 @@ import { View, Text, Button } from 'react-native';
 import { useState } from 'react';
 import { profileStyle } from '../styles/ProfileStyles';
 import { addRoom, deleteRoom } from '../api/firebaseAPI';
-import { Room } from '../types/RoomType';
+import { Room } from '../domain/RoomType';
 import { getAdditionalUserInfo } from 'firebase/auth';
+import { getPatient } from '../api/folkeregisterModelAPI';
 
 
 
@@ -17,7 +18,7 @@ export function ProfileView()
         heartRate: [{time: 0, value: 60}, {time: 1, value: 30}],
         bloodPressure: [{time: 0, value: 120}, {time: 1, value: 80}],
         oxygenLevel: [{time: 0, value: 100}, {time: 1, value: 90}],
-        notes: [{role: 'Nurse', note: 'This is a note'}]
+        notes: [{role:'Nurse', note: 'This is a note'}]
     }
 
     return (
@@ -25,7 +26,7 @@ export function ProfileView()
             {/*HEADER*/}
             <View style={{flex:1}}>
                 <Text style={{alignSelf:'center'}}>Profile</Text>
-                <Button title="Add Room" onPress={() => {addRoom(room)} }/>
+                <Button title="Add Room" onPress={() => {getPatient("12212121212")} }/>
                 <Button title="Delete Room" onPress={() => {deleteRoom('50uaIdfmRjd4CeRUBhOl')} }/>
             </View>
         </View>

@@ -1,5 +1,5 @@
 export type GraphData = {
-    time: string,
+    time: number,
     value: number
 }
 
@@ -11,5 +11,10 @@ export type Room = {
     breathingRate: Array<GraphData> | undefined,
     bloodPressure: Array<GraphData> | undefined,
     oxygenLevel: Array<GraphData> | undefined,
-    notes: Array<GraphData> | undefined
+    notes: Array<NoteData> | undefined
+}
+
+export type NoteData = {
+    role: string,
+    note: string
 }

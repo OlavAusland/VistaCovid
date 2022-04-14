@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StackParameters, TabParameters } from './types/NavigationTypes';
+import { StackParameters, TabParameters } from './domain/NavigationTypes';
 
 //Views
 import { RegisterView } from './components/Register';

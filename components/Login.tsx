@@ -2,12 +2,12 @@ import { View, Text, TextInput, Button, Image, TouchableOpacity} from 'react-nat
 import { useState, useEffect} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParameters } from '../types/NavigationTypes';
+import { StackParameters } from '../domain/NavigationTypes';
 import { loginStyle } from '../styles/LoginStyles';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase-config';
-import { LoginInfo } from '../types/UserType';
+import { LoginInfo } from '../domain/UserType';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import { isReactNative } from '@firebase/util';
@@ -20,7 +20,7 @@ export function LoginView()
     const [user, setUser] = useState<LoginInfo>({displayPassword: true} as LoginInfo);
     const [error, setError] = useState<string>('');
 
-    //useEffect(() => {navigation.navigate('VistaCovid', {screen:'Room'});}, []);
+    useEffect(() => {navigation.navigate('VistaCovid', {screen:'Room'});}, []);
 
     useEffect(() => {console.log(user.displayPassword)}, [user.displayPassword])
 

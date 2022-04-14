@@ -1,8 +1,8 @@
 import { db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc} from 'firebase/firestore'
-import { User } from "../types/UserType";
-import { Room } from "../types/RoomType";
-import { Patient } from "../types/PatientType";
+import { User } from "../domain/UserType";
+import { Room } from "../domain/RoomType";
+import { Patient } from "../domain/PatientType";
 
 // USERS
 
