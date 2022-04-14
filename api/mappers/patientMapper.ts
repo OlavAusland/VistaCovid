@@ -2,7 +2,7 @@ import { Patient } from "../../domain/PatientType";
 
 export const mapDataToPatient = (data: FolkeregisterDto): Patient => {
   console.log(data);
-  if (data.person.adressebeskyttelse[0].graderingsnivå === "ugradert") {
+  if (data.person.adressebeskyttelse[0].graderingsnivå === "ugradert" || !data.person.adressebeskyttelse[0]) {
     return {
       firstname: data.person.personnavn[0]
         ? data.person.personnavn[0].fornavn
