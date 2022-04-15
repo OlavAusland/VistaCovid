@@ -16,9 +16,9 @@ export function RoomView()
 
     useEffect(() => {
         const getRoomData = async () => {
-            console.log('Getting Room: ');
+            
             await getRoom('awDdlNKxiCpMsHqsE2Rh').then((res) => {
-                console.log(res);
+
                 setRoom(res);
                 setFetching(false);
             }).catch((err) => {console.log(err);});

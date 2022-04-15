@@ -5,12 +5,17 @@ import { addRoom, deleteRoom } from '../api/firebaseAPI';
 import { Room } from '../domain/RoomType';
 import { getAdditionalUserInfo } from 'firebase/auth';
 import { getPatient } from '../api/folkeregisterModelAPI';
-import { PationInfoModal} from './PationInfoModal';
+import { PatientInfoModal} from './PatientInfoModal';
 
-const [modalVisible, setModalVisible] = useState(false);
 
-export function ProfileView() 
+
+
+
+
+export const ProfileView = () =>
 {
+    const [modalVisible, setModalVisible] = useState(false);
+
     const room: Room = {
         patientId:'None',
         roomNumber: 'A2 021',
@@ -21,12 +26,15 @@ export function ProfileView()
         oxygenLevel: [{time: 0, value: 100}, {time: 1, value: 90}],
         notes: [{role:'Nurse', note: 'This is a note'}]
     }
+    const handleRequestClose = () => {
+        setModalVisible(false); 
+    }
 
     return (
         <View style={profileStyle.container}>
             {/*HEADER*/}
             <View style={{flex:1}}>
-            <PationInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+            <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose}/>
                 <Text style={{alignSelf:'center'}}>Profile</Text>
                 <Button title="Add Room" onPress={() => {setModalVisible(true)} }/>
                 <Button title="Delete Room" onPress={() => {deleteRoom('50uaIdfmRjd4CeRUBhOl')} }/>

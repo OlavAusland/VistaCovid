@@ -11,6 +11,7 @@
 */
 export type FolkeregisterPatient = {
     firstname: string,
+    midlename: string,
     lastname: string,
     ssn: string,
     gender: string,

@@ -5,7 +5,7 @@ import { Room, GraphData} from '../../domain/RoomType';
 
 export const LineGraph = (props: any) => {
 
-    console.log(props.room)
+    
     const xData = props.room?.heartRate?.map((res: GraphData) => {return res.time});
     const yData = props.room?.heartRate?.map((res: GraphData) => {return res.value});
 
