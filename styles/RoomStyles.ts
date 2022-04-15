@@ -26,8 +26,9 @@ export const roomStyle = StyleSheet.create({
         flexWrap:'wrap',
         backgroundColor:'rgba(0, 0, 0, 0)'
     },
+    //Change flexBasis On Web To Be 40%
     graphContainer: {
-        flexBasis: Platform.OS === 'android' ? '80%' : '50%',
+        flexBasis: Platform.OS === 'android' ? '80%' : '80%',
         justifyContent:'center',
         alignItems:'center'
         

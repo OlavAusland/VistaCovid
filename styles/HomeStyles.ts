@@ -1,10 +1,13 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export const homeStyle = StyleSheet.create({
     container: {
         flex: 1,
+        width: Platform.OS === ('android' || 'ios') ? '100%' : '100%',
         justifyContent: 'center',
         alignContent:'center',
+        alignSelf:'center',
+        backgroundColor:'#0274A1'
     },
     header: {
         flex:1,
@@ -12,11 +15,12 @@ export const homeStyle = StyleSheet.create({
         alignItems:'center'
     },
     searchBar: {
-        backgroundColor:'rgba(0, 0, 0, 0.01)',
+        backgroundColor:'#C1E8FD',
         width: '50%',
         height: 30,
+        borderRadius:5,
         shadowColor:'rgba(0, 0, 0, 0.2)',
-        shadowOffset:{width:0, height:2},
+        shadowOffset:{width:0, height:3},
         shadowOpacity:0.8,
         shadowRadius:2,
         elevation:1
@@ -26,10 +30,12 @@ export const homeStyle = StyleSheet.create({
     },
     card: {
         width: '90%',
-        height: 180,
-        backgroundColor:'rgba(0, 0, 0, 0.01)',
+        height: 200,
+        backgroundColor:'#C1E8FD',
+        flexDirection:'row',
         shadowColor:'rgba(0, 0, 0, 0.2)',
-        shadowOffset:{width:0, height:2},
+        borderRadius:5,
+        shadowOffset:{width:0, height:3},
         shadowOpacity:0.8,
         shadowRadius:2,
         elevation:1,

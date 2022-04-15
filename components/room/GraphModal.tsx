@@ -13,7 +13,7 @@ export const GraphModal = (props: any) => {
             }}
         >
             <ScrollView contentContainerStyle={graphModalStyle.container}>
-                <LineGraph data={[{time: 0, value:60}, {time:1, value:80}]}/>
+                <LineGraph data={[{time: 0, value:60}, {time:1, value:80}]} name={'shees'}/>
                 <View style={{flexDirection:'row', justifyContent:'center'}}>
                     <Pressable>
                         <Text>Press me</Text>
@@ -23,7 +23,7 @@ export const GraphModal = (props: any) => {
                     </Pressable>
                 </View>
                 <View style={graphModalStyle.notes}>
-                    <Text>Hello asdukloa sslajd lkasjd klasjdklsajd lkasjd klasj dklasj dklasjd klasjd klasjd lkasjd lkasjdl kasj dklasjd lkasj daklsjd klasdj lkasjd lkas djaskldj alsk djaskl djaslkd jaskld</Text>
+                    <Text></Text>
                 </View>
                 <TouchableOpacity onPress={() => {props.setModal(false)}}>
                     <Text>Exit</Text>

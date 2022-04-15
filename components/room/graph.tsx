@@ -3,9 +3,14 @@ import { LineChartData } from '../../types/GraphTypes';
 import { TouchableOpacity, Dimensions, Platform} from 'react-native';
 import { Room, GraphData} from '../../types/RoomType';
 
-export const LineGraph = (props: any) => {
+export type GraphProps = {
+    data: GraphData[] | undefined,
+    name: string
+}
 
-    const xData = props.data?.map((res: GraphData) => {return res.time});
+export const LineGraph = (props: GraphProps) => {
+
+    const xData = props.data?.map((res: GraphData) => {return res.time.toString()});
     const yData = props.data?.map((res: GraphData) => {return res.value});
 
     return(
@@ -20,7 +25,7 @@ export const LineGraph = (props: any) => {
                 ],
                 legend: [props.name]
             }}
-            width={Platform.OS === 'android' ? Dimensions.get('window').width / 1.1 : 600} // from react-native
+            width={Platform.OS === 'android' ? Dimensions.get('window').width / 1.1 : 375} // from react-native
             height={200}
             xAxisLabel='s'
             yAxisInterval={1} // optional, defaults to 1
@@ -44,6 +49,7 @@ export const LineGraph = (props: any) => {
                 marginVertical: 8,
                 borderRadius: 16,
             }}
+            fromZero={true}
         />
         </TouchableOpacity>
     )
