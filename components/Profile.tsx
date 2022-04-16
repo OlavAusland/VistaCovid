@@ -6,6 +6,7 @@ import { Room } from '../domain/RoomType';
 import { getAdditionalUserInfo } from 'firebase/auth';
 import { getPatient } from '../api/folkeregisterModelAPI';
 import { PatientInfoModal} from './PatientInfoModal';
+import { AssignPatientModal } from './AssignPatientToRoomModal';
 
 
 
@@ -35,11 +36,13 @@ export const ProfileView = () =>
             {/*HEADER*/}
             <View style={{flex:1}}>
                 <Text style={{alignSelf:'center'}}>Profile</Text>
-                <Button title="Add Room" onPress={() => {setModalVisible(true)} }/>
+                <Button title="Add Room" onPress={() => {addRoom(room)}}/>
+                <Button title="Assign" onPress={() => {setModalVisible(true)} }/>
                 <Button title="Delete Room" onPress={() => {deleteRoom('50uaIdfmRjd4CeRUBhOl')} }/>
-            <ScrollView>
+           {/*  <ScrollView>
                 <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} fnr={"29095915638"}/>
-            </ScrollView>
+            </ScrollView> */}
+            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} />
             </View>
         </View>
     );
