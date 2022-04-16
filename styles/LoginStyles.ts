@@ -6,7 +6,6 @@ export const loginStyle = StyleSheet.create({
         justifyContent: 'center',
         alignContent:'center',
         alignSelf:'center',
-        width: Platform.OS === 'android' ? '100%' : '40%',
-        backgroundColor:'rgba(0, 0, 0, 0)'
+        width: Platform.OS === 'android' ? '100%' : '40%'
     }
 })
