@@ -1,6 +1,6 @@
 import { LineChart } from 'react-native-chart-kit';
 import { LineChartData } from '../../domain/GraphTypes';
-
+import React from 'react';
 import { Room, GraphData} from '../../domain/RoomType';
 
 export const LineGraph = (props: any) => {

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Button} from 'react-native';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
 import { Room } from '../domain/RoomType';
 
