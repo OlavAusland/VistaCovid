@@ -6,7 +6,7 @@ export const profileStyle = StyleSheet.create({
         justifyContent: 'center',
         alignContent:'center',
         alignSelf:'center',
-        width: Platform.OS === 'android' ? '100%' : '50%',
+        width: Platform.OS === 'android' ? '100%' : '100%',
         backgroundColor: '#0274a1',
     }
 })

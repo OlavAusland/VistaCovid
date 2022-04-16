@@ -1,4 +1,4 @@
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { profileStyle } from '../styles/ProfileStyles';
 import { addRoom, deleteRoom } from '../api/firebaseAPI';
@@ -34,10 +34,12 @@ export const ProfileView = () =>
         <View style={profileStyle.container}>
             {/*HEADER*/}
             <View style={{flex:1}}>
-            <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose}/>
                 <Text style={{alignSelf:'center'}}>Profile</Text>
                 <Button title="Add Room" onPress={() => {setModalVisible(true)} }/>
                 <Button title="Delete Room" onPress={() => {deleteRoom('50uaIdfmRjd4CeRUBhOl')} }/>
+            <ScrollView>
+                <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose}/>
+            </ScrollView>
             </View>
         </View>
     );
