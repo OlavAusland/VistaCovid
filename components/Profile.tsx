@@ -38,7 +38,7 @@ export const ProfileView = () =>
                 <Button title="Add Room" onPress={() => {setModalVisible(true)} }/>
                 <Button title="Delete Room" onPress={() => {deleteRoom('50uaIdfmRjd4CeRUBhOl')} }/>
             <ScrollView>
-                <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose}/>
+                <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} fnr={"29095915638"}/>
             </ScrollView>
             </View>
         </View>

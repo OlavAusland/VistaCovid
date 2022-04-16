@@ -8,6 +8,7 @@ import { patientInfoStyle } from '../styles/PatientInfoStyle';
 type PatientInfoModalProps = {
     modalVisible: boolean;
     handleRequestClose: Function;
+    fnr: string;
 }
 
 
@@ -15,7 +16,7 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
     const [patient, setPatient] = useState<FolkeregisterPatient>();
 
     useEffect(() => {
-        getPatient("29095915638").then(patient => {
+        getPatient(props.fnr).then(patient => {
             setPatient(patient);
         }).catch(err => { console.log(err) });
     }, []);
