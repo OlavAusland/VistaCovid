@@ -1,54 +1,70 @@
-import { useEffect } from 'react';
+import { useEffect, useState} from 'react';
 import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
+import { Room } from '../types/RoomType';
+import { getRooms } from '../api/firebaseAPI';
 
 export function HomeView()
 {
+    const [rooms, setRooms] = useState<Room[]>([])
+
+    useState(() => {
+        const getRoomsData = async () => {
+            await getRooms().then((res) => {
+                setRooms(res);
+            }).catch((err) => {console.log(err)});
+        };
+        getRoomsData();
+    }, []);
+
     return(
         <View style={homeStyle.container}>
             <View style={homeStyle.header}>
                 <TextInput placeholder={'Search For Room'} style={homeStyle.searchBar}/>
             </View>
-            <ScrollView style={{flex:4}} contentContainerStyle={homeStyle.body}>
-                {
-                    [1,2,3,4,5, 6, 7, 8, 9].map((res) => {
-                        return (
-                            <TouchableOpacity style={homeStyle.card}>
-                                <Text style={{flex:1}}> Room: {res}</Text>
-                                <BarChart
-                                    data={{
-                                        labels: ['BL', 'OXL', 'HR'],
-                                        datasets: [{
-                                            data: [20, 45, 28]
-                                        }]
-                                    }}
-                                    width={Dimensions.get('window').width * 0.9/2}
-                                    height={200}
-                                    chartConfig={{
-                                        backgroundColor: "#e26a00",
-                                        backgroundGradientFrom: "#fb8c00",
-                                        backgroundGradientTo: "#ffa726",
-                                        decimalPlaces: 0, // optional, defaults to 2dp
-                                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                        style: {
-                                          borderRadius: 8
-                                        },
-                                        barPercentage: 0.5,
-                                        propsForDots: {
-                                            r: "3",
-                                            strokeWidth: "1",
-                                            stroke: "#ffa726"
-                                        }
-                                      }}
-                                      withHorizontalLabels={false}
-                                />
-                            </TouchableOpacity>
-                        )
-                    })
-                }
-            </ScrollView>
+            <View style={{flex:4}}>    
+                <ScrollView contentContainerStyle={homeStyle.body}>
+                    {rooms.length > 0 &&
+                        rooms.map((room: Room) => {
+                            return (
+                                <TouchableOpacity key={'room:' + room.roomNumber} style={homeStyle.card}>
+                                    {/*<Text style={{flex:0}}> Room: {room.roomNumber}</Text>*/}
+                                    <BarChart
+                                        data={{
+                                            labels: ['BL', 'OXL', 'HR'],
+                                            datasets: [{
+                                                data: [30, 50, 22]
+                                            }]
+                                        }}
+                                        width={Dimensions.get('window').width * 0.9}
+                                        height={200}
+                                        chartConfig={{
+                                            backgroundColor: "#e26a00",
+                                            backgroundGradientFrom: "#fb8c00",
+                                            backgroundGradientTo: "#ffa726",
+                                            decimalPlaces: 0, // optional, defaults to 2dp
+                                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                            style: {
+                                                borderRadius: 8
+                                            },
+                                            barPercentage: 0.5,
+                                            propsForDots: {
+                                                r: "3",
+                                                strokeWidth: "1",
+                                                stroke: "#ffa726"
+                                            }
+                                        }}
+                                        withHorizontalLabels={false}
+                                        fromZero={true}
+                                        />
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
+                </ScrollView>
+            </View>
         </View>
     );
 }

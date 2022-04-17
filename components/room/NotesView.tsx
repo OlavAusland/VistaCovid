@@ -5,9 +5,9 @@ import { NoteData } from '../../types/RoomType';
 export const NotesView = (props: any) => {
     return (
         <ScrollView contentContainerStyle={roomStyle.body}>
-            {props.room?.notes?.map((res: NoteData) => {
+            {props.room?.notes?.map((res: NoteData, index:number) => {
                 return(
-                    <View style={roomStyle.noteContainer}>
+                    <View key={'note: ' + index} style={roomStyle.noteContainer}>
                         <Text style={{fontWeight:'bold', fontSize:25, textDecorationLine:'underline'}}>Role: {res.role}</Text>
                         <Text>{res.role}: {res.note}</Text>
                     </View>

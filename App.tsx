@@ -19,7 +19,7 @@ const Tab = createMaterialTopTabNavigator<TabParameters>();
 
 function VistaCovid(){
   return(
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{tabBarShowLabel:false, tabBarShowIcon:false}}>
       <Tab.Screen name="Profile" component={ProfileView}/>
       <Tab.Screen name="Home" component={HomeView}/>
       <Tab.Screen name="Room" component={RoomView}/>

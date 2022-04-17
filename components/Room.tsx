@@ -11,6 +11,7 @@ import { NotesView } from './room/NotesView';
 
 import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
 import { profileStyle } from '../styles/ProfileStyles';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 export function RoomView()
 {
@@ -20,7 +21,7 @@ export function RoomView()
 
     const [modal, setModal] = useState(false);
 
-    const [view, setView] = useState<string>('notes')
+    const [view, setView] = useState<string>('graphs')
 
     useEffect(() => {
         const getRoomData = async () => {
@@ -57,10 +58,16 @@ export function RoomView()
     }else{
         return(
             <View style={roomStyle.container}>
-                <GraphModal visible={modal} setModal={setModal} />
+                <GraphModal room={room} modal={modal} setModal={setModal} />
                 <View style={roomStyle.header}>
                     <Text style={roomStyle.headerText} >Room: {room?.roomNumber}</Text>
-                    <Text style={{fontSize:20}}>Patient: {patient?.firstname} {patient?.lastname}</Text>
+                    <View style={{flexDirection:'row', justifyContent:'center'}}>
+                        <Text style={{fontSize:20}}>Patient: {patient?.firstname} {patient?.lastname}</Text>
+                        <TouchableOpacity>
+                            <Icon name='infocirlceo' size={20} style={{alignSelf:'center', paddingTop:5, paddingLeft:5}}/>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
                 <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
                     <TouchableOpacity style={{flexBasis:'50%', justifyContent:'center', backgroundColor:'#9DD4FB', height:30}}
@@ -72,7 +79,7 @@ export function RoomView()
                         <Text style={{alignSelf:'center', fontWeight:'bold'}}>Notes</Text>
                     </TouchableOpacity>
                 </View>
-                {view === 'graphs' ? <GraphView room={room}/> : <NotesView room={room}/> }
+                {(view === 'graphs' && room !== undefined) ? <GraphView room={room} setModal={setModal} modal={modal}/> : <NotesView room={room}/> }
             </View>
         );
     }

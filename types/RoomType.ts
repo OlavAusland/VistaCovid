@@ -14,7 +14,7 @@ export type Room = {
     lastUpdated: string | undefined,
     heartRate: Array<GraphData> | undefined,
     breathingRate: Array<GraphData> | undefined,
-    bloodPressure: Array<GraphData> | undefined,
+    bloodPressure: Array<GraphData>,
     oxygenLevel: Array<GraphData> | undefined,
     notes: Array<NoteData> | undefined
 }

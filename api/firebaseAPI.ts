@@ -65,9 +65,10 @@ export const deleteRoom = async (id: string) => {
     });
 }
 
-export const getRooms = async () => {
+export const getRooms = async (): Promise<Room[]> => {
     return await getDocs(collection(db, 'Rooms')).then((res) => {
-        return res;
+        const data = res.docs.map((doc) => {return doc.data() as Room});
+        return data;
     }).catch((err) => {
         throw err;
     });

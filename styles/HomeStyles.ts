@@ -26,6 +26,7 @@ export const homeStyle = StyleSheet.create({
         elevation:1
     },
     body: {
+        flex:4,
         alignItems:'center'
     },
     card: {

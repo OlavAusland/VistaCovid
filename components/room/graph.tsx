@@ -5,7 +5,9 @@ import { Room, GraphData} from '../../types/RoomType';
 
 export type GraphProps = {
     data: GraphData[] | undefined,
-    name: string
+    name: string,
+    setModal: (modal: boolean) => void,
+    modal: boolean
 }
 
 export const LineGraph = (props: GraphProps) => {
@@ -14,7 +16,8 @@ export const LineGraph = (props: GraphProps) => {
     const yData = props.data?.map((res: GraphData) => {return res.value});
 
     return(
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={() => {props.setModal(true)}}>
             <LineChart
             data={{
                 labels: xData ? xData : [],
