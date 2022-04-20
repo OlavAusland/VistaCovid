@@ -5,7 +5,7 @@ import * as patientMapper from "./mappers/patientMapper";
 export const getPatient = async (fnr: string): Promise<FolkeregisterPatient> => {
     console.log("inside getPatient");
     const result = await fetch(
-        `http://192.168.40.196:3001/api/folk/hentPersonMedFNr/${fnr}`,
+        `http://192.168.43.153:3001/api/folk/hentPersonMedFNr/${fnr}`,
         {
             method: "GET",
             headers: {
