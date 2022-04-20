@@ -4,14 +4,13 @@ import { registerStyle } from '../styles/RegisterStyles';
 
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParameters } from '../types/NavigationTypes';
+import { StackParameters } from '../domain/NavigationTypes';
 
-import { User, Roles} from '../types/UserType';
+import { User, Roles} from '../domain/UserType';
 
 // * AUTH
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase-config'
-import React from 'react';
 
 export function RegisterView()
 {

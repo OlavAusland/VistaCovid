@@ -1,8 +1,7 @@
-import React from 'react';
 import { View, Text, Button, ScrollView } from 'react-native';
 import { addUser, addRoom } from '../api/firebaseAPI';
-import { User } from '../types/UserType';
-import { Room } from '../types/RoomType';
+import { User } from '../domain/UserType';
+import { Room } from '../domain/RoomType';
 import { adminStyle } from '../styles/AdminStyles';
 
 
