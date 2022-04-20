@@ -37,6 +37,7 @@ export const GraphModal = (props: GraphModalTypes) => {
                             value={date.dateFrom.date}
                             onChange={(event, selectedDate) => {setDate({...date, dateFrom:{date:selectedDate || new Date(), visible:false}})}}
                         />}
+                        <Text>{date.dateFrom.date.toUTCString()}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#0274A1'}}
                     onPress={() => setDate({...date, dateTo:{...date.dateTo, visible:true}})}>
@@ -46,6 +47,7 @@ export const GraphModal = (props: GraphModalTypes) => {
                             value={date.dateTo.date}
                             onChange={(event, selectedDate) => {setDate({...date, dateTo:{date:selectedDate || new Date(), visible:false}})}}
                         />}
+                        <Text>{date.dateTo.date.toUTCString()}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={graphModalStyle.notes}>
