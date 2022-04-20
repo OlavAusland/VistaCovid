@@ -3,6 +3,7 @@ export type StackParameters = {
     Profile : object | undefined,
     Login : object | undefined,
     Home : object | undefined,
+    Admin : object | undefined,
     VistaCovid : object | undefined
 }
 

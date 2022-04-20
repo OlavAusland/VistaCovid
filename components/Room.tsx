@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native';
 import { useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
+import React from 'react';
 
 export function RoomView()
 {

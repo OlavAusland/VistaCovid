@@ -7,6 +7,7 @@ import { loginStyle } from '../styles/LoginStyles';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase-config';
+import React from 'react';
 
 
 export function LoginView() 

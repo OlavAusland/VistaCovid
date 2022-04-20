@@ -11,6 +11,7 @@ import { User, Roles} from '../types/UserType';
 // * AUTH
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase-config'
+import React from 'react';
 
 export function RegisterView()
 {

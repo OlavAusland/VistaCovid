@@ -4,6 +4,7 @@ import { profileStyle } from '../styles/ProfileStyles';
 import { addRoom, deleteRoom } from '../api/firebaseAPI';
 import { Room } from '../types/RoomType';
 import { getAdditionalUserInfo } from 'firebase/auth';
+import React from 'react';
 
 
 

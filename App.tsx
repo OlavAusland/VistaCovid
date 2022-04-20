@@ -7,6 +7,7 @@ import { RegisterView } from './components/Register';
 import { ProfileView } from './components/Profile';
 import { LoginView } from './components/Login';
 import { RoomView } from './components/Room';
+import { AdminView } from './components/Admin';
 
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -28,10 +29,11 @@ function VistaCovid(){
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'> 
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Admin'> 
         <Stack.Screen name="VistaCovid" component={VistaCovid}/>
         <Stack.Screen name="Login" component={LoginView}/>
         <Stack.Screen name="Register" component={RegisterView}/>
+        <Stack.Screen name="Admin" component={AdminView}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
