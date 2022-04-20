@@ -20,11 +20,10 @@ export const ProfileView = () =>
         patientId:'None',
         roomNumber: 'A2 021',
         lastUpdated: Date.now().toString(),
-        breathingRate: undefined,
         heartRate: [{time: 0, value: 60}, {time: 1, value: 30}],
         bloodPressure: [{time: 0, value: 120}, {time: 1, value: 80}],
         oxygenLevel: [{time: 0, value: 100}, {time: 1, value: 90}],
-        notes: [{role:'Nurse', note: 'This is a note'}]
+        notes: [{role:3, note: 'This is a note'}]
     }
     const handleRequestClose = () => {
         setModalVisible(false); 

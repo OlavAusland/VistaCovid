@@ -57,6 +57,7 @@ export const addRoom = async (room: Room) => {
     });
 }
 
+
 export const deleteRoom = async (id: string) => {
     await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
         console.log('Deleted Room: ', res);

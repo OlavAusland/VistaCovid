@@ -9,6 +9,7 @@ import { ProfileView } from './components/Profile';
 import { LoginView } from './components/Login';
 import { RoomView } from './components/Room';
 import { AdminView } from './components/Admin';
+import { ManageRolesView } from './components/ManageRoles';
 
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginView}/>
         <Stack.Screen name="Register" component={RegisterView}/>
         <Stack.Screen name="Admin" component={AdminView}/>
+        <Stack.Screen name="ManageRoles" component={ManageRolesView}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

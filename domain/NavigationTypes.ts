@@ -4,7 +4,8 @@ export type StackParameters = {
     Login : object | undefined,
     Home : object | undefined,
     Admin : object | undefined,
-    VistaCovid : object | undefined
+    VistaCovid : object | undefined,
+    ManageRoles : object | undefined
 }
 
 export type TabParameters = {
