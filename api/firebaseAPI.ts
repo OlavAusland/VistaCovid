@@ -66,12 +66,21 @@ export const deleteRoom = async (id: string) => {
     });
 }
 
-export const getRooms = async () => {
+export const getRooms = async (): Promise<Room[]> => {
     return await getDocs(collection(db, 'Rooms')).then((res) => {
-        return res;
+        return res.docs.map((doc) => <Room>({...doc.data(), id: doc.id}));
     }).catch((err) => {
         throw err;
     });
+}
+
+export const getAvailableRooms = async (): Promise<Room[]> => {
+    const rooms: Room[] = await getRooms();
+    console.log(rooms)
+    
+    const availableRooms = rooms.filter(room => room.patientId === null || room.patientId === undefined || room.patientId === '');
+    console.log(availableRooms);
+    return availableRooms;
 }
 
 export const getRoom = async (id: string): Promise<Room | undefined> => {

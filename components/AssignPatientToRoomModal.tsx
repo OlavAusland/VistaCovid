@@ -1,8 +1,13 @@
-import { Text, View, TextInput, Pressable, Modal, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, Pressable, Modal, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getPatient } from '../api/folkeregisterModelAPI';
 import { FolkeregisterPatient } from '../domain/PatientType';
 import { assignPatientStyle } from '../styles/AssignPatientStyle';
+import { dropdownStyles } from '../styles/dropdownStyle';
+import { getAvailableRooms } from '../api/firebaseAPI';
+import { Room } from '../domain/RoomType';
+import { Dropdown } from 'react-native-element-dropdown';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 
 
@@ -11,10 +16,23 @@ type AssignPatientModalProps = {
     handleRequestClose: Function;
 }
 
+type DropDownType = {
+    open: boolean,
+    value: string,
+    items: Array<ItemType>
+}
+
+type ItemType = {
+    label: string,
+    value: string
+}
 
 export const AssignPatientModal = (props: AssignPatientModalProps) => {
+
     const [patient, setPatient] = useState<FolkeregisterPatient>();
     const [search, setSearch] = useState<string>("");
+    const [dropdown, setDropdown] = useState<DropDownType>({ open: false, value: "0", items: [] });
+    const [value, setValue] = useState(null);
 
     const handleSearch = () => {
         if (search.length > 0) {
@@ -28,6 +46,18 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             }
         }
     }
+
+    useEffect(() => {
+        getAvailableRooms().then((room: Room[]) => {
+            room.forEach((room: Room) => {
+                const item: ItemType = { label: room.roomNumber, value: room.id,};
+                setDropdown(prev => ({ ...prev, items: [...prev.items, item] }));
+            })
+        })
+    }, []);
+
+    useEffect(() => { console.log('items', dropdown.items) }, [dropdown]);
+
     return (
 
         <Modal
@@ -54,6 +84,30 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                                 <Text>{patient.lastname}, {patient.firstname} {patient.midlename}</Text>
                             </Text>
                         </View>}
+                        <Text style={{fontSize:20}}>Room:</Text>
+                        <View style={{ backgroundColor:'white' }}>
+                        <Dropdown
+                            style={dropdownStyles.dropdown}
+                            placeholderStyle={dropdownStyles.placeholderStyle}
+                            selectedTextStyle={dropdownStyles.selectedTextStyle}
+                            inputSearchStyle={dropdownStyles.inputSearchStyle}
+                            iconStyle={dropdownStyles.iconStyle}
+                            data={dropdown.items}
+                            search
+                            maxHeight={300}
+                            labelField="label"
+                            valueField="value"
+                            placeholder="Select room"
+                            searchPlaceholder="Search..."
+                            value={value}
+                            onChange={item => {
+                                setValue(item.value);
+                              }}
+                            renderLeftIcon={() => (
+                            <AntDesign style={dropdownStyles.icon} color="black" name="Safety" size={20} />
+                            )}
+                        />
+                        </View>
                     <View style={{ flexDirection: 'row', alignContent: 'space-between' }}>
                         <Pressable onPress={() => props.handleRequestClose()} >
                             <View style={assignPatientStyle.button}>
