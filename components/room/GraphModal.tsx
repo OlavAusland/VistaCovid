@@ -4,7 +4,7 @@ import { LineGraph } from "./Graph";
 import { GraphData} from "../../types/RoomType";
 import { useState } from "react";
 
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export type GraphModalTypes = {
     data: GraphData[],
@@ -14,7 +14,9 @@ export type GraphModalTypes = {
 
 
 export const GraphModal = (props: GraphModalTypes) => {
-    const [date, setDate] = useState({dateFrom:{date:new Date(), visible:false}, dateTo:{date:new Date(), visible:false}});
+    const [date, setDate] = useState({startDate:{date: new Date(), visible: false}, endDate:{date: new Date(), visible: false}});
+
+    
 
     return (
         <Modal  
@@ -29,26 +31,26 @@ export const GraphModal = (props: GraphModalTypes) => {
                 <LineGraph data={[{time:0, value:60}]} name={'Heart Rate'}
                             modal={props.modal} setModal={props.setModal}/>
                 <View style={{flexDirection:'row', width:'90%', justifyContent:'center'}}>
-                    <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#0274A1'}}
-                    onPress={() => setDate({...date, dateFrom:{...date.dateFrom, visible:true}})}>
-                        <Text style={{fontSize:20, color:'white'}}>Date From</Text>
-                        {date.dateFrom.visible && <DateTimePicker
-                            style={{backgroundColor:'black', width: 200, height: 200}}
-                            value={date.dateFrom.date}
-                            onChange={(event, selectedDate) => {setDate({...date, dateFrom:{date:selectedDate || new Date(), visible:false}})}}
-                        />}
-                        <Text>{date.dateFrom.date.toUTCString()}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#0274A1'}}
-                    onPress={() => setDate({...date, dateTo:{...date.dateTo, visible:true}})}>
-                        <Text style={{fontSize:20, color:'white'}}>Date To</Text>
-                        {date.dateTo.visible && <DateTimePicker
-                            style={{backgroundColor:'black', width: 200, height: 200}}
-                            value={date.dateTo.date}
-                            onChange={(event, selectedDate) => {setDate({...date, dateTo:{date:selectedDate || new Date(), visible:false}})}}
-                        />}
-                        <Text>{date.dateTo.date.toUTCString()}</Text>
-                    </TouchableOpacity>
+                    <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#0274A1', paddingTop:10, paddingBottom:10}}>
+                        <Button title="Set Start Date" onPress={() => {setDate({...date, startDate:{...date.startDate, visible: true}})}}/>
+                        <DateTimePickerModal
+                            isVisible={date.startDate.visible}
+                            date={date.startDate.date}
+                            mode="date"
+                            onConfirm={(newDate: Date) => {setDate({...date, startDate:{date:newDate, visible: false}})}}
+                            onCancel={() => {setDate({...date, startDate:{...date.startDate, visible: false}})}}
+                        />
+                    </View>
+                    <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#0274A1', paddingTop:10, paddingBottom:10}}>
+                        <Button title="Set End Date" onPress={() => {setDate({...date, endDate:{...date.endDate, visible: true}})}}/>
+                        <DateTimePickerModal
+                            isVisible={date.endDate.visible}
+                            date={date.endDate.date}
+                            mode="date"
+                            onConfirm={(newDate: Date) => {setDate({...date, endDate:{date:newDate, visible: false}})}}
+                            onCancel={() => {setDate({...date, endDate:{...date.endDate, visible: false}})}}
+                        />
+                    </View>
                 </View>
                 <View style={graphModalStyle.notes}>
                     <Text></Text>

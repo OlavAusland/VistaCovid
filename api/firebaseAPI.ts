@@ -41,6 +41,7 @@ export const deletePatient = async(id: string) => {
 }
 
 export const getPatient = async (id: string): Promise<Patient | undefined> => {
+    console.log(id)
     return await getDoc(doc(db, 'Patients', id)).then((res) => {
         return res.data() as Patient;
     }).catch((err) => {

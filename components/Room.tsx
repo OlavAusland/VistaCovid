@@ -25,7 +25,7 @@ export function RoomView()
 
     useEffect(() => {
         const getRoomData = async () => {
-            await getRoom('awDdlNKxiCpMsHqsE2Rh').then(async(res) => {
+            await getRoom('OKqa8wlfNZGO9ajhnLIH').then(async(res) => {
                 setRoom(res);
                 setFetching(false);
                 if(res !== undefined){await getPatientData(res);}
@@ -38,6 +38,7 @@ export function RoomView()
             if(id !== undefined){
                 await getPatient(id).then((res) => {
                     setPatient(res);
+                    console.log(res?.firstname)
                 }).catch((err) => {console.log(err);});
             }
         };
