@@ -33,19 +33,19 @@ export const LineGraph = (props: GraphProps) => {
             xAxisLabel='s'
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
-                backgroundColor: "#e26a00",
-                backgroundGradientFrom: "#fb8c00",
-                backgroundGradientTo: "#ffa726",
+                backgroundColor: "#FFFFFF",
+                backgroundGradientFrom: "#9dd9fb",
+                backgroundGradientTo: "#9dd9fb",
                 decimalPlaces: 1, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                color: () => '#C1E8FD',
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                 style: {
                     borderRadius: 16
             },
             propsForDots: {
-                r: "4",
-                strokeWidth: "2",
-                stroke: "#ffa726"
+                r: "1",
+                strokeWidth: "6",
+                stroke: "#000000"
             }
             }}
             style={{

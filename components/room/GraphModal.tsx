@@ -52,9 +52,6 @@ export const GraphModal = (props: GraphModalTypes) => {
                         />
                     </View>
                 </View>
-                <View style={graphModalStyle.notes}>
-                    <Text></Text>
-                </View>
                 <TouchableOpacity onPress={() => {props.setModal(false)}}>
                     <Text>Exit</Text>
                 </TouchableOpacity>

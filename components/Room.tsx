@@ -12,9 +12,11 @@ import { NotesView } from './room/NotesView';
 import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
 import { profileStyle } from '../styles/ProfileStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
+import DateTimePickerModal from "react-native-modal-datetime-picker"
 
 export function RoomView()
 {
+    const [date, setDate] = useState({startDate:{date: new Date(), visible: false}, endDate:{date: new Date(), visible: false}});
     const [patient, setPatient] = useState<Patient>()
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)

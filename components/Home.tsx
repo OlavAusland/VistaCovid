@@ -29,7 +29,6 @@ export function HomeView()
                         rooms.map((room: Room) => {
                             return (
                                 <TouchableOpacity key={'room:' + room.roomNumber} style={homeStyle.card}>
-                                    {/*<Text style={{flex:0}}> Room: {room.roomNumber}</Text>*/}
                                     <BarChart
                                         data={{
                                             labels: ['BL', 'OXL', 'HR'],
@@ -37,17 +36,17 @@ export function HomeView()
                                                 data: [30, 50, 22]
                                             }]
                                         }}
-                                        width={Dimensions.get('window').width * 0.9}
+                                        width={Dimensions.get('window').width * 0.9 / 2}
                                         height={200}
                                         chartConfig={{
-                                            backgroundColor: "#e26a00",
-                                            backgroundGradientFrom: "#fb8c00",
-                                            backgroundGradientTo: "#ffa726",
+                                            backgroundColor: "#FFFFFF",
+                                            backgroundGradientFrom: "#9dd9fb",
+                                            backgroundGradientTo: "#9dd4fb",
                                             decimalPlaces: 0, // optional, defaults to 2dp
                                             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                                             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                                             style: {
-                                                borderRadius: 8
+                                                flex:2
                                             },
                                             barPercentage: 0.5,
                                             propsForDots: {
@@ -56,9 +55,10 @@ export function HomeView()
                                                 stroke: "#ffa726"
                                             }
                                         }}
-                                        withHorizontalLabels={false}
+                                        withHorizontalLabels={true}
                                         fromZero={true}
                                         />
+                                        <Text style={{flex:1}}> Room: {room.roomNumber}</Text>
                                 </TouchableOpacity>
                             )
                         })

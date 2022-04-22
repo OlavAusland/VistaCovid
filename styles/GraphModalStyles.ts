@@ -6,7 +6,8 @@ export const graphModalStyle = StyleSheet.create({
         justifyContent:'center', 
         alignItems:'center',
         alignSelf:'center',
-        width: Platform.OS === ('android' || 'ios') ? '100%' : '50%'
+        width: Platform.OS === ('android' || 'ios') ? '100%' : '50%',
+        height: Platform.OS === ('android' || 'ios') ? '100%' : '50%',
     },
     notes: {
         backgroundColor:'rgba(0, 0, 0, 0.05)', 

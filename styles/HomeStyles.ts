@@ -7,7 +7,7 @@ export const homeStyle = StyleSheet.create({
         justifyContent: 'center',
         alignContent:'center',
         alignSelf:'center',
-        backgroundColor:'#0274A1'
+        backgroundColor:'#FFFFFF'
     },
     header: {
         flex:1,
