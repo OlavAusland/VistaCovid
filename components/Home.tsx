@@ -33,7 +33,9 @@ export function HomeView()
                                         data={{
                                             labels: ['BL', 'OXL', 'HR'],
                                             datasets: [{
-                                                data: [30, 50, 22]
+                                                data: [room.bloodPressure ? room.bloodPressure[room.bloodPressure.length - 1].value : 0, 
+                                                        room.oxygenLevel ? room.oxygenLevel[room.oxygenLevel.length - 1].value : 0,
+                                                         room.heartRate ? room.heartRate[room.heartRate.length - 1].value : 0]
                                             }]
                                         }}
                                         width={Dimensions.get('window').width * 0.9 / 2}

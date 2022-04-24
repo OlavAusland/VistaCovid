@@ -1,11 +1,10 @@
-import { View, Text, ScrollView, Button, TouchableOpacity} from 'react-native';
+import { View, Text, ScrollView, Button, TouchableOpacity, LogBox} from 'react-native';
 import { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
 import { Room } from '../types/RoomType';
 import { Patient } from '../types/PatientType';
 
 import { LineGraph } from './room/Graph';
-import { GraphModal } from './room/GraphModal';
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
 
@@ -13,6 +12,8 @@ import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
 import { profileStyle } from '../styles/ProfileStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
+
+LogBox.ignoreLogs(['Setting a timer']);
 
 export function RoomView()
 {
@@ -61,7 +62,6 @@ export function RoomView()
     }else{
         return(
             <View style={roomStyle.container}>
-                <GraphModal room={room} modal={modal} setModal={setModal} />
                 <View style={roomStyle.header}>
                     <Text style={roomStyle.headerText} >Room: {room?.roomNumber}</Text>
                     <View style={{flexDirection:'row', justifyContent:'center'}}>
@@ -72,7 +72,7 @@ export function RoomView()
                     </View>
 
                 </View>
-                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                <View style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between', alignItems:'center'}}>
                     <TouchableOpacity style={{flexBasis:'50%', justifyContent:'center', backgroundColor:'#9DD4FB', height:30}}
                     onPress={() => {setView('graphs')}}>
                         <Text style={{alignSelf:'center', fontWeight:'bold'}}>Graphs</Text>
@@ -81,6 +81,33 @@ export function RoomView()
                     onPress={() => {setView('notes')}}>
                         <Text style={{alignSelf:'center', fontWeight:'bold'}}>Notes</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={{flexBasis:'50%', justifyContent:'center', backgroundColor:'#9DD4FB', height:30}}
+                    onPress={() => {setDate({...date, startDate:{...date.startDate, visible: true}})}}>
+                        <Text style={{alignSelf:'center', fontWeight:'bold'}}>Date From</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flexBasis:'50%', justifyContent:'center', backgroundColor:'#9DD4FB', height:30}}
+                    onPress={() => {setDate({...date, endDate:{...date.endDate, visible: true}})}}>
+                        <Text style={{alignSelf:'center', fontWeight:'bold'}}>Date To</Text>
+                    </TouchableOpacity>
+                    <View>
+                        <DateTimePickerModal
+                            isVisible={date.endDate.visible}
+                            date={date.endDate.date}
+                            mode="date"
+                            onConfirm={(newDate: Date) => {setDate({...date, endDate:{date:newDate, visible: false}})}}
+                            onCancel={() => {setDate({...date, endDate:{...date.endDate, visible: false}})}}
+                        />
+                        <DateTimePickerModal
+                            isVisible={date.startDate.visible}
+                            date={date.startDate.date}
+                            mode="date"
+                            onConfirm={(newDate: Date) => {setDate({...date, startDate:{date:newDate, visible: false}})}}
+                            onCancel={() => {setDate({...date, startDate:{...date.startDate, visible: false}})}}
+                        />
+                    </View>
+                </View>
+                <View>
+                    
                 </View>
                 {(view === 'graphs' && room !== undefined) ? <GraphView room={room} setModal={setModal} modal={modal}/> : <NotesView room={room}/> }
             </View>

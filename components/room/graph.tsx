@@ -20,7 +20,7 @@ export const LineGraph = (props: GraphProps) => {
         onPress={() => {props.setModal(true)}}>
             <LineChart
             data={{
-                labels: xData ? xData : [],
+                labels: [],
                 datasets: [
                     {
                         data: yData ? yData : [],
@@ -43,8 +43,8 @@ export const LineGraph = (props: GraphProps) => {
                     borderRadius: 16
             },
             propsForDots: {
-                r: "1",
-                strokeWidth: "6",
+                r: "2",
+                strokeWidth: "4",
                 stroke: "#000000"
             }
             }}
@@ -52,7 +52,7 @@ export const LineGraph = (props: GraphProps) => {
                 marginVertical: 8,
                 borderRadius: 16,
             }}
-            fromZero={true}
+            fromZero={false}
         />
         </TouchableOpacity>
     )

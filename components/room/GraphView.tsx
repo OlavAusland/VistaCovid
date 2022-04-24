@@ -11,7 +11,7 @@ export type GraphViewProps = {
 }
 
 
-export const GraphView = (props: GraphViewProps) => {
+export  const GraphView = (props: GraphViewProps) => {
     return (
         <ScrollView contentContainerStyle={roomStyle.body}>
             <View style={roomStyle.graphContainer}>
