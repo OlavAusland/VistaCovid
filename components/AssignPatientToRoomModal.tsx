@@ -7,7 +7,7 @@ import { dropdownStyles } from '../styles/dropdownStyle';
 import { getAvailableRooms } from '../api/firebaseAPI';
 import { Room } from '../domain/RoomType';
 import { Dropdown } from 'react-native-element-dropdown';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 
@@ -49,14 +49,13 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
 
     useEffect(() => {
         getAvailableRooms().then((room: Room[]) => {
+            setDropdown(prev => ({ ...prev, items: [] }));
             room.forEach((room: Room) => {
-                const item: ItemType = { label: room.roomNumber, value: room.id,};
+                const item: ItemType = { label: room.roomNumber, value: room.id, };
                 setDropdown(prev => ({ ...prev, items: [...prev.items, item] }));
             })
         })
     }, []);
-
-    useEffect(() => { console.log('items', dropdown.items) }, [dropdown]);
 
     return (
 
@@ -69,6 +68,8 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
         >
             <View style={{ top: '5%', }}>
                 <View style={assignPatientStyle.container}>
+                    <Text style={{ fontSize: 40, marginBottom: 90 }}>Admit patient</Text>
+                    <Text style={{ fontSize: 20, paddingBottom: 5, marginTop: 40 }}>Patient:</Text>
                     <View style={{ width: '100%', borderRadius: 5, flexDirection: 'row', marginBottom: 10 }}>
                         <TextInput onChangeText={text => { setSearch(text) }} placeholder="SSN" style={{ flex: 3, height: 40, backgroundColor: "white", paddingLeft: 10, width: '100%' }} />
                         <TouchableOpacity style={{ flex: 1 }} onPress={() => handleSearch()}>
@@ -79,13 +80,10 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                     </View>
                     {patient &&
                         <View>
-                            <Text style={{ fontSize: 20 }}>
-                                <Text style={{ fontWeight: 'bold' }}>Patient: </Text>
-                                <Text>{patient.lastname}, {patient.firstname} {patient.midlename}</Text>
-                            </Text>
+                            <Text style={{ fontSize: 15 }}>{patient.lastname}, {patient.firstname} {patient.midlename}</Text>
                         </View>}
-                        <Text style={{fontSize:20}}>Room:</Text>
-                        <View style={{ backgroundColor:'white' }}>
+                    <Text style={{ fontSize: 20, paddingBottom: 5, marginTop: 25 }}>Room:</Text>
+                    <View style={{ backgroundColor: 'white' }}>
                         <Dropdown
                             style={dropdownStyles.dropdown}
                             placeholderStyle={dropdownStyles.placeholderStyle}
@@ -94,7 +92,7 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                             iconStyle={dropdownStyles.iconStyle}
                             data={dropdown.items}
                             search
-                            maxHeight={300}
+                            maxHeight={200}
                             labelField="label"
                             valueField="value"
                             placeholder="Select room"
@@ -102,13 +100,13 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                             value={value}
                             onChange={item => {
                                 setValue(item.value);
-                              }}
+                            }}
                             renderLeftIcon={() => (
-                            <AntDesign style={dropdownStyles.icon} color="black" name="Safety" size={20} />
+                                <FontAwesome5 style={dropdownStyles.icon} color="black" name="bed" size={20} />
                             )}
                         />
-                        </View>
-                    <View style={{ flexDirection: 'row', alignContent: 'space-between' }}>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignContent: 'space-between', marginTop: 200 }}>
                         <Pressable onPress={() => props.handleRequestClose()} >
                             <View style={assignPatientStyle.button}>
                                 <Text style={{ color: 'white', alignSelf: 'center', fontSize: 20 }}>Add</Text>

@@ -2,10 +2,12 @@ import { StyleSheet } from "react-native";
 
 export const dropdownStyles = StyleSheet.create({
     dropdown: {
-        margin: 16,
-        height: 50,
-        borderBottomColor: "gray",
-        borderBottomWidth: 0.5,
+        marginBottom: 10,
+        marginTop: 10,
+        paddingRight: 10,
+        paddingLeft:10,
+        height: 30,
+     
     },
     icon: {
         marginRight: 5,
