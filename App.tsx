@@ -9,7 +9,10 @@ import { ProfileView } from './components/Profile';
 import { LoginView } from './components/Login';
 import { RoomView } from './components/Room';
 import { AdminView } from './components/Admin';
-import { ManageRolesView } from './components/ManageRoles';
+import { AddRoom } from './components/adminView/addRoomView';
+import { DeleteRoom } from './components/adminView/deleteRoom';
+import { EditRoom } from './components/adminView/editRoomView';
+import { ManageRoom } from './components/adminView/manageRoom';
 
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -36,7 +39,11 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginView}/>
         <Stack.Screen name="Register" component={RegisterView}/>
         <Stack.Screen name="Admin" component={AdminView}/>
-        <Stack.Screen name="ManageRoles" component={ManageRolesView}/>
+        <Stack.Screen name="AddRoom" component={AddRoom}/>
+        <Stack.Screen name="DeleteRoom" component={DeleteRoom}/>
+        <Stack.Screen name="EditRoom" component={EditRoom}/>
+        <Stack.Screen name="ManageRoom" component={ManageRoom}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

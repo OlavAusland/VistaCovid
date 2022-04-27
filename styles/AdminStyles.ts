@@ -2,7 +2,8 @@ import { StyleSheet, Platform} from "react-native";
 
 export const adminStyle = StyleSheet.create({
     container: {
-        marginTop: 20,
+        //marginTop: 20,
+        backgroundColor: '#E5FCFF'
     },
     header: {
         flex: 1,
@@ -10,18 +11,41 @@ export const adminStyle = StyleSheet.create({
         padding: 30,
         alignItems: 'center',
     },
-    text:{
-        fontSize: 30
+    headertext:{
+        fontSize: 30,
     },
     addRoom: {
         flex: 2,
-        backgroundColor: 'blue',
-        padding: 50
+        backgroundColor: 'powderblue',
+        padding: 50,
+        // marginTop:3,
+        // marginBottom:3,
+        // marginLeft:3,
+        // marginRight:3
     },
-    manageRoles: {
+    manageRoom: {
         flex: 3,
         backgroundColor:'powderblue',
-        padding: 50
+        padding: 50,
+        // marginBottom:3,
+        // marginLeft:3,
+        // marginRight:3
+    },
+    addRoomContainer: {
+        //marginTop: 20,
+        backgroundColor: 'powderblue'
+    },
+    addRoomHeader:{
+        flex: 1,
+        backgroundColor: 'powderblue',
+        padding: 30,
+        alignItems: 'center',
+    },
+    addRoomInput:{
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
     }
   
 })
