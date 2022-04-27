@@ -9,7 +9,7 @@
     journals: Array<Object> | undefined
 }
 */
-export type FolkeregisterPatient = {
+export type FolkeregisterPerson = {
     firstname: string,
     midlename: string,
     lastname: string,

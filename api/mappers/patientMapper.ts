@@ -1,8 +1,8 @@
-import { FolkeregisterPatient } from "../../domain/PatientType";
+import { FolkeregisterPerson } from "../../domain/PatientType";
 
 export const mapDataToPatient = (
     data: FolkeregisterDto
-): FolkeregisterPatient => {
+): FolkeregisterPerson => {
     if (
         data.person.adressebeskyttelse[0].graderingsnivå === "ugradert" ||
         !data.person.adressebeskyttelse[0]

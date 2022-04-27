@@ -1,13 +1,14 @@
 import { Text, View, TextInput, Pressable, Modal, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getPatient } from '../api/folkeregisterModelAPI';
-import { FolkeregisterPatient } from '../domain/PatientType';
+import { FolkeregisterPerson } from '../domain/PatientType';
 import { assignPatientStyle } from '../styles/AssignPatientStyle';
 import { dropdownStyles } from '../styles/dropdownStyle';
 import { getAvailableRooms } from '../api/firebaseAPI';
 import { Room } from '../domain/RoomType';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {addPatientToRoom} from '../api/firebaseAPI';
 
 
 
@@ -20,6 +21,7 @@ type DropDownType = {
     open: boolean,
     value: string,
     items: Array<ItemType>
+    room: string
 }
 
 type ItemType = {
@@ -29,10 +31,9 @@ type ItemType = {
 
 export const AssignPatientModal = (props: AssignPatientModalProps) => {
 
-    const [patient, setPatient] = useState<FolkeregisterPatient>();
+    const [patient, setPatient] = useState<FolkeregisterPerson>();
     const [search, setSearch] = useState<string>("");
-    const [dropdown, setDropdown] = useState<DropDownType>({ open: false, value: "0", items: [] });
-    const [value, setValue] = useState(null);
+    const [dropdown, setDropdown] = useState<DropDownType>({ open: false, value: "0", items: [], room: "" });
 
     const handleSearch = () => {
         if (search.length > 0) {
@@ -42,12 +43,24 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             if (isFnr) {
                 getPatient(search).then(result => {
                     setPatient(result)
-                }).catch(err => { console.log(err) });
+                }).catch(err => { console.log('here',err.message) });
             }
         }
     }
 
+    const handleAddPatient = () => {
+        if (patient && dropdown.room) {
+            addPatientToRoom(dropdown.room, patient.ssn);
+            props.handleRequestClose();
+            setPatient(undefined);
+            setSearch("");
+            setDropdown({ open: false, value: "0", items: [], room: "" });
+        }
+    }
+
+
     useEffect(() => {
+        console.log('here')
         getAvailableRooms().then((room: Room[]) => {
             setDropdown(prev => ({ ...prev, items: [] }));
             room.forEach((room: Room) => {
@@ -55,7 +68,9 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                 setDropdown(prev => ({ ...prev, items: [...prev.items, item] }));
             })
         })
-    }, []);
+    }, [props.modalVisible]);
+
+   
 
     return (
 
@@ -97,9 +112,9 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                             valueField="value"
                             placeholder="Select room"
                             searchPlaceholder="Search..."
-                            value={value}
+                            value={dropdown.room}
                             onChange={item => {
-                                setValue(item.value);
+                                setDropdown(prev => ({ ...prev, room: item.value }));
                             }}
                             renderLeftIcon={() => (
                                 <FontAwesome5 style={dropdownStyles.icon} color="black" name="bed" size={20} />
@@ -107,7 +122,7 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                         />
                     </View>
                     <View style={{ flexDirection: 'row', alignContent: 'space-between', marginTop: 200 }}>
-                        <Pressable onPress={() => props.handleRequestClose()} >
+                        <Pressable onPress={() => handleAddPatient()} >
                             <View style={assignPatientStyle.button}>
                                 <Text style={{ color: 'white', alignSelf: 'center', fontSize: 20 }}>Add</Text>
                             </View>

@@ -11,8 +11,6 @@ import { AssignPatientModal } from './AssignPatientToRoomModal';
 
 
 
-
-
 export const ProfileView = () =>
 {
     const [modalVisible, setModalVisible] = useState(false);

@@ -21,13 +21,13 @@ export function RoomView()
 
                 setRoom(res);
                 setFetching(false);
-            }).catch((err) => {console.log(err);});
+            }).catch((err) => {});
         };
 
         getRoomData();
     }, []);
 
-    useEffect(() => {const data = room?.heartRate?.map((res) => {return res.value}); console.log(data)}, [room]);
+    useEffect(() => {const data = room?.heartRate?.map((res) => {return res.value}); }, [room]);
 
 
     if(fetching)
@@ -46,7 +46,7 @@ export function RoomView()
                 <ScrollView style={{flex:6}} contentContainerStyle={roomStyle.body}>
                     <View>
                         <Text style={{fontSize:30, textDecorationLine:'underline'}}>Heart Rate:</Text>
-                        <LineGraph room={room}/>
+                        {/*<LineGraph room={room}/>*/}
                     </View>
                 </ScrollView>
             </View>

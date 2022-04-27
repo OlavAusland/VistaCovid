@@ -25,7 +25,7 @@ export function RegisterView()
 
     const [error, setError] = useState<string>('');
 
-    useEffect(() => {console.log(user)}, [user])
+   
 
     const handleRegister = async() => {
         await createUserWithEmailAndPassword(auth, user.email, user.password).then((res) => {
