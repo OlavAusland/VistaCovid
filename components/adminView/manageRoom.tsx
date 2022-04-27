@@ -1,4 +1,4 @@
-import { Button, SafeAreaView, ScrollView, TextInput, View } from "react-native";
+import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View } from "react-native";
 import { useState } from "react";
 import { deleteRoom } from "../../api/firebaseAPI";
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +11,21 @@ export function ManageRoom()
 
     const [roomNumber, setRoomNumber] = useState('')
     const [delroomNumber, setDelRoomNumber] = useState('')
+    const [modalVisible, setModalVisible] = useState(false);
+
+    function handleDelete(){
+        return(
+            <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={()=>{
+                Alert.alert("modal has been closed.");
+                setModalVisible(!modalVisible);}}>
+                    <View></View>
+                </Modal>
+        );
+    }
 
     return(
         <ScrollView>
