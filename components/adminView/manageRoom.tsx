@@ -1,9 +1,11 @@
-import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View } from "react-native";
+import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable } from "react-native";
 import { useState } from "react";
 import { deleteRoom } from "../../api/firebaseAPI";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from "../../domain/NavigationTypes";
+import { adminStyle } from "../../styles/AdminStyles";
+import  handleDelete from "../adminView/modal"
 
 export function ManageRoom()
 {
@@ -11,21 +13,8 @@ export function ManageRoom()
 
     const [roomNumber, setRoomNumber] = useState('')
     const [delroomNumber, setDelRoomNumber] = useState('')
-    const [modalVisible, setModalVisible] = useState(false);
 
-    function handleDelete(){
-        return(
-            <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={()=>{
-                Alert.alert("modal has been closed.");
-                setModalVisible(!modalVisible);}}>
-                    <View></View>
-                </Modal>
-        );
-    }
+
 
     return(
         <ScrollView>
@@ -40,7 +29,7 @@ export function ManageRoom()
                     <TextInput
                     placeholder="room number"
                     onChangeText={setDelRoomNumber}/>
-                    <Button title="DeleteRoom" onPress={()=>{deleteRoom(delroomNumber)}}/>
+                    <Button title="DeleteRoom" onPress={()=>handleDelete}/>
                 </View>
             </SafeAreaView>
         </ScrollView>
