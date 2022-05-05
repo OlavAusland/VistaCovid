@@ -7,6 +7,6 @@ export type StackParameters = {
 }
 
 export type TabParameters = {
-    Profile : object | undefined,
-    Room : object | undefined
+    Room : object | undefined,
+    Home : object | undefined,
 }

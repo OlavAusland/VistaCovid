@@ -5,7 +5,7 @@ import { BarChart } from 'react-native-chart-kit';
 import { Room } from '../domain/RoomType';
 import { getRooms } from '../api/firebaseAPI';
 
-export function HomeView()
+export const HomeView = () =>
 {
     const [rooms, setRooms] = useState<Room[]>([])
 

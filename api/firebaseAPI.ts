@@ -2,7 +2,7 @@ import { db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
-import { FolkeregisterPerson } from "../domain/PatientType";
+import {Patient, FolkeregisterPerson } from "../domain/PatientType";
 
 // USERS
 
