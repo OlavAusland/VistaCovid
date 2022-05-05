@@ -33,7 +33,6 @@ export const ProfileView = () =>
             {/*HEADER*/}
             <View style={{flex:1}}>
                 <Text style={{alignSelf:'center'}}>Profile</Text>
-                <Button title="Add Room" onPress={() => {addRoom(room)}}/>
                 <Button title="Assign" onPress={() => {setModalVisible(true)} }/>
                 <Button title="Delete Room" onPress={() => {deleteRoom('50uaIdfmRjd4CeRUBhOl')} }/>
            {/*  <ScrollView>
