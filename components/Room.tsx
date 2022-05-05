@@ -7,6 +7,7 @@ import { Patient } from '../types/PatientType';
 import { LineGraph } from './room/Graph';
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
+import Notification from './Notification';
 
 import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
 import { profileStyle } from '../styles/ProfileStyles';
@@ -25,7 +26,7 @@ export function RoomView()
     const [modal, setModal] = useState(false);
 
     const [view, setView] = useState<string>('graphs')
-
+    Notification();
     useEffect(() => {
         const getRoomData = async () => {
             await getRoom('OKqa8wlfNZGO9ajhnLIH').then(async(res) => {
@@ -38,7 +39,7 @@ export function RoomView()
         const getPatientData = async (room: Room) => {
             const id = room?.patientId;
             
-            if(id !== undefined){
+            if(id !== ""){
                 await getPatient(id).then((res) => {
                     setPatient(res);
                     console.log(res?.firstname)
