@@ -11,7 +11,6 @@ import { PatientInfoModal} from './PatientInfoModal';
 
 
 
-
 export const ProfileView = () =>
 {
     const [modalVisible, setModalVisible] = useState(false);

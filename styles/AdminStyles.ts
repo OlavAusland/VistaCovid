@@ -14,7 +14,7 @@ export const adminStyle = StyleSheet.create({
     headertext:{
         fontSize: 30,
     },
-    //--------------------------------------------------
+    //-----------------------Buttons in main admin view---------------------------
     addRoom: {
         flex: 2,
         backgroundColor: 'powderblue',
@@ -32,7 +32,7 @@ export const adminStyle = StyleSheet.create({
         // marginLeft:3,
         // marginRight:3
     },
-    //-------------------------------------------------
+    //--------------------add room styling-----------------------------
     addRoomContainer: {
         //marginTop: 20,
         backgroundColor: 'powderblue'
@@ -51,21 +51,38 @@ export const adminStyle = StyleSheet.create({
     },
     //---------------manage room styling-----------------------
     editRoom:{
+      // height: 40,
+      // margin: 12,
+      // padding: 10,
+    },
+    editRoomNumber:{
       height: 40,
       margin: 12,
       borderWidth: 1,
       padding: 10,
+    },
+    editRoomButton:{
+      flex: 2,
+      backgroundColor: 'powderblue',
+      padding: 50,
     },
 
     deleteRoom:{
+      // height: 40,
+      // margin: 12,
+      // borderWidth: 1,
+      // padding: 10,
+    },
+    deleteRoomNumber:{
       height: 40,
       margin: 12,
       borderWidth: 1,
       padding: 10,
     },
-
-    manageRoomButtons:{
-      padding: 30
+    deleteRoomButton:{
+      flex: 3,
+      backgroundColor: 'powderblue',
+      padding: 50,
     },
 
     //--------------modal styling------------------------------
