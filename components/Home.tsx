@@ -10,7 +10,7 @@ export const HomeView = () => {
     const [rooms, setRooms] = useState<Room[]>([])
     const [modalVisible, setModalVisible] = useState(false);
 
-    
+
     const handleRequestClose = () => {
         setModalVisible(false);
     }
@@ -29,10 +29,10 @@ export const HomeView = () => {
             <View style={homeStyle.header}>
                 <TextInput placeholder={'Search For Room'} style={homeStyle.searchBar} />
             </View>
-            <View style={{paddingBottom: 10}}>
+            <View style={{ paddingBottom: 10 }}>
                 <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
-                    <Text style={{ fontSize: 30, paddingTop: 5 }}>Assign Patient</Text>
-                    <Icon name='bed-patient' size={60} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                    <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
+                    <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                 </TouchableOpacity>
                 <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} />
             </View>
@@ -75,7 +75,11 @@ export const HomeView = () => {
                                         withHorizontalLabels={true}
                                         fromZero={true}
                                     />
-                                    <Text style={{ flex: 1 }}> Room: {room.roomNumber}</Text>
+                                    <View style={{ flexDirection: 'column' }}>
+                                        <Text> Room: {room.roomNumber}</Text>
+                                        <Text> Patient: {room.patientId ? room.patientId : 'No Patient'}</Text>
+                                    </View>
+
                                 </TouchableOpacity>
                             )
                         })
