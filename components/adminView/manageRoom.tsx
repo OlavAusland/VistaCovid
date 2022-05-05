@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from "../../domain/NavigationTypes";
 import { adminStyle } from "../../styles/AdminStyles";
-import  handleDelete from "../adminView/modal"
+import  handleDelete from "./deleteModal"
 
 export function ManageRoom()
 {
@@ -19,13 +19,16 @@ export function ManageRoom()
     return(
         <ScrollView>
             <SafeAreaView>
-                <View>
+                <View style={adminStyle.editRoom}>
                     <TextInput
                     placeholder="room number"
                     onChangeText={setRoomNumber}/>
-                    <Button title="Edit room" onPress={()=>navigation.navigate("EditRoom")}/>
+                    <View style={adminStyle.manageRoomButtons}>
+                        <Button title="Edit room" onPress={()=>navigation.navigate("EditRoom")}/>
+                    </View>
                 </View>
-                <View>
+
+                <View style={adminStyle.deleteRoom}>
                     <TextInput
                     placeholder="room number"
                     onChangeText={setDelRoomNumber}/>
@@ -33,6 +36,5 @@ export function ManageRoom()
                 </View>
             </SafeAreaView>
         </ScrollView>
-
     );
 }
