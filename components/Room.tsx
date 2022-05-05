@@ -13,7 +13,7 @@ import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
 import { profileStyle } from '../styles/ProfileStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
-import { PatientInfoModal } from './PatientInfoModal';
+import { PatientInfoModal } from './room/PatientInfoModal';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
