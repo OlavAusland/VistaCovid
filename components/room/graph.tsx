@@ -1,48 +1,60 @@
 import { LineChart } from 'react-native-chart-kit';
 import { LineChartData } from '../../domain/GraphTypes';
-import React from 'react';
+import { TouchableOpacity, Dimensions, Platform} from 'react-native';
 import { Room, GraphData} from '../../domain/RoomType';
+import React from 'react';
 
-export const LineGraph = (props: any) => {
+export type GraphProps = {
+    data: GraphData[] | undefined,
+    name: string,
+    setModal: (modal: boolean) => void,
+    modal: boolean
+}
 
-    
-    const xData = props.room?.heartRate?.map((res: GraphData) => {return res.time});
-    const yData = props.room?.heartRate?.map((res: GraphData) => {return res.value});
+export const LineGraph = (props: GraphProps) => {
+
+    const xData = props.data?.map((res: GraphData) => {return res.time.toString()});
+    const yData = props.data?.map((res: GraphData) => {return res.value});
 
     return(
-        <LineChart
+        <TouchableOpacity
+        onPress={() => {props.setModal(true)}}>
+            <LineChart
             data={{
-            labels: xData ? xData : [],
-            datasets: [
-                {
-                    data: yData ? yData : [],
-                }
-            ]
+                labels: [],
+                datasets: [
+                    {
+                        data: yData ? yData : [],
+                    }
+                ],
+                legend: [props.name]
             }}
-            width={600} // from react-native
-            height={300}
+            width={Platform.OS === 'android' ? Dimensions.get('window').width / 1.1 : 375} // from react-native
+            height={200}
             xAxisLabel='s'
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
-                backgroundColor: "#e26a00",
-                backgroundGradientFrom: "#fb8c00",
-                backgroundGradientTo: "#ffa726",
+                backgroundColor: "#FFFFFF",
+                backgroundGradientFrom: "#9dd9fb",
+                backgroundGradientTo: "#9dd9fb",
                 decimalPlaces: 1, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                color: () => '#C1E8FD',
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                 style: {
                     borderRadius: 16
             },
             propsForDots: {
-                r: "4",
-                strokeWidth: "2",
-                stroke: "#ffa726"
+                r: "2",
+                strokeWidth: "4",
+                stroke: "#000000"
             }
             }}
             style={{
                 marginVertical: 8,
                 borderRadius: 16,
             }}
+            fromZero={false}
         />
+        </TouchableOpacity>
     )
 }

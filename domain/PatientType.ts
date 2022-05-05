@@ -1,4 +1,4 @@
-/*export type Patient1 = {
+export type Patient = {
     firstname: string,
     lastname: string,
     ssn: string,
@@ -8,7 +8,7 @@
         city: string | undefined,
     journals: Array<Object> | undefined
 }
-*/
+
 export type FolkeregisterPerson = {
     firstname: string,
     midlename: string,

@@ -9,8 +9,6 @@ import { PatientInfoModal} from './PatientInfoModal';
 import { AssignPatientModal } from './AssignPatientToRoomModal';
 
 
-
-
 export const ProfileView = () =>
 {
     const [modalVisible, setModalVisible] = useState(false);
@@ -19,10 +17,10 @@ export const ProfileView = () =>
         patientId:'',
         roomNumber: 'A3 021',
         lastUpdated: Date.now().toString(),
-        breathingRate: undefined,
         heartRate: [{time: 0, value: 60}, {time: 1, value: 30}],
         bloodPressure: [{time: 0, value: 120}, {time: 1, value: 80}],
         oxygenLevel: [{time: 0, value: 100}, {time: 1, value: 90}],
+        breathingRate: [{time: 0, value: 20}, {time: 1, value: 10}],
         notes: [{role:'', note: ''}],
         id: 'A3 021'
     }

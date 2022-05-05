@@ -8,6 +8,7 @@ import { RegisterView } from './components/Register';
 import { ProfileView } from './components/Profile';
 import { LoginView } from './components/Login';
 import { RoomView } from './components/Room';
+import { HomeView } from './components/Home';
 
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,8 +20,9 @@ const Tab = createMaterialTopTabNavigator<TabParameters>();
 
 function VistaCovid(){
   return(
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{tabBarShowLabel:false, tabBarShowIcon:false}}>
       <Tab.Screen name="Profile" component={ProfileView}/>
+      <Tab.Screen name="Home" component={HomeView}/>
       <Tab.Screen name="Room" component={RoomView}/>
     </Tab.Navigator>
   );
