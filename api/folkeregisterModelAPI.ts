@@ -2,9 +2,10 @@ import { FolkeregisterPerson } from "../domain/PatientType";
 import * as patientMapper from "./mappers/patientMapper";
 
 //192.168.1.6
+
 export const getPatient = async (fnr: string): Promise<FolkeregisterPerson> => {
     const result = await fetch(
-        `http://192.168.43.153:3001/api/folk/hentPersonMedFNr/${fnr}`,
+        `http://192.168.1.6:3001/api/folk/hentPersonMedFNr/${fnr}`,
         {
             method: "GET",
             headers: {
