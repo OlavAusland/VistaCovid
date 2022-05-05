@@ -2,7 +2,7 @@ import { db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
-import { FolkeregisterPatient } from "../domain/PatientType";
+import { FolkeregisterPerson, Patient } from "../domain/PatientType";
 
 // USERS
 
@@ -24,7 +24,7 @@ export const deleteUser = async(id: string) => {
 
 // Patients
 
-export const addPatient = async (user: FolkeregisterPatient) => {
+export const addPatient = async (user: FolkeregisterPerson) => {
     await addDoc(collection(db, 'Patients'), user).then((res) => {
         console.log(res);
     }).catch((err) => {
@@ -68,11 +68,16 @@ export const deleteRoom = async (id: string) => {
 
 export const getRooms = async (): Promise<Room[]> => {
     return await getDocs(collection(db, 'Rooms')).then((res) => {
-        const data = res.docs.map((doc) => {return doc.data() as Room});
-        return data;
+        return res.docs.map((doc) => <Room>({...doc.data(), id: doc.id}));
     }).catch((err) => {
         throw err;
     });
+}
+
+export const getAvailableRooms = async (): Promise<Room[]> => {
+    const rooms: Room[] = await getRooms();
+    const availableRooms = rooms.filter(room => room.patientId === null || room.patientId === undefined || room.patientId === '');
+    return availableRooms;
 }
 
 export const getRoom = async (id: string): Promise<Room | undefined> => {
@@ -82,6 +87,11 @@ export const getRoom = async (id: string): Promise<Room | undefined> => {
         throw err;
     }
 );
+}
+
+export const addPatientToRoom = async (roomId: string, patientId: string) => {
+    await setDoc(doc(db, 'Rooms', roomId), {patientId: patientId}, {merge: true})
+    
 }
 
 // ASSIGNMENTS - 

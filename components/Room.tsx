@@ -50,7 +50,7 @@ export function RoomView()
         getRoomData();
     }, []);
 
-    useEffect(() => {const data = room?.heartRate?.map((res) => {return res.value}); console.log(data)}, [room]);
+    useEffect(() => {const data = room?.heartRate?.map((res) => {return res.value}); }, [room]);
 
 
     if(fetching)

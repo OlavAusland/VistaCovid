@@ -8,7 +8,6 @@ export type Patient = {
         city: string | undefined,
     journals: Array<Object> | undefined
 }
-
 export type FolkeregisterPerson = {
     firstname: string,
     midlename: string,
