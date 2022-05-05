@@ -5,7 +5,7 @@ export type Patient = {
     phone: string | undefined,
     relatives: string | undefined,
     address: string | undefined,
-        city: string | undefined,
+    city: string | undefined,
     journals: Array<Object> | undefined
 }
 export type FolkeregisterPerson = {
