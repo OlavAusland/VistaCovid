@@ -1,8 +1,8 @@
-import { useEffect, useState} from 'react';
+import React,{ useEffect, useState} from 'react';
 import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
-import { Room } from '../types/RoomType';
+import { Room } from '../domain/RoomType';
 import { getRooms } from '../api/firebaseAPI';
 
 export function HomeView()

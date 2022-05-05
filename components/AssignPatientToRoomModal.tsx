@@ -1,5 +1,5 @@
 import { Text, View, TextInput, Pressable, Modal, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import { getPatient } from '../api/folkeregisterModelAPI';
 import { FolkeregisterPerson } from '../domain/PatientType';
 import { assignPatientStyle } from '../styles/AssignPatientStyle';
