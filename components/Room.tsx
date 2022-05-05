@@ -1,8 +1,8 @@
 import { View, Text, ScrollView, Button, TouchableOpacity, LogBox} from 'react-native';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
-import { Room } from '../types/RoomType';
-import { Patient } from '../types/PatientType';
+import { Room } from '../domain/RoomType';
+import { Patient } from '../domain/PatientType';
 
 import { LineGraph } from './room/Graph';
 import { GraphView } from './room/GraphView';
