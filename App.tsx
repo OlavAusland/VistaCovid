@@ -10,9 +10,9 @@ import { LoginView } from './components/Login';
 import { RoomView } from './components/Room';
 import { AdminView } from './components/Admin';
 import { AddRoom } from './components/adminView/addRoomView';
-import { DeleteRoom } from './components/adminView/deleteRoom';
 import { EditRoom } from './components/adminView/editRoomView';
 import { ManageRoom } from './components/adminView/manageRoom';
+import { HomeView } from './components/Home';
 
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -24,8 +24,9 @@ const Tab = createMaterialTopTabNavigator<TabParameters>();
 
 function VistaCovid(){
   return(
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{tabBarShowLabel:false, tabBarShowIcon:false}}>
       <Tab.Screen name="Profile" component={ProfileView}/>
+      <Tab.Screen name="Home" component={HomeView}/>
       <Tab.Screen name="Room" component={RoomView}/>
     </Tab.Navigator>
   );
@@ -33,6 +34,12 @@ function VistaCovid(){
 
 export default function App() {
   return (
+
+
+
+
+
+
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Admin'> 
         <Stack.Screen name="VistaCovid" component={VistaCovid}/>
@@ -40,7 +47,6 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterView}/>
         <Stack.Screen name="Admin" component={AdminView}/>
         <Stack.Screen name="AddRoom" component={AddRoom}/>
-        <Stack.Screen name="DeleteRoom" component={DeleteRoom}/>
         <Stack.Screen name="EditRoom" component={EditRoom}/>
         <Stack.Screen name="ManageRoom" component={ManageRoom}/>
 

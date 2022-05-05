@@ -1,4 +1,4 @@
-import { View, Text, Button, ScrollView } from 'react-native';
+import React, { View, Text, Button, ScrollView } from 'react-native';
 import { useState } from 'react';
 import { profileStyle } from '../styles/ProfileStyles';
 import { addRoom, deleteRoom } from '../api/firebaseAPI';

@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import React, { ScrollView } from "react-native";
 
 
 export function EditRoom()

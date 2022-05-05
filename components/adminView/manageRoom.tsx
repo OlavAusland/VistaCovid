@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable } from "react-native";
+import React, { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable } from "react-native";
 import { useState } from "react";
 import { deleteRoom, getRooms } from "../../api/firebaseAPI";
 import { useNavigation } from '@react-navigation/native';
@@ -25,6 +25,7 @@ export function ManageRoom()
 
     const DeleteRoom = () => {
         console.log('Delet rooomomomo')
+        console.log(delRoomNumber)
         //get all rooms
         getRooms()
         
