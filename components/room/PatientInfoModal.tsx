@@ -1,8 +1,8 @@
 import { Text, View, TextInput, Pressable, Modal, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { getPatient } from '../api/folkeregisterModelAPI';
-import { FolkeregisterPerson } from '../domain/PatientType';
-import { patientInfoStyle } from '../styles/PatientInfoStyle';
+import { getPatient } from '../../api/folkeregisterModelAPI';
+import { FolkeregisterPerson } from '../../domain/PatientType';
+import { patientInfoStyle } from '../../styles/PatientInfoStyle';
 
 
 type PatientInfoModalProps = {

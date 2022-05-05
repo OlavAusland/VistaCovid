@@ -1,14 +1,14 @@
 import { Text, View, TextInput, Pressable, Modal, TouchableOpacity } from 'react-native';
 import React,{ useEffect, useState } from 'react';
-import { getPatient } from '../api/folkeregisterModelAPI';
-import { FolkeregisterPerson } from '../domain/PatientType';
-import { assignPatientStyle } from '../styles/AssignPatientStyle';
-import { dropdownStyles } from '../styles/dropdownStyle';
-import { getAvailableRooms } from '../api/firebaseAPI';
-import { Room } from '../domain/RoomType';
+import { getPatient } from '../../api/folkeregisterModelAPI';
+import { FolkeregisterPerson } from '../../domain/PatientType';
+import { assignPatientStyle } from '../../styles/AssignPatientStyle';
+import { dropdownStyles } from '../../styles/dropdownStyle';
+import { getAvailableRooms } from '../../api/firebaseAPI';
+import { Room } from '../../domain/RoomType';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {addPatientToRoom} from '../api/firebaseAPI';
+import {addPatientToRoom} from '../../api/firebaseAPI';
 
 
 

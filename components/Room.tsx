@@ -13,17 +13,22 @@ import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
 import { profileStyle } from '../styles/ProfileStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
+import { PatientInfoModal } from './room/PatientInfoModal';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
 export function RoomView()
 {
+    const [modalVisible, setModalVisible] = useState(false);
     const [date, setDate] = useState({startDate:{date: new Date(), visible: false}, endDate:{date: new Date(), visible: false}});
     const [patient, setPatient] = useState<Patient>()
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
-
     const [modal, setModal] = useState(false);
+
+    const handleRequestClose = () => {
+        setModalVisible(false); 
+    }
 
     const [view, setView] = useState<string>('graphs')
     Notification();
@@ -68,8 +73,9 @@ export function RoomView()
                     <View style={{flexDirection:'row', justifyContent:'center'}}>
                         <Text style={{fontSize:20}}>Patient: {patient?.firstname} {patient?.lastname}</Text>
                         <TouchableOpacity>
-                            <Icon name='infocirlceo' size={20} style={{alignSelf:'center', paddingTop:5, paddingLeft:5}}/>
+                            <Icon name='infocirlceo' size={20} style={{alignSelf:'center', paddingTop:5, paddingLeft:5}}  onPress={() => {setModalVisible(true)}} />
                         </TouchableOpacity>
+                        <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} fnr = {patient? patient.ssn : ''}></PatientInfoModal>
                     </View>
 
                 </View>
