@@ -40,6 +40,15 @@ export const deletePatient = async(id: string) => {
     });
 }
 
+export const getPatient = async (id: string): Promise<Patient | undefined> => {
+    console.log(id)
+    return await getDoc(doc(db, 'Patients', id)).then((res) => {
+        return res.data() as Patient;
+    }).catch((err) => {
+        throw err;
+    });
+};
+
 // ROOMS
 
 export const addRoom = async (room: Room) => {
@@ -57,12 +66,22 @@ export const deleteRoom = async (id: string) => {
     });
 }
 
-export const getRooms = async () => {
+export const getRooms = async (): Promise<Room[]> => {
     return await getDocs(collection(db, 'Rooms')).then((res) => {
-        return res;
+        const data = res.docs.map((doc) => {return doc.data() as Room});
+        return data;
     }).catch((err) => {
-        console.log(err);
+        throw err;
     });
+}
+
+export const getRoom = async (id: string): Promise<Room | undefined> => {
+    return await getDoc(doc(db, 'Rooms', id)).then((res) => {
+        return res.data() as Room;
+    }).catch((err) => {
+        throw err;
+    }
+);
 }
 
 // ASSIGNMENTS - 
