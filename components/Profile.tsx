@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Text } from "react-native"
-import { AssignPatientModal } from "./AssignPatientToRoomModal"
+import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
 import React, { useState } from "react"
 import Icon from 'react-native-vector-icons/Fontisto';
 

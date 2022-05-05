@@ -4,7 +4,7 @@ import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
 import { Room } from '../domain/RoomType';
 import { getRooms } from '../api/firebaseAPI';
-import { AssignPatientModal } from "./AssignPatientToRoomModal"
+import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
 import Icon from 'react-native-vector-icons/Fontisto';
 export const HomeView = () => {
     const [rooms, setRooms] = useState<Room[]>([])
