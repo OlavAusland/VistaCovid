@@ -55,7 +55,10 @@ export function LoginView() {
                             <Icon name="eye" size={25} color="#0274a1" onPress={() => { console.log('tried to change!'); setUser({ ...user, displayPassword: !user.displayPassword }) }} />
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View>         
+                <Button title="Login" onPress={() => {handleLogin()} }/>
+                {/*<Button title="Register" onPress={() => {navigation.navigate('Register')} }/>*/}
+                <Image style={{height:300}} source={require('../assets/images/HeartLoading.gif')}></Image>
             </View>
             {/*error && <Text style={{ color: 'rgb(255, 0, 0)', fontSize: 18, alignSelf: 'center' }}>{error}</Text>*/}
             <View style={{ width: '85%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', backgroundColor:'#0274a1', borderRadius: 8}}>
