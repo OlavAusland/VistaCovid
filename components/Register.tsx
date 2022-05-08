@@ -32,7 +32,7 @@ export function RegisterView()
         open: false, 
         value: "0", 
         items: [
-            { label: 'Nurce', value: '1' },
+            { label: 'Nurse', value: '1' },
             { label: 'Doctor', value: '2' }],
         label: "" });
    
@@ -64,7 +64,7 @@ export function RegisterView()
                             inputSearchStyle={dropdownStyles.inputSearchStyle}
                             iconStyle={dropdownStyles.iconStyle}
                             data={dropdown.items}
-                            maxHeight={200}
+                            maxHeight={100}
                             labelField="label"
                             valueField="value"
                             placeholder="Role"
