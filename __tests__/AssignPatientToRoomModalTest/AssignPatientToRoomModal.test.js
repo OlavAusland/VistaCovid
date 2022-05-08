@@ -1,9 +1,10 @@
 
 import renderer from 'react-test-renderer';
+import { act } from 'react-dom/test-utils';
 
 import {AssignPatientModal} from '../../components/home/AssignPatientToRoomModal';
 
-it('renders correctly', () => {
-  const tree = renderer.create(<AssignPatientModal />).toJSON();
-  expect(tree).toMatchSnapshot();
-});
+it('renders correctly', async() => {
+  await act(async() => {const tree = await renderer.create(<AssignPatientModal />);
+  expect(tree.toJSON()).toMatchSnapshot();})
+}); 
