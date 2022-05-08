@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Button } from 'react-native';
-import { useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import { registerStyle } from '../styles/RegisterStyles';
 
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +14,6 @@ import { dropdownStyles } from '../styles/dropdownStyle';
 // * AUTH
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../firebase-config'
-import { addUser, getLoggedInUser } from '../api/firebaseAPI';
 import { SafetyModal } from './register/SafetyModal';
 
 export function RegisterView()

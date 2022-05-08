@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React, { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { StackParameters, TabParameters } from './domain/NavigationTypes';
+
+import Icon from 'react-native-vector-icons/Fontisto';
 
 //Views
 import { RegisterView } from './components/Register';
@@ -19,11 +21,11 @@ const Tab = createMaterialTopTabNavigator<TabParameters>();
 
 function VistaCovid(){
   return(
-    <Tab.Navigator screenOptions={{tabBarShowLabel:false, tabBarShowIcon:false}}>
-      <Tab.Screen name="Profile" component={ProfileView}/>
-      <Tab.Screen name="Home" component={HomeView}/>
-      <Tab.Screen name="Room" component={RoomView}/>
-      <Tab.Screen name="Register" component={RegisterView}/>
+    <Tab.Navigator tabBarPosition='bottom'>
+      {/*<Tab.Screen name="Profile" component={ProfileView}/>*/}
+      <Tab.Screen name="Room" component={HomeView} options={{tabBarIcon:() => <Icon name='nav-icon-list-a' size={25}/>}}/>
+      <Tab.Screen name="Home" component={RoomView} options={{tabBarIcon:() => <Icon name='home' size={20}/>}}/>
+      <Tab.Screen name="Register" component={RegisterView} options={{tabBarIcon:() => <Icon name='ticket-alt' size={25}/>}}/>
     </Tab.Navigator>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, View, Text, Button, TextInput } from "react-native";
+import React, { Modal, View, Text, Button, TextInput } from "react-native";
 import { compute_rest_props } from "svelte/internal";
 import { auth } from '../../firebase-config'
 

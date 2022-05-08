@@ -47,7 +47,7 @@ export function LoginView()
                     </View>
                 </View>         
                 <Button title="Login" onPress={() => {handleLogin()} }/>
-                <Button title="Register" onPress={() => {navigation.navigate('Register')} }/>
+                {/*<Button title="Register" onPress={() => {navigation.navigate('Register')} }/>*/}
                 <Image style={{height:300}} source={require('../assets/images/HeartLoading.gif')}></Image>
             </View>
         </View>
