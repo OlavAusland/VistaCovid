@@ -40,7 +40,7 @@ export function LoginView() {
                     <View style={{ height: '85%', marginLeft: 10, marginTop: 3, marginRight: 2 }}>
                         <Icon name="envelope" size={30} color="#0274a1" />
                     </View>
-                    <TextInput secureTextEntry={user.displayPassword} onChangeText={text => { setUser(prev => ({ ...prev, password: text })) }} placeholder="Email" style={loginStyle.input } />
+                    <TextInput onChangeText={text => { setUser(prev => ({ ...prev, email: text })) }} placeholder="Email" style={loginStyle.input } />
                 </View>
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
 
