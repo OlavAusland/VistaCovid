@@ -9,6 +9,7 @@ import { Room } from '../../domain/RoomType';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {addPatientToRoom} from '../../api/firebaseAPI';
+import { DropDownType, ItemType } from '../../domain/DropDownType';
 
 
 
@@ -17,23 +18,11 @@ type AssignPatientModalProps = {
     handleRequestClose: Function;
 }
 
-type DropDownType = {
-    open: boolean,
-    value: string,
-    items: Array<ItemType>
-    room: string
-}
-
-type ItemType = {
-    label: string,
-    value: string
-}
-
 export const AssignPatientModal = (props: AssignPatientModalProps) => {
 
     const [patient, setPatient] = useState<FolkeregisterPerson>();
     const [search, setSearch] = useState<string>("");
-    const [dropdown, setDropdown] = useState<DropDownType>({ open: false, value: "0", items: [], room: "" });
+    const [dropdown, setDropdown] = useState<DropDownType>({ open: false, value: "0", items: [], label: "" });
 
     const handleSearch = () => {
         if (search.length > 0) {
@@ -49,12 +38,12 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
     }
 
     const handleAddPatient = () => {
-        if (patient && dropdown.room) {
-            addPatientToRoom(dropdown.room, patient.ssn);
+        if (patient && dropdown.label) {
+            addPatientToRoom(dropdown.label, patient.ssn);
             props.handleRequestClose();
             setPatient(undefined);
             setSearch("");
-            setDropdown({ open: false, value: "0", items: [], room: "" });
+            setDropdown({ open: false, value: "0", items: [], label: "" });
         }
     }
 
@@ -112,9 +101,9 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                             valueField="value"
                             placeholder="Select room"
                             searchPlaceholder="Search..."
-                            value={dropdown.room}
+                            value={dropdown.label}
                             onChange={item => {
-                                setDropdown(prev => ({ ...prev, room: item.value }));
+                                setDropdown(prev => ({ ...prev, label: item.value }));
                             }}
                             renderLeftIcon={() => (
                                 <FontAwesome5 style={dropdownStyles.icon} color="black" name="bed" size={20} />

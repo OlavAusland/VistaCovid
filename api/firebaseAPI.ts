@@ -3,6 +3,7 @@ import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc} from 'fire
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
 import { FolkeregisterPerson, Patient } from "../domain/PatientType";
+import { getAuth } from "firebase/auth";
 
 // USERS
 
@@ -20,6 +21,13 @@ export const deleteUser = async(id: string) => {
     }).catch((err) => {
         console.log(err);
     });
+}
+
+
+export const getLoggedInUser = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    return user;
 }
 
 // Patients
