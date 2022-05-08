@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Button } from 'react-native';
-import React, { useState, useEffect} from 'react';
+import { useState, useEffect} from 'react';
 import { registerStyle } from '../styles/RegisterStyles';
 
 import { useNavigation } from '@react-navigation/native';
@@ -12,9 +12,10 @@ import { DropDownType} from '../domain/DropDownType';
 import { dropdownStyles } from '../styles/dropdownStyle';
 
 // * AUTH
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../firebase-config'
 import { addUser, getLoggedInUser } from '../api/firebaseAPI';
+import { SafetyModal } from './register/SafetyModal';
 
 export function RegisterView()
 {
@@ -28,11 +29,12 @@ export function RegisterView()
     });
 
     const [error, setError] = useState<string>('');
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [dropdown, setDropdown] = useState<DropDownType>({ 
         open: false, 
         value: "0", 
         items: [
-            { label: 'Nurce', value: '1' },
+            { label: 'Nurse', value: '1' },
             { label: 'Doctor', value: '2' }],
         label: "" });
    
@@ -40,14 +42,31 @@ export function RegisterView()
     const handleRegister = async() => {
         await createUserWithEmailAndPassword(auth, user.email, user.password).then((res) => {
             console.log('Successfully Created User!');
-            navigation.navigate('Login');
+            signOut(auth).then().catch((err) => {console.log(err)});
         }).catch((err) => {console.log('Error! Please Try Again!'); setError(err.message)})
-        
+
     }
+
+    const handleRequestClose = () => {
+        setModalVisible(false);
+    }
+
+    const handleConfirmation = (email: string, password: string) => {
+        console.log("password: " + password + '\n email:' + email)
+        signInWithEmailAndPassword(auth, email, password).then(() =>{
+            handleRegister().then(() => {signInWithEmailAndPassword(auth, email, password).then(() => {
+                console.log('Successfully Signed In!');
+                console.log(auth.currentUser?.uid)
+                }).catch((err) => {console.log(err)})
+            }).catch((err) => {console.log(err)});
+        }).catch((err) => {console.log(err)});
+    }
+
 
     //create simple register form using firebase auth
     return(
         <View style={registerStyle.container}>
+            <SafetyModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} handleConfirmation={handleConfirmation}/>
             <Text>Register</Text>
             <TextInput onChangeText={text => setUser(prev => ({...prev, email:text}))} placeholder="Email" style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
             <TextInput onChangeText={text => setUser(prev => ({...prev, password:text}))} placeholder="Password" style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
@@ -77,8 +96,7 @@ export function RegisterView()
                                 <FontAwesome5 style={dropdownStyles.icon} color="black" name="hospital-user" size={20} />
                             )}
                         />
-            <Button title="Register" onPress={() => {handleRegister()}}/>
-            <Button title="Back" onPress={() => {navigation.navigate('Login')} }/>
+            <Button title="Create" onPress={() => {setModalVisible(true)}}/>
         </View>
     );
 }

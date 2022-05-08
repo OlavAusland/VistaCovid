@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { StackParameters, TabParameters } from './domain/NavigationTypes';
-import React from 'react';
 
 //Views
 import { RegisterView } from './components/Register';
@@ -24,6 +23,7 @@ function VistaCovid(){
       <Tab.Screen name="Profile" component={ProfileView}/>
       <Tab.Screen name="Home" component={HomeView}/>
       <Tab.Screen name="Room" component={RoomView}/>
+      <Tab.Screen name="Register" component={RegisterView}/>
     </Tab.Navigator>
   );
 }
@@ -34,7 +34,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'> 
         <Stack.Screen name="VistaCovid" component={VistaCovid}/>
         <Stack.Screen name="Login" component={LoginView}/>
-        <Stack.Screen name="Register" component={RegisterView}/>
+        {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
       </Stack.Navigator>
     </NavigationContainer>
   );
