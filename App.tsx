@@ -26,6 +26,7 @@ function VistaCovid(){
       <Tab.Screen name="Room" component={HomeView} options={{tabBarIcon:() => <Icon name='nav-icon-list-a' size={25}/>}}/>
       <Tab.Screen name="Home" component={RoomView} options={{tabBarIcon:() => <Icon name='home' size={20}/>}}/>
       <Tab.Screen name="Register" component={RegisterView} options={{tabBarIcon:() => <Icon name='ticket-alt' size={25}/>}}/>
+      <Tab.Screen name="Profile" component={ProfileView} options={{tabBarIcon:() => <Icon name='person' size={25}/>}}/>
     </Tab.Navigator>
   );
 }

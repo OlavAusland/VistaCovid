@@ -14,12 +14,20 @@ type PatientInfoModalProps = {
 
 export const PatientInfoModal = (props: PatientInfoModalProps) => {
     const [patient, setPatient] = useState<FolkeregisterPerson>();
+    const [error, setError] = useState<Error | undefined>(undefined);
 
     useEffect(() => {
         getPatient(props.fnr).then(patient => {
             setPatient(patient);
-        }).catch(err => { console.log(err) });
+        }).catch(err => setError(err));
     }, []);
+
+    if (error) {
+        return <View>
+            <Text>{error.message}</Text>
+            <Text>Fek off ya lil cunt</Text>
+        </View>
+    }
 
     return (
 
@@ -29,6 +37,7 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
             transparent={true}
             visible={props.modalVisible}
             onRequestClose={() => props.handleRequestClose()}
+            testID="patientInfoModal"
         >
             <View style={{ top: '20%', bottom: '15%' }}>
                 <View style={patientInfoStyle.container}>
@@ -36,7 +45,7 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
                     <View style={patientInfoStyle.text}>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Lastname: </Text>
-                            <Text>{patient?.lastname}</Text>
+                            <Text testID='lastname'>{patient?.lastname}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Firstname: </Text>

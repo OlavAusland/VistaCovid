@@ -1,20 +1,18 @@
-import renderer from "react-test-renderer";
+import React from 'react';
+import { render } from '@testing-library/react-native';
 import { PatientInfoModal } from "../../components/room/PatientInfoModal";
 import {getPatient} from "../../api/folkeregisterModelAPI";
 
-it("renders correctly", () => {
-    const tree = renderer.create(<PatientInfoModal />).toJSON();
+
+
+// Snapshot test
+test("renders correctly", () => {
+    const tree = render(<PatientInfoModal modalVisible={true} handleRequestClose={jest.fn()} fnr="12313" />).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
-//Test API request
+//Unit tests
 
-   const fetch= () => {
-        return {
-            status: 200,
-            data: stubbedPatient,
-        };
-    }
 const stubbedPatient = [
     {
         person: {
@@ -60,7 +58,29 @@ const stubbedPatient = [
         },
     },
 ];
-describe("Response for patient 30070123456 request", () => {
+
+test("shows patient when data are fetched", () => {
+
+    const getPatient = jest.fn().mockReturnValueOnce({
+        loading: false,
+        data: stubbedPatient,
+        error: null,
+    });
+
+    const { getByTestId } = render(<PatientInfoModal modalVisible={true} handleRequestClose={jest.fn()} fnr="30070123456" />);
+    expect(getByTestId("patientInfoModal")).not.toBeNull();
+    
+    const test = getByTestId("lastname") 
+    console.log(test);
+    expect(test).toContain("Olsen");
+});
+
+
+
+
+
+
+/*describe("Response for patient 30070123456 request", () => {
     it("should return status code 200 and a defined body as response", async () => {
         // Mock API
         jest.spyOn(global, "fetch").mockImplementation(() =>
@@ -79,6 +99,7 @@ describe("Response for patient 30070123456 request", () => {
         expect(result.data).toBe(stubbedPatient);
     });
 });
+*/
 
 
 
