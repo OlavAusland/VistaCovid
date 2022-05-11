@@ -1,5 +1,5 @@
 import React, { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { deleteRoom, getRooms } from "../../api/firebaseAPI";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -27,9 +27,18 @@ export function ManageRoom()
         console.log('Delet rooomomomo')
         console.log(delRoomNumber)
         //get all rooms
-        getRooms()
+        const [rooms, setRooms] = useState<Room[]>([])
+        useEffect(()=>{
+            const GetAllRooms = async () => {
+                await getRooms().then((res) => {
+                    setRooms(res);
+                })
+            };
+            GetAllRooms();
+            console.log(rooms.map);
+        })
         
-        //match room number with room id   
+        //match room number with room id (with a loop and if else statement??????)
         //check if room is empty
             //if room not empty do not delete
 

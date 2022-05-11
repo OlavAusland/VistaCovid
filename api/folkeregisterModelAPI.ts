@@ -1,8 +1,8 @@
-import { FolkeregisterPatient } from "../domain/PatientType";
+import { FolkeregisterPerson } from "../domain/PatientType";
 import * as patientMapper from "./mappers/patientMapper";
 
 //192.168.1.6
-export const getPatient = async (fnr: string): Promise<FolkeregisterPatient> => {
+export const getPatient = async (fnr: string): Promise<FolkeregisterPerson> => {
     console.log("inside getPatient");
     const result = await fetch(
         `http://192.168.40.196:3001/api/folk/hentPersonMedFNr/${fnr}`,

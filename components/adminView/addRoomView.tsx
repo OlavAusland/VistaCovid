@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ScrollView, TextInput, View, Text, Button, SafeAreaView } from "react-native";
+import React, { ScrollView, TextInput, View, Text, Button, SafeAreaView } from "react-native";
 import { adminStyle } from "../../styles/AdminStyles";
 import { Room } from "../../domain/RoomType";
 import { addRoom } from "../../api/firebaseAPI";

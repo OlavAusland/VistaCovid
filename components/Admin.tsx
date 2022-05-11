@@ -1,4 +1,4 @@
-import { View, Text, Button, ScrollView, SafeAreaView } from 'react-native';
+import React, { View, Text, Button, ScrollView, SafeAreaView } from 'react-native';
 import { isPropertySignature } from 'typescript';
 import { addRoom, deleteRoom } from '../api/firebaseAPI';
 import { Room } from '../domain/RoomType';

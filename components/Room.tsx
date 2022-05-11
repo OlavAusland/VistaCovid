@@ -1,8 +1,8 @@
-import React, { View, Text, ScrollView, Button, TouchableOpacity, LogBox} from 'react-native';
-import { useEffect, useState } from 'react';
+import { View, Text, ScrollView, Button, TouchableOpacity, LogBox} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
 import { Room } from '../domain/RoomType';
-import { FolkeregisterPatient } from '../domain/PatientType';
+import { Patient } from '../domain/PatientType';
 
 import { LineGraph } from './room/Graph';
 import { GraphView } from './room/GraphView';
@@ -13,17 +13,22 @@ import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
 import { profileStyle } from '../styles/ProfileStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
+import { PatientInfoModal } from './PatientInfoModal';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
 export function RoomView()
 {
+    const [modalVisible, setModalVisible] = useState(false);
     const [date, setDate] = useState({startDate:{date: new Date(), visible: false}, endDate:{date: new Date(), visible: false}});
-    const [patient, setPatient] = useState<FolkeregisterPatient>()
+    const [patient, setPatient] = useState<Patient>()
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
-
     const [modal, setModal] = useState(false);
+
+    const handleRequestClose = () => {
+        setModalVisible(false); 
+    }
 
     const [view, setView] = useState<string>('graphs')
     Notification();
@@ -50,7 +55,7 @@ export function RoomView()
         getRoomData();
     }, []);
 
-    useEffect(() => {const data = room?.heartRate?.map((res) => {return res.value}); console.log(data)}, [room]);
+    useEffect(() => {const data = room?.heartRate?.map((res) => {return res.value}); }, [room]);
 
 
     if(fetching)
@@ -68,8 +73,9 @@ export function RoomView()
                     <View style={{flexDirection:'row', justifyContent:'center'}}>
                         <Text style={{fontSize:20}}>Patient: {patient?.firstname} {patient?.lastname}</Text>
                         <TouchableOpacity>
-                            <Icon name='infocirlceo' size={20} style={{alignSelf:'center', paddingTop:5, paddingLeft:5}}/>
+                            <Icon name='infocirlceo' size={20} style={{alignSelf:'center', paddingTop:5, paddingLeft:5}}  onPress={() => {setModalVisible(true)}} />
                         </TouchableOpacity>
+                        <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} fnr = {patient? patient.ssn : ''}></PatientInfoModal>
                     </View>
 
                 </View>

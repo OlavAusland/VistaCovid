@@ -1,15 +1,15 @@
-/*export type Patient1 = {
+export type Patient = {
     firstname: string,
     lastname: string,
     ssn: string,
     phone: string | undefined,
     relatives: string | undefined,
     address: string | undefined,
-        city: string | undefined,
+    city: string | undefined,
     journals: Array<Object> | undefined
 }
-*/
-export type FolkeregisterPatient = {
+
+export type FolkeregisterPerson = {
     firstname: string,
     midlename: string,
     lastname: string,

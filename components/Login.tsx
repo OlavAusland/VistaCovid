@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, Image, TouchableOpacity} from 'react-native';
+import React, { View, Text, TextInput, Button, Image, TouchableOpacity} from 'react-native';
 import { useState, useEffect} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';

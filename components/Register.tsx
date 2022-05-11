@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button } from 'react-native';
+import React, { View, Text, TextInput, Button } from 'react-native';
 import { useState, useEffect} from 'react';
 import { registerStyle } from '../styles/RegisterStyles';
 

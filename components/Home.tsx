@@ -1,15 +1,15 @@
 import { useEffect, useState} from 'react';
-import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
+import React, { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
-import { Room } from '../types/RoomType';
+import { Room } from '../domain/RoomType';
 import { getRooms } from '../api/firebaseAPI';
 
 export function HomeView()
 {
     const [rooms, setRooms] = useState<Room[]>([])
 
-    useState(() => {
+    useEffect(() => {
         const getRoomsData = async () => {
             await getRooms().then((res) => {
                 setRooms(res);
@@ -38,6 +38,8 @@ export function HomeView()
                                                          room.heartRate ? room.heartRate[room.heartRate.length - 1].value : 0]
                                             }]
                                         }}
+                                        yAxisLabel={''}
+                                        yAxisSuffix={''}
                                         width={Dimensions.get('window').width * 0.9 / 2}
                                         height={200}
                                         chartConfig={{

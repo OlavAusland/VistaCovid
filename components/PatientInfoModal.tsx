@@ -1,7 +1,7 @@
 import { Text, View, TextInput, Pressable, Modal, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getPatient } from '../api/folkeregisterModelAPI';
-import { FolkeregisterPatient } from '../domain/PatientType';
+import { FolkeregisterPerson } from '../domain/PatientType';
 import { patientInfoStyle } from '../styles/PatientInfoStyle';
 
 
@@ -13,7 +13,7 @@ type PatientInfoModalProps = {
 
 
 export const PatientInfoModal = (props: PatientInfoModalProps) => {
-    const [patient, setPatient] = useState<FolkeregisterPatient>();
+    const [patient, setPatient] = useState<FolkeregisterPerson>();
 
     useEffect(() => {
         getPatient(props.fnr).then(patient => {

@@ -1,8 +1,9 @@
 import { db } from "../firebase-config";
-import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc} from 'firebase/firestore'
+import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
-import { FolkeregisterPatient } from "../domain/PatientType";
+import { FolkeregisterPerson } from "../domain/PatientType";
+import { Patient } from "../domain/PatientType";
 
 // USERS
 
@@ -24,7 +25,7 @@ export const deleteUser = async(id: string) => {
 
 // Patients
 
-export const addPatient = async (user: FolkeregisterPatient) => {
+export const addPatient = async (user: FolkeregisterPerson) => {
     await addDoc(collection(db, 'Patients'), user).then((res) => {
         console.log(res);
     }).catch((err) => {
@@ -83,6 +84,11 @@ export const getRoom = async (id: string): Promise<Room | undefined> => {
         throw err;
     }
 );
+}
+
+export const getRoomByRoomNr = async(roomNumber: string): Promise<Room | undefined> =>{
+    const RoomQuery = query(collection(db, 'Rooms'), where('roomNumber', 'array-contains', roomNumber))
+    return 
 }
 
 // ASSIGNMENTS - 

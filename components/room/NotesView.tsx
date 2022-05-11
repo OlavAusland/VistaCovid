@@ -1,6 +1,6 @@
-import { View, Text, ScrollView } from 'react-native';
+import React, { View, Text, ScrollView } from 'react-native';
 import { roomStyle } from '../../styles/RoomStyles';
-import { NoteData } from '../../types/RoomType';
+import { NoteData } from '../../domain/RoomType';
 
 export const NotesView = (props: any) => {
     return (
