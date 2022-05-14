@@ -90,7 +90,9 @@ exports[`renders correctly 1`] = `
           >
             Firstname: 
           </Text>
-          <Text>
+          <Text
+            testID="firstname"
+          >
              
           </Text>
         </Text>
@@ -111,7 +113,9 @@ exports[`renders correctly 1`] = `
           >
             SSN: 
           </Text>
-          <Text />
+          <Text
+            testID="ssn"
+          />
         </Text>
         <Text
           style={
@@ -130,7 +134,9 @@ exports[`renders correctly 1`] = `
           >
             Gender: 
           </Text>
-          <Text />
+          <Text
+            testID="gender"
+          />
         </Text>
         <Text
           style={
@@ -149,7 +155,9 @@ exports[`renders correctly 1`] = `
           >
             Address: 
           </Text>
-          <Text>
+          <Text
+            testID="address"
+          >
              
           </Text>
         </Text>
@@ -170,7 +178,9 @@ exports[`renders correctly 1`] = `
           >
             City: 
           </Text>
-          <Text />
+          <Text
+            testID="city"
+          />
         </Text>
         <Text
           style={
@@ -189,7 +199,9 @@ exports[`renders correctly 1`] = `
           >
             Co-Address: 
           </Text>
-          <Text />
+          <Text
+            testID="co.adress"
+          />
         </Text>
       </View>
       <View

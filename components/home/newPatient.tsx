@@ -5,21 +5,9 @@ import { dropdownStyles } from '../../styles/dropdownStyle';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { DropDownType } from '../../domain/DropDownType';
-import { CheckBox } from 'react-native-elements'
-
-type newPatientProps = {
-    setPatient: Function;
-    patient: FolkeregisterPerson | undefined;
-    setSearch: Function;
-    handleSearch: Function;
-    dropdown: DropDownType;
-    setDropdown: Function;
-    handleRequestClose: Function;
-    handleNewPatient: Function;
-    setNew: Function;
+import { newPatientProps } from '../../domain/AssignPatietTypes';
 
 
-}
 
 export const NewPatient = (props: newPatientProps) => {
     return (
@@ -29,8 +17,7 @@ export const NewPatient = (props: newPatientProps) => {
                     <TextInput onChangeText={text => props.setPatient((prev:FolkeregisterPerson) => ({...prev, ssn:text}))} placeholder="SSN" style={assignPatientStyle.newpatientinput}/>
                     <TextInput onChangeText={text => props.setPatient((prev:FolkeregisterPerson) => ({...prev, firstname:text}))} placeholder="Firstname" style={assignPatientStyle.newpatientinput}/>
                     <TextInput onChangeText={text => props.setPatient((prev:FolkeregisterPerson) => ({...prev, lastname:text}))} placeholder="Lastname" style={assignPatientStyle.newpatientinput}/>
-                    <TextInput onChangeText={text => props.setPatient((prev:FolkeregisterPerson) => ({...prev, gender:text}))} placeholder="Sex" style={assignPatientStyle.newpatientinput}/>
-
+                    <TextInput onChangeText={text => props.setPatient((prev:FolkeregisterPerson) => ({...prev, gender:text}))} placeholder="sex" style={assignPatientStyle.newpatientinput}/>
                     
                 <Text style={{ fontSize: 20, paddingBottom: 5, marginTop: 25 }}>Room:</Text>
                 <View style={{ backgroundColor: 'white' }}>
@@ -60,14 +47,14 @@ export const NewPatient = (props: newPatientProps) => {
             <View style={{ marginTop: 10 }}>
                         <Text>Responsible: {/* {props?.user.lastName}, {props?.user.firstName} */}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', alignContent: 'space-between', marginTop: 110 }}>
+                    <View style={{ flexDirection: 'row', alignContent: 'space-between', marginTop: 140 }}>
                         <Pressable onPress={() => props.handleNewPatient()} >
                             <View style={assignPatientStyle.button}>
                                 <Text style={{ color: 'white', alignSelf: 'center', fontSize: 20 }}>Add</Text>
                             </View>
                         </Pressable>
                         <TouchableOpacity
-                            onPress={() => props.setNew(false)} >
+                            onPress={() => {props.setNew(false); props.setError('');}} >
                             <View style={assignPatientStyle.button}>
                                 <Text style={{ color: 'white', alignSelf: 'center', fontSize: 20 }}>Cancel</Text>
                             </View>

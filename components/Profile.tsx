@@ -10,13 +10,6 @@ export const ProfileView = () => {
     }
     return (
         <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' , backgroundColor:'#C1E8FD'}}>
-                <Text style={{ fontSize: 30, paddingTop: 5 }}>Assign Patient</Text>
-                <TouchableOpacity>
-                    <Icon name='bed-patient' size={60} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
-                </TouchableOpacity>
-                <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} />
-            </View>
         </View>
     )
 }

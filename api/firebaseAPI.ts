@@ -34,7 +34,7 @@ export const getLoggedInUser = () => {
 // Patients
 
 export const addPatient = async (user: FolkeregisterPerson) => {
-    await addDoc(collection(db, 'Patients'), user).then((res) => {
+    await setDoc(doc(db, 'Patients', user.ssn), user).then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
@@ -49,8 +49,7 @@ export const deletePatient = async(id: string) => {
     });
 }
 
-export const getPatient = async (id: string): Promise<Patient | undefined> => {
-    console.log(id)
+export const getPatient = async (id: string) => {
     return await getDoc(doc(db, 'Patients', id)).then((res) => {
         return res.data() as Patient;
     }).catch((err) => {
@@ -83,6 +82,7 @@ export const deleteRoom = async (id: string) => {
         }
     })
 }
+
 
 export const getRooms = async (): Promise<Room[]> => {
     return await getDocs(collection(db, 'Rooms')).then((res) => {
