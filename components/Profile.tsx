@@ -15,7 +15,6 @@ export const ProfileView = () => {
                 <TouchableOpacity>
                     <Icon name='bed-patient' size={60} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                 </TouchableOpacity>
-                <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} />
             </View>
         </View>
     )

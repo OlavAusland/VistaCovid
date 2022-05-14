@@ -1,7 +1,8 @@
 import { Text, View, TextInput, Pressable, Modal, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { getPatient } from '../../api/folkeregisterModelAPI';
-import { FolkeregisterPerson } from '../../domain/PatientType';
+import { getPatient as folkeregisterGetPatient} from '../../api/folkeregisterModelAPI';
+import {getPatient as firebaseGetPatient} from '../../api/firebaseAPI';
+import { FolkeregisterPerson, Patient } from '../../domain/PatientType';
 import { patientInfoStyle } from '../../styles/PatientInfoStyle';
 
 
@@ -13,19 +14,29 @@ type PatientInfoModalProps = {
 
 
 export const PatientInfoModal = (props: PatientInfoModalProps) => {
-    const [patient, setPatient] = useState<FolkeregisterPerson>();
+    const [patient, setPatient] = useState<FolkeregisterPerson | Patient>();
     const [error, setError] = useState<Error | undefined>(undefined);
 
     useEffect(() => {
-        getPatient(props.fnr).then(patient => {
+        folkeregisterGetPatient('23456798765').then(patient => {
             setPatient(patient);
-        }).catch(err => setError(err));
+        }).catch( (err) =>{ 
+            firebaseGetPatient('23456798765').then(patient => {
+                setPatient(patient);
+            })
+            setError(err);
+        });
     }, []);
 
+    useEffect(() => {
+        console.log(patient);
+    }, [patient]);
+
+    
     if (error) {
         return <View>
             <Text>{error.message}</Text>
-            <Text>Fek off ya lil cunt</Text>
+            <Text>Can't find patient info</Text>
         </View>
     }
 
