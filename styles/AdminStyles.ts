@@ -49,6 +49,10 @@ export const adminStyle = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
     },
+    addRoomButton:{
+      backgroundColor: 'powderblue',
+      padding: 20,
+    },
     //---------------manage room styling-----------------------
     editRoom:{
       // height: 40,
@@ -84,6 +88,14 @@ export const adminStyle = StyleSheet.create({
       backgroundColor: 'powderblue',
       padding: 50,
     },
+
+    // --------------------edit room view-------------------------
+    editRoomInput:{
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+  },
 
     //--------------modal styling------------------------------
     centeredView: {

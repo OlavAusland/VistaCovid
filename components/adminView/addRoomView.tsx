@@ -3,20 +3,34 @@ import React, { ScrollView, TextInput, View, Text, Button, SafeAreaView } from "
 import { adminStyle } from "../../styles/AdminStyles";
 import { Room } from "../../domain/RoomType";
 import { addRoom } from "../../api/firebaseAPI";
+import { NoteData } from "../../domain/RoomType";
+import { Roles } from "../../domain/UserType";
 
 export function AddRoom()
 {
+
+    const [patientId, setPatiantId] = useState("")
+    const [roomNumber, setRoomNumber] = useState("")
+
+ 
     const newroom: Room = {
-        patientId:'None',
-        roomNumber: 'A2 023',
+        patientId: patientId,
+        roomNumber: roomNumber,
         lastUpdated: Date.now().toString(),
-        heartRate: [{time: 0, value: 62}, {time: 1, value: 32}],
-        bloodPressure: [{time: 0, value: 122}, {time: 1, value: 82}],
-        oxygenLevel: [{time: 0, value: 102}, {time: 1, value: 92}],
-        notes: [{role: 3, note: 'This is a another new note'}]
+        heartRate: undefined,
+        bloodPressure: undefined,
+        oxygenLevel: undefined,
+        notes: undefined
     }
 
-    const [text, onChangeText] = useState("")
+    const AddRoom = () =>{
+        console.log("ihsfldkjn")
+        console.log(patientId)
+        console.log(roomNumber)
+        //Add room with entered patient id and roomnumber
+        //If room number already exist then dont add??
+        //addRoom(newroom)
+    }
 
     return(
         <ScrollView style={adminStyle.addRoomContainer}>
@@ -27,15 +41,15 @@ export function AddRoom()
                 <View>
                     <TextInput
                     style={adminStyle.addRoomInput}
-                    onChangeText={onChangeText}
-                    value={text}
+                    onChangeText={setPatiantId}
                     placeholder="patient id"/>
                     <TextInput
                     style={adminStyle.addRoomInput}
-                    onChangeText={onChangeText}
-                    value={text}
+                    onChangeText={setRoomNumber}
                     placeholder="room number"/>
-                    <Button title='Add Room' onPress={()=>{addRoom(newroom)}}/>
+                    <View style={adminStyle.addRoomButton}>
+                        <Button title='Add Room' onPress={()=>{AddRoom}}/>
+                    </View>
                 </View>
             </SafeAreaView>
         </ScrollView>

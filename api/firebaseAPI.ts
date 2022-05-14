@@ -86,10 +86,7 @@ export const getRoom = async (id: string): Promise<Room | undefined> => {
 );
 }
 
-export const getRoomByRoomNr = async(roomNumber: string): Promise<Room | undefined> =>{
-    const RoomQuery = query(collection(db, 'Rooms'), where('roomNumber', 'array-contains', roomNumber))
-    return 
-}
+
 
 // ASSIGNMENTS - 
 // ! DISCHARGE PATIENT
