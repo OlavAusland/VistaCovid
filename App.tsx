@@ -36,7 +36,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'> 
         <Stack.Screen name="VistaCovid" component={VistaCovid}/>
         <Stack.Screen name="Login" component={LoginView}/>
-        <Stack.Screen name="Room" component={RoomView}/>
+        <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
         {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
       </Stack.Navigator>
     </NavigationContainer>
