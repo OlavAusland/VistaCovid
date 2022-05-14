@@ -7,12 +7,16 @@ import { getLoggedInUser, getRooms } from '../api/firebaseAPI';
 import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
 import Icon from 'react-native-vector-icons/Fontisto';
 import { currentUser, Roles } from '../domain/UserType';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackParameters } from '../domain/NavigationTypes';
 
+type NavigationParameters = {Room:undefined, Home:undefined, Profile:undefined}
+type  HomeScreenProps = NativeStackScreenProps<NavigationParameters, 'Home'>
 
-
-export const HomeView = () => {
+export const HomeView = (props: HomeScreenProps) => {
     const [rooms, setRooms] = useState<Room[]>([])
     const [modalVisible, setModalVisible] = useState(false);
+    const [keyword, setKeyword] = useState('');
     const [User, setUser] = useState<currentUser>({email: '', firstName: '', lastName: '', role: Roles.NONE, id:''});
 
 
@@ -42,7 +46,7 @@ export const HomeView = () => {
     return (
         <View style={homeStyle.container}>
             <View style={homeStyle.header}>
-                <TextInput placeholder={'Search For Room'} style={homeStyle.searchBar} />
+                <TextInput onChangeText={(text) => {setKeyword(text)}} placeholder={'Search For Room'} style={homeStyle.searchBar} />
             </View>
             <View style={{ paddingBottom: 10 }}>
                 <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
@@ -54,9 +58,10 @@ export const HomeView = () => {
             <View style={{ flex: 4 }}>
                 <ScrollView contentContainerStyle={homeStyle.body}>
                     {rooms.length > 0 &&
-                        rooms.map((room: Room) => {
+                        rooms.filter((room) => {if(room.patientId != '' && room.roomNumber.includes(keyword)){return room}}).map((room: Room) => {
                             return (
-                                <TouchableOpacity key={'room:' + room.roomNumber} style={homeStyle.card}>
+                                <TouchableOpacity key={'room:' + room.roomNumber} style={homeStyle.card}
+                                onPress={() => {props.navigation.navigate('Room')}}>
                                     <BarChart
                                         data={{
                                             labels: ['BL', 'OXL', 'HR'],
