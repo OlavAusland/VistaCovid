@@ -6,6 +6,7 @@ exports[`renders correctly 1`] = `
   hardwareAccelerated={false}
   onRequestClose={[Function]}
   statusBarTranslucent={true}
+  testID="patientInfoModal"
   transparent={true}
   visible={true}
 >
@@ -68,7 +69,9 @@ exports[`renders correctly 1`] = `
           >
             Lastname: 
           </Text>
-          <Text />
+          <Text
+            testID="lastname"
+          />
         </Text>
         <Text
           style={

@@ -26,5 +26,11 @@ export const assignPatientStyle = StyleSheet.create({
         height: 40,
         borderRadius: 10,
         marginRight:20,
+    },
+    newpatientinput:{
+        height: 40,
+        backgroundColor: 'white',
+        paddingLeft:4,
+        marginBottom:8
     }
 })

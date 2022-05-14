@@ -14,7 +14,8 @@
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
-    ]
+    ],
+    "timers": "fake"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "4.0.0",
@@ -37,6 +38,7 @@
     "react-native": "^0.64.3",
     "react-native-chart-kit": "^6.12.0",
     "react-native-element-dropdown": "^1.8.8",
+    "react-native-elements": "^3.4.2",
     "react-native-modal-datetime-picker": "^13.1.2",
     "react-native-pager-view": "5.4.9",
     "react-native-push-notification": "^8.1.1",
@@ -52,14 +54,13 @@
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
+    "@testing-library/react-native": "^9.1.0",
     "@types/jest": "26",
     "@types/react": "~17.0.21",
     "@types/react-csv": "^1.1.2",
     "@types/react-datepicker": "^4.4.0",
     "@types/react-native": "~0.64.12",
     "@types/react-native-vector-icons": "^6.4.10",
-    "@types/react-test-renderer": "^18.0.0",
-    "react-test-renderer": "17",
     "ts-jest": "26",
     "typescript": "~4.3.5"
   },

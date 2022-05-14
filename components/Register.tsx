@@ -82,7 +82,7 @@ export function RegisterView()
                             inputSearchStyle={dropdownStyles.inputSearchStyle}
                             iconStyle={dropdownStyles.iconStyle}
                             data={dropdown.items}
-                            maxHeight={200}
+                            maxHeight={100}
                             labelField="label"
                             valueField="value"
                             placeholder="Role"

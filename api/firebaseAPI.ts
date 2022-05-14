@@ -7,8 +7,8 @@ import { getAuth } from "firebase/auth";
 
 // USERS
 
-export const addUser = async(user: User) => {
-    await addDoc(collection(db, 'Users'), user).then((res) => {
+export const addUser = async(user: User, id:string) => {
+    await addDoc(collection(db, 'Users', id), user).then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);

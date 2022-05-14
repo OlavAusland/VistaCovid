@@ -5,7 +5,6 @@ export enum Roles {
     NONE
 };
 
-
 export type User = {
     email: string,
     password: string,
@@ -22,4 +21,12 @@ export type LoginInfo = {
     email: string,
     password: string,
     displayPassword: boolean
+}
+
+export type currentUser = {
+    email: string,
+    firstName: string, 
+    lastName: string,
+    role: Roles,
+    id: string
 }

@@ -3,12 +3,17 @@ import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity
 import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
 import { Room } from '../domain/RoomType';
-import { getRooms } from '../api/firebaseAPI';
+import { getLoggedInUser, getRooms } from '../api/firebaseAPI';
 import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
 import Icon from 'react-native-vector-icons/Fontisto';
+import { currentUser, Roles } from '../domain/UserType';
+
+
+
 export const HomeView = () => {
     const [rooms, setRooms] = useState<Room[]>([])
     const [modalVisible, setModalVisible] = useState(false);
+    const [User, setUser] = useState<currentUser>({email: '', firstName: '', lastName: '', role: Roles.NONE, id:''});
 
 
     const handleRequestClose = () => {
@@ -23,6 +28,16 @@ export const HomeView = () => {
         };
         getRoomsData();
     }, []);
+/* 
+    useEffect(() => {
+        const getUserData = () => {
+             getLoggedInUser().then((res) => {
+                setUser(res);
+            }).catch((err) => { console.log(err) });
+        };
+        getUserData();
+    }, []); */
+
 
     return (
         <View style={homeStyle.container}>
@@ -34,7 +49,7 @@ export const HomeView = () => {
                     <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
                     <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                 </TouchableOpacity>
-                <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} />
+                <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={User} />
             </View>
             <View style={{ flex: 4 }}>
                 <ScrollView contentContainerStyle={homeStyle.body}>
