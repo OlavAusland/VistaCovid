@@ -66,7 +66,7 @@ test("shows patient when data are fetched", async () => {
         error: null,
     });
 
-    const { getByTestId } = render(<PatientInfoModal modalVisible={true} handleRequestClose={jest.fn()} fnr="30070123456" />);
+    const { getByTestId } = render(<PatientInfoModal  handleRequestClose={jest.fn()} fnr="30070123456" />);
     expect(getByTestId("patientInfoModal")).not.toBeNull();
 
     const lastnametest = getByTestId("lastname") 

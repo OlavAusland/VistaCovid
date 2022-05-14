@@ -1,6 +1,6 @@
+import { Patient, FolkeregisterPerson } from "./PatientType";
 
 export type PatientInfoModalProps = {
-    modalVisible: boolean;
     handleRequestClose: Function;
-    fnr: string;
+    patient: Patient | FolkeregisterPerson | undefined;
 }
