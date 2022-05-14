@@ -23,8 +23,7 @@ function VistaCovid(){
   return(
     <Tab.Navigator tabBarPosition='bottom'>
       {/*<Tab.Screen name="Profile" component={ProfileView}/>*/}
-      <Tab.Screen name="Room" component={HomeView} options={{tabBarIcon:() => <Icon name='nav-icon-list-a' size={25}/>}}/>
-      <Tab.Screen name="Home" component={RoomView} options={{tabBarIcon:() => <Icon name='home' size={20}/>}}/>
+      <Tab.Screen name="Home" component={HomeView} options={{tabBarIcon:() => <Icon name='nav-icon-list-a' size={25}/>}}/>
       <Tab.Screen name="Register" component={RegisterView} options={{tabBarIcon:() => <Icon name='ticket-alt' size={25}/>}}/>
       <Tab.Screen name="Profile" component={ProfileView} options={{tabBarIcon:() => <Icon name='person' size={25}/>}}/>
     </Tab.Navigator>
@@ -37,6 +36,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'> 
         <Stack.Screen name="VistaCovid" component={VistaCovid}/>
         <Stack.Screen name="Login" component={LoginView}/>
+        <Stack.Screen name="Room" component={RoomView}/>
         {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
       </Stack.Navigator>
     </NavigationContainer>

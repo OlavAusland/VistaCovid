@@ -60,7 +60,7 @@ export const getPatient = async (id: string): Promise<Patient | undefined> => {
 // ROOMS
 
 export const addRoom = async (room: Room) => {
-    await addDoc(collection(db, 'Rooms'), room).then((res) => {
+    await addDoc(collection(db, 'Rooms', room.id), room).then((res) => {
         console.log(res);
     });
 }
@@ -73,6 +73,7 @@ export const deleteRoom = async (id: string) => {
         console.log('Error: ', err);
     });
 }
+
 
 export const getRooms = async (): Promise<Room[]> => {
     return await getDocs(collection(db, 'Rooms')).then((res) => {

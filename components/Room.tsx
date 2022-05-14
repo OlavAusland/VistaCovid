@@ -14,10 +14,12 @@ import { profileStyle } from '../styles/ProfileStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { PatientInfoModal } from './room/PatientInfoModal';
-
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RoomNavigationParameters } from '../domain/NavigationTypes';
 LogBox.ignoreLogs(['Setting a timer']);
 
-export function RoomView()
+type  RoomProps = NativeStackScreenProps<RoomNavigationParameters, 'Room'>
+export function RoomView(props: RoomProps)
 {
     const [modalVisible, setModalVisible] = useState(false);
     const [date, setDate] = useState({startDate:{date: new Date(), visible: false}, endDate:{date: new Date(), visible: false}});
