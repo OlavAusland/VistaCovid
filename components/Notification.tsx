@@ -22,7 +22,7 @@ export default function Notification() {
       console.log(typeof sendFunc);
       setSender({ sendFunc });
     });
-  }, []);
+  }, [false]);
 
   // useEffect that will send push alert
   useEffect(() => {
