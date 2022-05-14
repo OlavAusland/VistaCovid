@@ -1,15 +1,13 @@
-import React from 'react';
+
 import { act, render } from '@testing-library/react-native';
 import { PatientInfoModal } from "../../components/room/PatientInfoModal";
-import {getPatient} from "../../api/folkeregisterModelAPI";
-import { async } from '@firebase/util';
 
 
 
 // Snapshot test
 test("renders correctly", () => {
     const tree = render(<PatientInfoModal modalVisible={true} handleRequestClose={jest.fn()} fnr="12313" />).toJSON();
-    expect(tree).toMatchSnapshot();
+        expect(tree).toMatchSnapshot();
 });
 
 //Unit tests
