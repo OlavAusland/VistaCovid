@@ -1,9 +1,10 @@
 import { db } from "../firebase-config";
-import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc} from 'firebase/firestore'
+import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
 import { FolkeregisterPerson, Patient } from "../domain/PatientType";
 import { getAuth } from "firebase/auth";
+import { ConsoleWriter } from "istanbul-lib-report";
 
 // USERS
 
@@ -59,18 +60,27 @@ export const getPatient = async (id: string) => {
 // ROOMS
 
 export const addRoom = async (room: Room) => {
-    await addDoc(collection(db, 'Rooms', room.id), room).then((res) => {
-        console.log(res);
-    });
+    getRoom(room.id).then(async(res)=> {
+        if(res == undefined){
+            await setDoc(doc(db, 'Rooms', room.id), room).then((res) => {
+                console.log("added new room")
+            });
+        }
+   }).catch((err)=> {console.log("inside"); throw(err)})
 }
 
+
 export const deleteRoom = async (id: string) => {
-    await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
-        console.log('Deleted Room: ', res);
-    }).catch((err) => {
-        console.log(console.log('Failed to delete room with id: ', id));
-        console.log('Error: ', err);
-    });
+    getRoom(id).then(async(res)=>{
+        if(res?.patientId == ""){
+            await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
+                console.log('Deleted Room: ', res);
+            }).catch((err) => {
+                console.log(console.log('Failed to delete room with id: ', id));
+                console.log('Error: ', err);
+            });
+        }
+    })
 }
 
 
@@ -101,6 +111,9 @@ export const addPatientToRoom = async (roomId: string, patientId: string) => {
     await setDoc(doc(db, 'Rooms', roomId), {patientId: patientId}, {merge: true})
     
 }
+
+
+
 
 // ASSIGNMENTS - 
 // ! DISCHARGE PATIENT

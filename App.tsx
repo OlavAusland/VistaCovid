@@ -9,7 +9,12 @@ import { RegisterView } from './components/Register';
 import { ProfileView } from './components/Profile';
 import { LoginView } from './components/Login';
 import { RoomView } from './components/Room';
+import { AdminView } from './components/Admin';
+import { AddRoom } from './components/adminView/addRoomView';
+import { ManageRoom } from './components/adminView/manageRoom';
 import { HomeView } from './components/Home';
+import { ManageRoles } from './components/adminView/manageRoles';
+
 
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -32,10 +37,17 @@ function VistaCovid(){
 
 export default function App() {
   return (
+
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'> 
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Admin'> 
         <Stack.Screen name="VistaCovid" component={VistaCovid}/>
         <Stack.Screen name="Login" component={LoginView}/>
+        <Stack.Screen name="Register" component={RegisterView}/>
+        <Stack.Screen name="Admin" component={AdminView}/>
+        <Stack.Screen name="AddRoom" component={AddRoom}/>
+        <Stack.Screen name="ManageRoom" component={ManageRoom}/>
+        <Stack.Screen name="ManageRoles" component={ManageRoles}/>
+
         <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
         {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
       </Stack.Navigator>
