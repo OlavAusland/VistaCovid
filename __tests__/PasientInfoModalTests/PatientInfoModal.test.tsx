@@ -1,7 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { act, render } from '@testing-library/react-native';
 import { PatientInfoModal } from "../../components/room/PatientInfoModal";
 import {getPatient} from "../../api/folkeregisterModelAPI";
+import { async } from '@firebase/util';
 
 
 
@@ -59,7 +60,7 @@ const stubbedPatient = [
     },
 ];
 
-test("shows patient when data are fetched", () => {
+test("shows patient when data are fetched", async () => {
 
     const getPatient = jest.fn().mockReturnValueOnce({
         loading: false,
@@ -69,37 +70,15 @@ test("shows patient when data are fetched", () => {
 
     const { getByTestId } = render(<PatientInfoModal modalVisible={true} handleRequestClose={jest.fn()} fnr="30070123456" />);
     expect(getByTestId("patientInfoModal")).not.toBeNull();
-    
     const test = getByTestId("lastname") 
-    console.log(test);
-    expect(test).toContain("Olsen");
+    
+    act(async () => {
+        expect(test.props).toContain("Olsen");
+      });
+    
 });
 
 
-
-
-
-
-/*describe("Response for patient 30070123456 request", () => {
-    it("should return status code 200 and a defined body as response", async () => {
-        // Mock API
-        jest.spyOn(global, "fetch").mockImplementation(() =>
-            Promise.resolve({
-                json: () =>
-                    Promise.resolve({
-                        status: 200,
-                        data: stubbedPatient,
-                    }),
-            })
-        );
-
-        const result = await getPatient("30070123456");
-
-        expect(result.status).toBe(200);
-        expect(result.data).toBe(stubbedPatient);
-    });
-});
-*/
 
 
 
