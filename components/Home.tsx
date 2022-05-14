@@ -46,7 +46,7 @@ export const HomeView = (props: HomeScreenProps) => {
     return (
         <View style={homeStyle.container}>
             <View style={homeStyle.header}>
-                <TextInput onChangeText={(text) => setKeyword(text)} placeholder={'Search For Room'} style={homeStyle.searchBar} />
+                <TextInput onChangeText={(text) => {setKeyword(text)}} placeholder={'Search For Room'} style={homeStyle.searchBar} />
             </View>
             <View style={{ paddingBottom: 10 }}>
                 <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
