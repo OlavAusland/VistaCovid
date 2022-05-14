@@ -70,12 +70,21 @@ test("shows patient when data are fetched", async () => {
 
     const { getByTestId } = render(<PatientInfoModal modalVisible={true} handleRequestClose={jest.fn()} fnr="30070123456" />);
     expect(getByTestId("patientInfoModal")).not.toBeNull();
-    const test = getByTestId("lastname") 
-    
+
+    const lastnametest = getByTestId("lastname") 
     act(async () => {
-        expect(test.props).toContain("Olsen");
+        expect(lastnametest.props).toContain("Olsen");
       });
+
+    const firstnametest = getByTestId("firstname") 
+    act(async () => {
+        expect(firstnametest.props).toContain("Siri Hanne");
+    });
     
+    const ssntest = getByTestId("ssn") 
+    act(async () => {
+        expect(ssntest.props).toContain("30070123456");
+    });
 });
 
 
