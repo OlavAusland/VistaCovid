@@ -6,9 +6,9 @@ export type StackParameters = {
     Admin : object | undefined,
     VistaCovid : object | undefined,
     AddRoom : object | undefined,
-    EditRoom : object | undefined,
     DeleteRoom : object | undefined,
-    ManageRoom : object | undefined
+    ManageRoom : object | undefined,
+    ManageRoles : object | undefined
 }
 
 export type TabParameters = {

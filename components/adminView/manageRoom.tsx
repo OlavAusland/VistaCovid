@@ -6,14 +6,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from "../../domain/NavigationTypes";
 import { adminStyle } from "../../styles/AdminStyles";
 import {DeleteRoomModal} from "./deleteModal";
-import { isPropertySignature } from "typescript";
 import {Room} from "../../domain/RoomType"
 
 export function ManageRoom()
 {
     const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
 
-    const [editRoomNumber, setEditRoomNumber] = useState('')
     const [delRoomNumber, setDelRoomNumber] = useState('')
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -26,23 +24,7 @@ export function ManageRoom()
     const DeleteRoom = () => {
         console.log('Delet rooomomomo')
         console.log(delRoomNumber)
-        //get all rooms
-        const [rooms, setRooms] = useState<Room[]>([])
-        useEffect(()=>{
-            const GetAllRooms = async () => {
-                await getRooms().then((res) => {
-                    setRooms(res);
-                })
-            };
-            GetAllRooms();
-            console.log(rooms.map);
-        })
-        
-        //match room number with room id (with a loop and if else statement??????)
-        //check if room is empty
-            //if room not empty do not delete
-
-        //then execute delete room function form firebaseAPI
+        deleteRoom(delRoomNumber)
 
     }
 
@@ -57,16 +39,6 @@ export function ManageRoom()
                 <View style={adminStyle.header}>
                     <Text style={adminStyle.headertext}>Manage Rooms</Text>
                 </View>
-                <View style={adminStyle.editRoom}>
-                    <TextInput
-                    placeholder="room number"
-                    onChangeText={setEditRoomNumber}
-                    style={adminStyle.editRoomNumber}/>
-                    <View style={adminStyle.editRoomButton}>
-                        <Button title="Edit room" onPress={()=>navigation.navigate("EditRoom")}/>
-                    </View>
-                </View>
-
                 <View style={adminStyle.deleteRoom}>
                     <TextInput
                     placeholder="room number"

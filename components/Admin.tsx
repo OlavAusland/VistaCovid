@@ -27,7 +27,10 @@ export function AdminView()
                         <Button title='Add Room' onPress={() => {navigation.navigate('AddRoom')}}></Button>
                     </View>
                     <View style={adminStyle.manageRoom}>
-                    <Button title='Manage Room' onPress={() => {navigation.navigate('ManageRoom')}}></Button>
+                        <Button title='Delete Room' onPress={() => {navigation.navigate('ManageRoom')}}></Button>
+                    </View>
+                    <View style={adminStyle.manageRoom}>
+                        <Button title='Manage Users' onPress={() => {navigation.navigate('ManageRoles')}}></Button>
                     </View>
                 </View>
             </SafeAreaView>
