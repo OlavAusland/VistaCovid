@@ -1,25 +1,25 @@
-import { View, Text, ScrollView, Button, TouchableOpacity, LogBox} from 'react-native';
+import { View, Text, ScrollView, Button, TouchableOpacity, LogBox, Touchable} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
 import { Room } from '../domain/RoomType';
 import { Patient } from '../domain/PatientType';
 
-import { LineGraph } from './room/Graph';
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
 import Notification from './Notification';
 
 import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
-import { profileStyle } from '../styles/ProfileStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { PatientInfoModal } from './room/PatientInfoModal';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RoomNavigationParameters } from '../domain/NavigationTypes';
+import { StackParameters } from '../domain/NavigationTypes';
 LogBox.ignoreLogs(['Setting a timer']);
 
-type  RoomProps = NativeStackScreenProps<RoomNavigationParameters, 'Room'>
-export function RoomView(props: RoomProps)
+
+type Props = NativeStackScreenProps<StackParameters, 'Room'>;
+
+export function RoomView({route, navigation}: Props)
 {
     const [modalVisible, setModalVisible] = useState(false);
     const [date, setDate] = useState({startDate:{date: new Date(), visible: false}, endDate:{date: new Date(), visible: false}});
@@ -27,6 +27,8 @@ export function RoomView(props: RoomProps)
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
     const [modal, setModal] = useState(false);
+
+    const props = route.params;
 
     const handleRequestClose = () => {
         setModalVisible(false); 
@@ -36,7 +38,7 @@ export function RoomView(props: RoomProps)
     Notification();
     useEffect(() => {
         const getRoomData = async () => {
-            await getRoom('OKqa8wlfNZGO9ajhnLIH').then(async(res) => {
+            await getRoom(props?.roomId).then(async(res) => {
                 setRoom(res);
                 setFetching(false);
                 if(res !== undefined){await getPatientData(res);}
@@ -79,7 +81,6 @@ export function RoomView(props: RoomProps)
                         </TouchableOpacity>
                         <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} fnr = {patient? patient.ssn : ''}></PatientInfoModal>
                     </View>
-
                 </View>
                 <View style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between', alignItems:'center'}}>
                     <TouchableOpacity style={{flexBasis:'50%', justifyContent:'center', backgroundColor:'#9DD4FB', height:30}}
@@ -97,6 +98,9 @@ export function RoomView(props: RoomProps)
                     <TouchableOpacity style={{flexBasis:'50%', justifyContent:'center', backgroundColor:'#9DD4FB', height:30}}
                     onPress={() => {setDate({...date, endDate:{...date.endDate, visible: true}})}}>
                         <Text style={{alignSelf:'center', fontWeight:'bold'}}>Date To</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flexBasis:'100%', justifyContent:'center', backgroundColor:'#9DD4FB', height:60}}>
+                        <Text style={{alignSelf:'center', fontWeight:'bold'}}>Export</Text>
                     </TouchableOpacity>
                     <View>
                         <DateTimePickerModal

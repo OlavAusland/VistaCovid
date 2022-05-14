@@ -8,10 +8,9 @@ import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
 import Icon from 'react-native-vector-icons/Fontisto';
 import { currentUser, Roles } from '../domain/UserType';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackParameters } from '../domain/NavigationTypes';
+import { StackParameters, TabParameters } from '../domain/NavigationTypes';
 
-type NavigationParameters = {Room:undefined, Home:undefined, Profile:undefined}
-type  HomeScreenProps = NativeStackScreenProps<NavigationParameters, 'Home'>
+type  HomeScreenProps = NativeStackScreenProps<TabParameters, 'Home'>
 
 export const HomeView = (props: HomeScreenProps) => {
     const [rooms, setRooms] = useState<Room[]>([])
@@ -61,7 +60,7 @@ export const HomeView = (props: HomeScreenProps) => {
                         rooms.filter((room) => {if(room.patientId != '' && room.roomNumber.includes(keyword)){return room}}).map((room: Room) => {
                             return (
                                 <TouchableOpacity key={'room:' + room.roomNumber} style={homeStyle.card}
-                                onPress={() => {props.navigation.navigate('Room')}}>
+                                onPress={() => {props.navigation.push('Room', {roomId:room.id})}}>
                                     <BarChart
                                         data={{
                                             labels: ['BL', 'OXL', 'HR'],
