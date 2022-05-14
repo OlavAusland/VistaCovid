@@ -1,9 +1,15 @@
 export type StackParameters = {
-    Register : object,
-    Room : {roomId: string},
-    Profile : object,
-    Login : object,
-    VistaCovid : object
+    Register : object | undefined,
+    Profile : object | undefined,
+    Login : object | undefined,
+    Home : object | undefined,
+    Admin : object | undefined,
+    VistaCovid : object | undefined,
+    AddRoom : object | undefined,
+    DeleteRoom : object | undefined,
+    ManageRoom : object | undefined,
+    ManageRoles : object | undefined,
+    Room: object | undefined
 }
 
 export type TabParameters = {

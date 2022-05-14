@@ -1,3 +1,5 @@
+import { Roles } from "./UserType"
+
 export type GraphData = {
     time: number,
     value: number
