@@ -24,7 +24,7 @@ export const LineGraph = (props: GraphProps) => {
                 labels: [],
                 datasets: [
                     {
-                        data: yData ? yData : [],
+                        data: yData ? yData.slice(-15) : [],
                     }
                 ],
                 legend: [props.name]
