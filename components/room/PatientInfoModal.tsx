@@ -1,16 +1,10 @@
 import { Text, View, TextInput, Pressable, Modal, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getPatient as folkeregisterGetPatient} from '../../api/folkeregisterModelAPI';
 import {getPatient as firebaseGetPatient} from '../../api/firebaseAPI';
 import { FolkeregisterPerson, Patient } from '../../domain/PatientType';
 import { patientInfoStyle } from '../../styles/PatientInfoStyle';
-
-
-type PatientInfoModalProps = {
-    modalVisible: boolean;
-    handleRequestClose: Function;
-    fnr: string;
-}
+import { PatientInfoModalProps } from '../../domain/patientInfoType';
 
 
 export const PatientInfoModal = (props: PatientInfoModalProps) => {
@@ -18,27 +12,29 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
     const [error, setError] = useState<Error | undefined>(undefined);
 
     useEffect(() => {
-        folkeregisterGetPatient('23456798765').then(patient => {
+        folkeregisterGetPatient(props.fnr).then(patient => {
             setPatient(patient);
-        }).catch( (err) =>{ 
-            firebaseGetPatient('23456798765').then(patient => {
+        }).catch((err) =>{setError(err);});
+
+        if(!patient){
+            firebaseGetPatient(props.fnr).then(patient => {
                 setPatient(patient);
-            })
-            setError(err);
-        });
+            }).catch((err) =>{setError(err);});
+        }
+        
     }, []);
 
     useEffect(() => {
         console.log(patient);
     }, [patient]);
 
-    
+/* 
     if (error) {
         return <View>
             <Text>{error.message}</Text>
             <Text>Can't find patient info</Text>
         </View>
-    }
+    } */
 
     return (
 
@@ -60,27 +56,27 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Firstname: </Text>
-                            <Text>{patient?.firstname} {patient?.midlename}</Text>
+                            <Text testID='firstname'>{patient?.firstname} {patient?.midlename}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>SSN: </Text>
-                            <Text>{patient?.ssn}</Text>
+                            <Text testID='ssn'>{patient?.ssn}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Gender: </Text>
-                            <Text>{patient?.gender}</Text>
+                            <Text testID='gender'>{patient?.gender}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Address: </Text>
-                            <Text>{patient?.address} {patient?.housenumber}</Text>
+                            <Text  testID='address'>{patient?.address} {patient?.housenumber}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>City: </Text>
-                            <Text>{patient?.city}</Text>
+                            <Text  testID='city'>{patient?.city}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Co-Address: </Text>
-                            <Text>{patient?.coAddress}</Text>
+                            <Text  testID='co.adress'>{patient?.coAddress}</Text>
                         </Text>
                     </View>
                     <Pressable
