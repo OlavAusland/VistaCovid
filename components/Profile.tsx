@@ -1,44 +1,22 @@
-import React, { View, Text, Button, ScrollView } from 'react-native';
-import { useState } from 'react';
-import { profileStyle } from '../styles/ProfileStyles';
-import { addRoom, deleteRoom } from '../api/firebaseAPI';
-import { Room } from '../domain/RoomType';
-import { getAdditionalUserInfo } from 'firebase/auth';
-import { getPatient } from '../api/folkeregisterModelAPI';
-import { PatientInfoModal} from './PatientInfoModal';
+import { View, TouchableOpacity, Text } from "react-native"
+import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
+import React, { useState } from "react"
+import Icon from 'react-native-vector-icons/Fontisto';
 
-
-
-
-
-export const ProfileView = () =>
-{
+export const ProfileView = () => {
     const [modalVisible, setModalVisible] = useState(false);
-
-    const room: Room = {
-        patientId:'None',
-        roomNumber: 'A2 021',
-        lastUpdated: Date.now().toString(),
-        heartRate: [{time: 0, value: 60}, {time: 1, value: 30}],
-        bloodPressure: [{time: 0, value: 120}, {time: 1, value: 80}],
-        oxygenLevel: [{time: 0, value: 100}, {time: 1, value: 90}],
-        notes: [{role:3, note: 'This is a note'}]
-    }
     const handleRequestClose = () => {
-        setModalVisible(false); 
+        setModalVisible(false);
     }
-
     return (
-        <View style={profileStyle.container}>
-            {/*HEADER*/}
-            <View style={{flex:1}}>
-                <Text style={{alignSelf:'center'}}>Profile</Text>
-                <Button title="Add Room" onPress={() => {setModalVisible(true)} }/>
-                <Button title="Delete Room" onPress={() => {deleteRoom('50uaIdfmRjd4CeRUBhOl')} }/>
-            <ScrollView>
-                <PatientInfoModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} fnr={"29095915638"}/>
-            </ScrollView>
+        <View>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' , backgroundColor:'#C1E8FD'}}>
+                <Text style={{ fontSize: 30, paddingTop: 5 }}>Assign Patient</Text>
+                <TouchableOpacity>
+                    <Icon name='bed-patient' size={60} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                </TouchableOpacity>
+                <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} />
             </View>
         </View>
-    );
+    )
 }

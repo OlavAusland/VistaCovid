@@ -13,15 +13,15 @@ export function AddRoom()
     const [roomNumber, setRoomNumber] = useState("")
 
  
-    const newroom: Room = {
-        patientId: patientId,
-        roomNumber: roomNumber,
-        lastUpdated: Date.now().toString(),
-        heartRate: undefined,
-        bloodPressure: undefined,
-        oxygenLevel: undefined,
-        notes: undefined
-    }
+    // const newroom: Room = {
+    //     patientId: patientId,
+    //     roomNumber: roomNumber,
+    //     lastUpdated: Date.now().toString(),
+    //     heartRate: undefined,
+    //     bloodPressure: undefined,
+    //     oxygenLevel: undefined,
+    //     notes: undefined
+    // }
 
     const AddRoom = () =>{
         console.log("ihsfldkjn")

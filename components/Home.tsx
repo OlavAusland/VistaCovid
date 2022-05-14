@@ -1,29 +1,57 @@
-import { useEffect, useState} from 'react';
-import React, { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
 import { Room } from '../domain/RoomType';
-import { getRooms } from '../api/firebaseAPI';
+import { getLoggedInUser, getRooms } from '../api/firebaseAPI';
+import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
+import Icon from 'react-native-vector-icons/Fontisto';
+import { currentUser, Roles } from '../domain/UserType';
 
-export function HomeView()
-{
+
+
+export const HomeView = () => {
     const [rooms, setRooms] = useState<Room[]>([])
+    const [modalVisible, setModalVisible] = useState(false);
+    const [User, setUser] = useState<currentUser>({email: '', firstName: '', lastName: '', role: Roles.NONE, id:''});
+
+
+    const handleRequestClose = () => {
+        setModalVisible(false);
+    }
 
     useEffect(() => {
         const getRoomsData = async () => {
             await getRooms().then((res) => {
                 setRooms(res);
-            }).catch((err) => {console.log(err)});
+            }).catch((err) => { console.log(err) });
         };
         getRoomsData();
     }, []);
+/* 
+    useEffect(() => {
+        const getUserData = () => {
+             getLoggedInUser().then((res) => {
+                setUser(res);
+            }).catch((err) => { console.log(err) });
+        };
+        getUserData();
+    }, []); */
 
-    return(
+
+    return (
         <View style={homeStyle.container}>
             <View style={homeStyle.header}>
-                <TextInput placeholder={'Search For Room'} style={homeStyle.searchBar}/>
+                <TextInput placeholder={'Search For Room'} style={homeStyle.searchBar} />
             </View>
-            <View style={{flex:4}}>    
+            <View style={{ paddingBottom: 10 }}>
+                <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
+                    <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
+                    <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                </TouchableOpacity>
+                <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={User} />
+            </View>
+            <View style={{ flex: 4 }}>
                 <ScrollView contentContainerStyle={homeStyle.body}>
                     {rooms.length > 0 &&
                         rooms.map((room: Room) => {
@@ -33,9 +61,9 @@ export function HomeView()
                                         data={{
                                             labels: ['BL', 'OXL', 'HR'],
                                             datasets: [{
-                                                data: [room.bloodPressure ? room.bloodPressure[room.bloodPressure.length - 1].value : 0, 
-                                                        room.oxygenLevel ? room.oxygenLevel[room.oxygenLevel.length - 1].value : 0,
-                                                         room.heartRate ? room.heartRate[room.heartRate.length - 1].value : 0]
+                                                data: [room.bloodPressure ? room.bloodPressure[room.bloodPressure.length - 1].value : 0,
+                                                room.oxygenLevel ? room.oxygenLevel[room.oxygenLevel.length - 1].value : 0,
+                                                room.heartRate ? room.heartRate[room.heartRate.length - 1].value : 0]
                                             }]
                                         }}
                                         yAxisLabel={''}
@@ -50,7 +78,7 @@ export function HomeView()
                                             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                                             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                                             style: {
-                                                flex:2
+                                                flex: 2
                                             },
                                             barPercentage: 0.5,
                                             propsForDots: {
@@ -61,8 +89,12 @@ export function HomeView()
                                         }}
                                         withHorizontalLabels={true}
                                         fromZero={true}
-                                        />
-                                        <Text style={{flex:1}}> Room: {room.roomNumber}</Text>
+                                    />
+                                    <View style={{ flexDirection: 'column' }}>
+                                        <Text> Room: {room.roomNumber}</Text>
+                                        <Text> Patient: {room.patientId ? room.patientId : 'No Patient'}</Text>
+                                    </View>
+
                                 </TouchableOpacity>
                             )
                         })

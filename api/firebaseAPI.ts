@@ -2,13 +2,13 @@ import { db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
-import { FolkeregisterPerson } from "../domain/PatientType";
-import { Patient } from "../domain/PatientType";
+import { FolkeregisterPerson, Patient } from "../domain/PatientType";
+import { getAuth } from "firebase/auth";
 
 // USERS
 
-export const addUser = async(user: User) => {
-    await addDoc(collection(db, 'Users'), user).then((res) => {
+export const addUser = async(user: User, id:string) => {
+    await addDoc(collection(db, 'Users', id), user).then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
@@ -21,6 +21,13 @@ export const deleteUser = async(id: string) => {
     }).catch((err) => {
         console.log(err);
     });
+}
+
+
+export const getLoggedInUser = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    return user;
 }
 
 // Patients
@@ -70,11 +77,16 @@ export const deleteRoom = async (id: string) => {
 
 export const getRooms = async (): Promise<Room[]> => {
     return await getDocs(collection(db, 'Rooms')).then((res) => {
-        const data = res.docs.map((doc) => {return doc.data() as Room});
-        return data;
+        return res.docs.map((doc) => <Room>({...doc.data(), id: doc.id}));
     }).catch((err) => {
         throw err;
     });
+}
+
+export const getAvailableRooms = async (): Promise<Room[]> => {
+    const rooms: Room[] = await getRooms();
+    const availableRooms = rooms.filter(room => room.patientId === null || room.patientId === undefined || room.patientId === '');
+    return availableRooms;
 }
 
 export const getRoom = async (id: string): Promise<Room | undefined> => {
@@ -86,7 +98,10 @@ export const getRoom = async (id: string): Promise<Room | undefined> => {
 );
 }
 
-
+export const addPatientToRoom = async (roomId: string, patientId: string) => {
+    await setDoc(doc(db, 'Rooms', roomId), {patientId: patientId}, {merge: true})
+    
+}
 
 // ASSIGNMENTS - 
 // ! DISCHARGE PATIENT

@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import createSender from "../utils/register";
 import { addNotificationReceivedListener, removeNotificationSubscription} from "expo-notifications";
