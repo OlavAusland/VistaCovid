@@ -1,48 +1,49 @@
-import { useState } from "react";
-import React, { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
-import { addUser } from '../../api/firebaseAPI';
-import { User, Roles } from '../../domain/UserType';
-import { dropdownStyles } from '../../styles/dropdownStyle';
-import { DropDownType} from '../../domain/DropDownType';
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { useEffect, useState } from "react";
+import React, { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable, FlatList } from "react-native";
+import { SearchBar } from 'react-native-elements';
 
-
+// navigation
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParameters } from '../../domain/NavigationTypes';
+import { adminStyle } from "../../styles/AdminStyles";
+import { Room } from "../../domain/RoomType";
+import { User } from "../../domain/UserType";
 
 export function ManageRoles(){
 
-    const [user, setUser] = useState<User>({
-        email:'',  password:'', firstName:'', 
-        lastName:'', role:Roles.NONE, address:undefined,
-        phone: undefined, city: undefined, code: undefined
-    });
+    const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
 
-    const [dropdown, setDropdown] = useState<DropDownType>({ 
-        open: false, 
-        value: "0", 
-        items: [
-            { label: 'Nurse', value: '1' },
-            { label: 'Doctor', value: '2' }],
-        label: "" });
+    const [searchWord, setSearchWord] = useState("");
+    const [users, setUsers] = useState<User[]>([])
 
+    useEffect(() => {
+        const getUserData = async () =>{
 
-    const CreateUser = () =>{
-        
-    }
+        }
+    })
 
     return(
-        <ScrollView>
-            <SafeAreaView>
-                <View>
-                    <Text>
-                        Manage users
-                    </Text>
-                </View>
-                <View>
-                    
-                </View>
-            </SafeAreaView>
-        </ScrollView>
+        <SafeAreaView>
+            <View>
+                <Text>
+                    Manage users
+                </Text>
+            </View>
+            <View>
+                <Button
+                title="AddUser"
+                onPress={()=> {navigation.navigate('CreateUser')}}
+                />
+            </View>
+            <View style={adminStyle.managerolesheader}>
+                <TextInput onChangeText={(text) => {setSearchWord(text)}} placeholder={"search for user"} style={adminStyle.searchBar}/>
+            </View>
+            <View>
+                <ScrollView>
 
+                </ScrollView>
+            </View>
+        </SafeAreaView>
     );
 }

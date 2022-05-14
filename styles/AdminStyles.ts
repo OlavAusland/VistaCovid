@@ -89,14 +89,22 @@ export const adminStyle = StyleSheet.create({
       padding: 50,
     },
 
-    // --------------------edit room view-------------------------
-    editRoomInput:{
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
+    // --------------------manage roles view-------------------------
+   managerolesheader:{
+      alignItems: "center",
+      padding:10
+   },
+    searchBar: {
+      backgroundColor:'#C1E8FD',
+      width: '50%',
+      height: 30,
+      borderRadius:5,
+      shadowColor:'rgba(0, 0, 0, 0.2)',
+      shadowOffset:{width:0, height:3},
+      shadowOpacity:0.8,
+      shadowRadius:2,
+      elevation:1
   },
-
     //--------------modal styling------------------------------
     centeredView: {
         flex: 1,

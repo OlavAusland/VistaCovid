@@ -24,6 +24,22 @@ export const deleteUser = async(id: string) => {
     });
 }
 
+// export const getRooms = async (): Promise<Room[]> => {
+//     return await getDocs(collection(db, 'Rooms')).then((res) => {
+//         return res.docs.map((doc) => <Room>({...doc.data(), id: doc.id}));
+//     }).catch((err) => {
+//         throw err;
+//     });
+// }
+
+export const getUser = async (): Promise<User[]> =>{
+    return await getDocs(collection(db, 'User')).then((res)=> {
+        return res.docs.map((doc) => <User>({...doc.data(), id: doc.id})):
+    }).catch((err) => {
+        throw err;
+    });
+}
+
 
 export const getLoggedInUser = () => {
     const auth = getAuth();
