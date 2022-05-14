@@ -1,4 +1,5 @@
 export type StackParameters = {
+    Menu : object,
     Register : object,
     Profile : object,
     Login : object,
@@ -16,5 +17,11 @@ export type TabParameters = {
     Profile : object,
     Home : object,
     Room: {roomId: string},
-    Register : object
+    Register : object,
+    Menu : object
+}
+
+export type DrawerParameters = {
+    Settings : object,
+    VistaCovid : object
 }
