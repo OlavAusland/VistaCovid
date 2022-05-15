@@ -1,10 +1,9 @@
 export enum Roles {
-    ADMIN,
+    ADMIN,                      
     DOCTOR,
     NURSE,
     NONE
 };
-
 
 export type User = {
     email: string,
@@ -16,4 +15,18 @@ export type User = {
     phone: string | undefined,
     address: string | undefined,
     city: string | undefined,
+}
+
+export type LoginInfo = {
+    email: string,
+    password: string,
+    displayPassword: boolean
+}
+
+export type currentUser = {
+    email: string,
+    firstName: string, 
+    lastName: string,
+    role: Roles,
+    id: string
 }
