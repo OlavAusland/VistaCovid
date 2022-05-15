@@ -10,7 +10,8 @@ export type StackParameters = {
     DeleteRoom : object | undefined,
     ManageRoom : object | undefined,
     ManageRoles : object | undefined,
-    Room: {roomId: string}
+    Room: {roomId: string},
+    CreateUser: object | undefined
 }
 
 export type TabParameters = {

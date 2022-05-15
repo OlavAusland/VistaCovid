@@ -12,21 +12,22 @@ import { LoginInfo } from '../domain/UserType';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { isReactNative } from '@firebase/util';
 import { getRole } from '../api/firebaseAPI';
+import { ErrorType } from '../domain/Errortype';
+import { Errormodal } from './ErrorModal';
+
+
+
 
 export function LoginView() {
     const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
 
     const [user, setUser] = useState<LoginInfo>({ displayPassword: true } as LoginInfo);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
 
-    useEffect(() => {
-        const getFirebaseRole = async() => {
-            await getRole('5ZkVPenOrkMvOAahjda1W679NDw2').then((role) => {
-                console.log(role);
-            });
-        }
-        getFirebaseRole();
-    }, []);
+    const handleRequestClose = () => {
+        setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
+    }
+
 
     useEffect(() => { console.log(user.displayPassword) }, [user.displayPassword])
 
@@ -34,10 +35,14 @@ export function LoginView() {
         await signInWithEmailAndPassword(getAuth(), user.email, user.password).then((res) => {
             console.log('Successfully Logged In!');
             navigation.navigate('Menu', { screen: 'VistaCovid' });
-        }).catch((err) => { console.log('Error! Please Try Again!'); setError(err.message); console.log(err) })
+        }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true})); });
     }
 
-
+    if(error.errormodalVisible){
+        return (
+            <Errormodal error={error} handleRequestClose={handleRequestClose} />
+        )
+    }
     return (
         <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#FFFFFF' }}>
             <View style={{ marginBottom: 60 }}>

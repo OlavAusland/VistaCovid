@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, Button, TouchableOpacity, LogBox, Touchable } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, LogBox, } from 'react-native';
+import { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
 import { Room } from '../domain/RoomType';
 import { FolkeregisterPerson, Patient } from '../domain/PatientType';
@@ -7,14 +7,15 @@ import { FolkeregisterPerson, Patient } from '../domain/PatientType';
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
 import Notification from './Notification';
-
-import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
-import { getPatient as folkeregisterpatient } from '../api/folkeregisterModelAPI';
+import { getRoom, getPatient } from '../api/firebaseAPI';
+import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { PatientInfoModal } from './room/PatientInfoModal';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
+import { ErrorType } from '../domain/Errortype';
+import { Errormodal } from './ErrorModal';
 LogBox.ignoreLogs(['Setting a timer']);
 
 
@@ -27,12 +28,15 @@ export function RoomView({ route, navigation }: Props) {
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
     const [modal, setModal] = useState(false);
-    const [error, setError] = useState<Error | undefined>(undefined);
+    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
+
+ 
 
     const props = route.params;
 
     const handleRequestClose = () => {
         setModalVisible(false);
+        setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
     }
 
     const [view, setView] = useState<string>('graphs')
@@ -42,7 +46,7 @@ export function RoomView({ route, navigation }: Props) {
             await getRoom(props?.roomId).then(async (res) => {
                 setRoom(res);
                 setFetching(false);
-            }).catch((err) => { console.log(err); });
+            }).catch( (err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
         };
         getRoomData();
     }, []);
@@ -52,14 +56,15 @@ export function RoomView({ route, navigation }: Props) {
             const id = room?.patientId;
 
             if (id) {
-                await getPatient(id).then((res) => {
-                    setPatient(res);
-                }).catch((err) => { console.log(err); });
-            }
-            if (!patient && id) {
                 await folkeregisterpatient(id).then((res) => {
                     setPatient(res);
-                }).catch((err) => { console.log(err); });
+                }).catch();
+            }
+            
+            if (!patient && id) {
+                await getPatient(id).then((res) => {
+                    setPatient(res);
+                }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
             }
         };
 
@@ -78,6 +83,11 @@ export function RoomView({ route, navigation }: Props) {
             handleRequestClose={handleRequestClose}
             patient={patient}
         />
+    }
+    if(error.errormodalVisible){
+        return (
+            <Errormodal error={error} handleRequestClose={handleRequestClose} />
+        )
     }
 
     if (fetching) {

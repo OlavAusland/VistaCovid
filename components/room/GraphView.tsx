@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native';
-import { LineGraph } from './Graph';
+import { LineGraph } from './graph';
 import { roomStyle } from '../../styles/RoomStyles';
 import { Room } from '../../domain/RoomType';
 import React from 'react';

@@ -14,8 +14,12 @@ export const getPatient = async (fnr: string): Promise<FolkeregisterPerson> => {
     );
     if (!result.ok) {
         if (result.status === 404) {
+            console.log("Patient not found");
             throw new Error("Patient not found");
+           
         }
+        console.log(`Call to folkeregisteret failed with status ${result.status} ${result.statusText}`);
+        
         throw new Error(
             `Call to folkeregisteret failed with status ${result.status} ${result.statusText}`
         );

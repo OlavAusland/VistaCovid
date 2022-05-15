@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/Fontisto';
 import { currentUser, Roles } from '../domain/UserType';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParameters, TabParameters } from '../domain/NavigationTypes';
+import { Errormodal } from './ErrorModal';
+import { ErrorType } from '../domain/Errortype';
 import { auth } from '../firebase-config';
 import { AdminView } from './Admin';
 import { sendEmail } from '../utils/email-sender';
@@ -19,18 +21,20 @@ export const HomeView = (props: HomeScreenProps) => {
     const [rooms, setRooms] = useState<Room[]>([])
     const [modalVisible, setModalVisible] = useState(false);
     const [keyword, setKeyword] = useState('');
+    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
     const [user, setUser] = useState<currentUser>({email: '', firstName: '', lastName: '', role: Roles.NONE, id:''});
     const [isLoading, setIsLoading] = useState(true);
 
 
     const handleRequestClose = () => {
         setModalVisible(false);
+        setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
     }
     useEffect(() => {
         const getRoomsData = async () => {
             await getRooms().then((res) => {
                 setRooms(res);
-            }).catch((err) => { console.log(err) });
+            }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true})); });
         };
         getRoomsData();
     }, []);
@@ -41,7 +45,7 @@ export const HomeView = (props: HomeScreenProps) => {
                 if(role !== undefined)
                     setUser(prev => ({...prev, role: Roles[role?.toUpperCase() as keyof typeof Roles]}));
                     setIsLoading(false);
-            }).catch((err) => {console.log(err)});  
+            }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true})); });
         }
         getFirebaseRole();
     }, []);
@@ -54,6 +58,18 @@ export const HomeView = (props: HomeScreenProps) => {
         };
         getUserData();
     }, []); */
+    if(error.errormodalVisible){
+        return (
+            <Errormodal error={error} handleRequestClose={handleRequestClose} />
+        )
+    }
+
+    if(modalVisible){
+        return (
+            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+        )
+    }
+
 
     if(user.role == Roles.ADMIN)
     {
@@ -73,7 +89,7 @@ export const HomeView = (props: HomeScreenProps) => {
                             <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
                             <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                         </TouchableOpacity>
-                        <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+                        
                     </View>
                 }
                 <View style={{ flex: 4 }}>

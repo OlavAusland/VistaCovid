@@ -2,7 +2,7 @@ import { useState } from "react";
 import React, { ScrollView, TextInput, View, Text, Button, SafeAreaView, Alert } from "react-native";
 import { adminStyle } from "../../styles/AdminStyles";
 import { Room } from "../../domain/RoomType";
-import { addRoom } from "../../api/firebaseAPI";
+import { addRoom, getRooms } from "../../api/firebaseAPI";
 import { NoteData } from "../../domain/RoomType";
 import { Roles } from "../../domain/UserType";
 
@@ -26,8 +26,8 @@ export function AddRoom()
 
      const SuccessfullAlert = () =>
      Alert.alert(
-       "yay gikk bra",
-       "bitch",
+       "Successfully added room with room number: "+{roomNumber},
+       "",
        [
          { text: "OK", onPress: () => console.log("OK Pressed", roomNumber) }
        ]
@@ -35,15 +35,14 @@ export function AddRoom()
 
      const UnsuccessfullAlert = () =>
      Alert.alert(
-       "bitch det gikk ikke buuu",
-       "bitch",
+       "Could not add room with room number: ",
+       "Room might already exist",
        [
          { text: "OK", onPress: () => console.log("OK Pressed") }
        ]
      );
 
      const AddRoom = () =>{
-         
          addRoom(newroom).then(() => {SuccessfullAlert()}).catch(() => {UnsuccessfullAlert()})
      }
 

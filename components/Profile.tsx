@@ -5,6 +5,7 @@ import { auth } from "../firebase-config";
 
 export const ProfileView = () => {
     const [modalVisible, setModalVisible] = useState(false);
+   
     const handleRequestClose = () => {
         setModalVisible(false);
     }

@@ -1,6 +1,6 @@
 import { Text, View, TextInput, Pressable, Modal, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
-import { getPatient } from '../../api/folkeregisterModelAPI';
+import { getPatient } from '../../api/folkeregisterAPI';
 import { FolkeregisterPerson } from '../../domain/PatientType';
 import { assignPatientStyle } from '../../styles/AssignPatientStyle';
 import { addPatient, getAvailableRooms } from '../../api/firebaseAPI';
