@@ -103,6 +103,32 @@ test("shows patient when data are fetched", async () => {
     await act(async () => {
         expect(ssntest.props.children).toContain("30070123456");
     });
+
+    const gendertest = getByTestId("gender") 
+    await act(async () => {
+        expect(gendertest.props.children).toContain("kvinne");
+    });
+
+    const addresstest1 = getByTestId("address") 
+    await act(async () => {
+        expect(addresstest1.props.children[0]).toContain("maurliveien");
+    });
+    
+    const addresstest2 = getByTestId("address") 
+    await act(async () => {
+        expect(addresstest2.props.children[2]).toContain("1");
+    });
+
+    const citytest = getByTestId("city") 
+    await act(async () => {
+        expect(citytest.props.children).toContain("Oslo");
+    });
+
+    const coaddress = getByTestId("co.address") 
+    await act(async () => {
+        expect(coaddress.props.children).toContain("");
+    });
+
 });
 
 

@@ -33,7 +33,7 @@ function Menu() {
     <Drawer.Navigator  screenOptions={{headerTitle:''}} drawerContent={props => {
       return (
         <DrawerContentScrollView>
-          <DrawerItem label="Logout" onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
+          <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
         </DrawerContentScrollView>
       )
     }}>
