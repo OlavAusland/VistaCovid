@@ -69,6 +69,14 @@ export const addRoom = async (room: Room) => {
    }).catch((err)=> {console.log("inside"); throw(err)})
 }
 
+export const getRole = async (id: string): Promise<string | undefined> => {
+    return await getDoc(doc(db, 'User', id)).then((res) => {
+        return  res.data()?.role;
+    }).catch((err) => {
+        throw err;
+    });
+};
+
 
 export const deleteRoom = async (id: string) => {
     getRoom(id).then(async(res)=>{

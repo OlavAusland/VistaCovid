@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Button, Image, Pressable, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
@@ -11,13 +11,22 @@ import { LoginInfo } from '../domain/UserType';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { isReactNative } from '@firebase/util';
-
+import { getRole } from '../api/firebaseAPI';
 
 export function LoginView() {
     const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
 
     const [user, setUser] = useState<LoginInfo>({ displayPassword: true } as LoginInfo);
     const [error, setError] = useState<string>('');
+
+    useEffect(() => {
+        const getFirebaseRole = async() => {
+            await getRole('5ZkVPenOrkMvOAahjda1W679NDw2').then((role) => {
+                console.log(role);
+            });
+        }
+        getFirebaseRole();
+    }, []);
 
     // useEffect(() => {navigation.navigate('VistaCovid', {screen:'Room'});}, []);
 
