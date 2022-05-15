@@ -56,12 +56,13 @@ export function RoomView({ route, navigation }: Props) {
             const id = room?.patientId;
 
             if (id) {
-                await getPatient(id).then((res) => {
-                    setPatient(res);
-                }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
-            }
-            if (!patient && id) {
                 await folkeregisterpatient(id).then((res) => {
+                    setPatient(res);
+                }).catch();
+            }
+            
+            if (!patient && id) {
+                await getPatient(id).then((res) => {
                     setPatient(res);
                 }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
             }
