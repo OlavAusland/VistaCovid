@@ -16,7 +16,7 @@ export const homeStyle = StyleSheet.create({
     },
     searchBar: {
         backgroundColor:'#C1E8FD',
-        width: '50%',
+        width: '90%',
         height: 30,
         borderRadius:5,
         shadowColor:'rgba(0, 0, 0, 0.2)',
