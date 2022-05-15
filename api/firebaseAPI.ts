@@ -4,7 +4,6 @@ import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
 import { FolkeregisterPerson, Patient } from "../domain/PatientType";
 import { getAuth } from "firebase/auth";
-import { ConsoleWriter } from "istanbul-lib-report";
 
 // USERS
 
@@ -56,8 +55,6 @@ export const getPatient = async (id: string) => {
         throw err;
     });
 };
-
-// ROOMS
 
 export const addRoom = async (room: Room) => {
     getRoom(room.id).then(async(res)=> {
@@ -112,8 +109,7 @@ export const getRoom = async (id: string): Promise<Room | undefined> => {
     }).catch((err) => {
         throw err;
     }
-);
-}
+);}
 
 export const addPatientToRoom = async (roomId: string, patientId: string) => {
     await setDoc(doc(db, 'Rooms', roomId), {patientId: patientId}, {merge: true})

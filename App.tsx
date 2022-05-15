@@ -1,6 +1,4 @@
 import 'react-native-gesture-handler';
-import { StyleSheet, Text, View, Button} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { DrawerParameters, StackParameters, TabParameters } from './domain/NavigationTypes';
 
 import Icon from 'react-native-vector-icons/Fontisto';
