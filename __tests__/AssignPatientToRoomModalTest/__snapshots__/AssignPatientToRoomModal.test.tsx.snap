@@ -65,10 +65,8 @@ exports[`renders correctly 1`] = `
             }
           >
             <TextInput
-              allowFontScaling={true}
               onChangeText={[Function]}
               placeholder="SSN"
-              rejectResponderTermination={true}
               style={
                 Object {
                   "backgroundColor": "white",
@@ -78,10 +76,10 @@ exports[`renders correctly 1`] = `
                   "width": "100%",
                 }
               }
-              underlineColorAndroid="transparent"
             />
             <View
               accessible={true}
+              collapsable={false}
               focusable={true}
               onClick={[Function]}
               onResponderGrant={[Function]}
@@ -278,6 +276,7 @@ exports[`renders correctly 1`] = `
           </View>
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
