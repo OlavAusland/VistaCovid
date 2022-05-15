@@ -1,4 +1,4 @@
-import { db } from "../firebase-config";
+import { auth, db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
@@ -24,11 +24,43 @@ export const deleteUser = async(id: string) => {
 }
 
 
+export const getUsers = async(): Promise<User[]> => {
+    return await getDocs(collection(db, 'User')).then((res) =>{
+        return res.docs.map((doc) => <User>({...doc.data()}));
+    }).catch((err) => {
+        throw err;
+    });
+} 
+
+// auth
+// .getUsers([
+//     { uid: 'uid1' },
+//     { email: 'user2@example.com' },
+//     { phoneNumber: '+15555550003' },
+//     { providerId: 'google.com', providerUid: 'google_uid4' },
+//   ])
+//   .then((getUsersResult) => {
+//     console.log('Successfully fetched user data:');
+//     getUsersResult.users.forEach((userRecord) => {
+//       console.log(userRecord);
+//     });
+
+//     console.log('Unable to find users corresponding to these identifiers:');
+//     getUsersResult.notFound.forEach((userIdentifier) => {
+//       console.log(userIdentifier);
+//     });
+//   })
+//   .catch((error) => {
+//     console.log('Error fetching user data:', error);
+//   });
+
+
 export const getLoggedInUser = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     return user;
 }
+
 
 // Patients
 
@@ -61,9 +93,10 @@ export const addRoom = async (room: Room) => {
         if(res == undefined){
             await setDoc(doc(db, 'Rooms', room.id), room).then((res) => {
                 console.log("added new room")
+                console.log(res)
             });
         }
-   }).catch((err)=> {console.log("inside"); throw(err)})
+   }).catch((err)=> {console.log("inside"); throw(err)});
 }
 
 export const getRole = async (id: string): Promise<string | undefined> => {
