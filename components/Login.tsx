@@ -26,7 +26,7 @@ export function LoginView() {
     const handleLogin = async () => {
         await signInWithEmailAndPassword(getAuth(), user.email, user.password).then((res) => {
             console.log('Successfully Logged In!');
-            navigation.navigate('VistaCovid', { screen: 'Home' });
+            navigation.navigate('Menu', { screen: 'VistaCovid' });
         }).catch((err) => { console.log('Error! Please Try Again!'); setError(err.message); console.log(err) })
     }
 
