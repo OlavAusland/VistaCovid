@@ -28,8 +28,6 @@ export function LoginView() {
         getFirebaseRole();
     }, []);
 
-    // useEffect(() => {navigation.navigate('VistaCovid', {screen:'Room'});}, []);
-
     useEffect(() => { console.log(user.displayPassword) }, [user.displayPassword])
 
     const handleLogin = async () => {
