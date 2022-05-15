@@ -54,7 +54,7 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Co-Address: </Text>
-                            <Text  testID='co.adress'>{props.patient?.coAddress}</Text>
+                            <Text  testID='co.address'>{props.patient?.coAddress}</Text>
                         </Text>
                     </View>
                     <Pressable

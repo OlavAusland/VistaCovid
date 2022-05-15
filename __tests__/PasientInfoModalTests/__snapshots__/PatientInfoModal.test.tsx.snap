@@ -213,7 +213,7 @@ exports[`renders correctly 1`] = `
             Co-Address: 
           </Text>
           <Text
-            testID="co.adress"
+            testID="co.address"
           >
             
           </Text>
