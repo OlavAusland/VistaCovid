@@ -58,6 +58,18 @@ export const HomeView = (props: HomeScreenProps) => {
         };
         getUserData();
     }, []); */
+    if(error.errormodalVisible){
+        return (
+            <Errormodal error={error} handleRequestClose={handleRequestClose} />
+        )
+    }
+
+    if(modalVisible){
+        return (
+            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+        )
+    }
+
 
     if(user.role == Roles.ADMIN)
     {
@@ -77,7 +89,7 @@ export const HomeView = (props: HomeScreenProps) => {
                             <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
                             <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                         </TouchableOpacity>
-                        <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+                        
                     </View>
                 }
                 <View style={{ flex: 4 }}>

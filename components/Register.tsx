@@ -16,6 +16,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, si
 import { auth } from '../firebase-config'
 import { SafetyModal } from './register/SafetyModal';
 import { USER_FACING_NOTIFICATIONS } from 'expo-permissions';
+import { ErrorType } from '../domain/Errortype';
 
 export function RegisterView()
 {
@@ -28,7 +29,7 @@ export function RegisterView()
         phone: undefined, city: undefined, code: undefined
     });
 
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [dropdown, setDropdown] = useState<DropDownType>({ 
         open: false, 
@@ -52,6 +53,7 @@ export function RegisterView()
 
     const handleRequestClose = () => {
         setModalVisible(false);
+        setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
     }
 
     const handleConfirmation = (email: string, password: string) => {
@@ -60,9 +62,9 @@ export function RegisterView()
             handleRegister().then(() => {signInWithEmailAndPassword(auth, email, password).then(() => {
                 console.log('Successfully Signed In!');
                 console.log(auth.currentUser?.uid)
-                }).catch((err) => {console.log(err)})
-            }).catch((err) => {console.log(err)});
-        }).catch((err) => {console.log(err)});
+                }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
+            }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
+        }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
     }
 
 
