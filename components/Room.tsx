@@ -9,7 +9,7 @@ import { NotesView } from './room/NotesView';
 import Notification from './Notification';
 
 import { getRoom, deleteRoom, getPatient } from '../api/firebaseAPI';
-import { getPatient as folkeregisterpatient } from '../api/folkeregisterModelAPI';
+import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { PatientInfoModal } from './room/PatientInfoModal';

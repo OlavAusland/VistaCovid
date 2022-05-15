@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/Fontisto';
 import { currentUser, Roles } from '../domain/UserType';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParameters, TabParameters } from '../domain/NavigationTypes';
+import { Errormodal } from './ErrorModal';
+import { ErrorType } from '../domain/Errortype';
 
 type  HomeScreenProps = NativeStackScreenProps<TabParameters, 'Home'>
 
@@ -17,10 +19,13 @@ export const HomeView = (props: HomeScreenProps) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [User, setUser] = useState<currentUser>({email: '', firstName: '', lastName: '', role: Roles.NONE, id:''});
+    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
+
 
 
     const handleRequestClose = () => {
         setModalVisible(false);
+        setError(false);
     }
 
     useEffect(() => {
@@ -31,16 +36,12 @@ export const HomeView = (props: HomeScreenProps) => {
         };
         getRoomsData();
     }, []);
-/* 
-    useEffect(() => {
-        const getUserData = () => {
-             getLoggedInUser().then((res) => {
-                setUser(res);
-            }).catch((err) => { console.log(err) });
-        };
-        getUserData();
-    }, []); */
 
+        if(modalVisible){
+            return (
+                <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={User} />
+            )
+        }
 
     return (
         <View style={homeStyle.container}>
@@ -52,7 +53,9 @@ export const HomeView = (props: HomeScreenProps) => {
                     <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
                     <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                 </TouchableOpacity>
-                <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={User} />
+               
+               <Errormodal errormessage={errormessage} handleRequestClose={handleRequestClose} errorModalVisible={errorModalVisible} ></Errormodal>
+
             </View>
             <View style={{ flex: 4 }}>
                 <ScrollView contentContainerStyle={homeStyle.body}>
