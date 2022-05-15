@@ -12,9 +12,10 @@ import { DropDownType} from '../domain/DropDownType';
 import { dropdownStyles } from '../styles/dropdownStyle';
 
 // * AUTH
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase-config'
 import { SafetyModal } from './register/SafetyModal';
+import { USER_FACING_NOTIFICATIONS } from 'expo-permissions';
 
 export function RegisterView()
 {
@@ -40,6 +41,9 @@ export function RegisterView()
 
     const handleRegister = async() => {
         await createUserWithEmailAndPassword(auth, user.email, user.password).then((res) => {
+            updateProfile(res.user, {displayName: user.firstName + " " + user.lastName}).then((res) => {
+                console.log('Profile Updated');
+            }).catch((err) => {});
             console.log('Successfully Created User!');
             signOut(auth).then().catch((err) => {console.log(err)});
         }).catch((err) => {console.log('Error! Please Try Again!'); setError(err.message)})
