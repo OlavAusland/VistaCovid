@@ -12,11 +12,10 @@ export type NoteData = {
 
 export type Room = {
     patientId: string,
-    roomNumber: string,
     lastUpdated: string | undefined,
-    heartRate: Array<GraphData> | undefined,
-    bloodPressure: Array<GraphData> | undefined,
-    oxygenLevel: Array<GraphData> | undefined,
-    notes: Array<NoteData> | undefined,
+    heartRate: Array<GraphData>,
+    bloodPressure: Array<GraphData>,
+    oxygenLevel: Array<GraphData>,
+    notes: Array<NoteData>,
     id: string
 }

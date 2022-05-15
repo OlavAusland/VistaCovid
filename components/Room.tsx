@@ -6,7 +6,6 @@ import { FolkeregisterPerson, Patient } from '../domain/PatientType';
 
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
-import Notification from './Notification';
 import { getRoom, getPatient } from '../api/firebaseAPI';
 import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -16,6 +15,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
 import { ErrorType } from '../domain/Errortype';
 import { Errormodal } from './ErrorModal';
+import { collection, doc, onSnapshot, query } from 'firebase/firestore';
+import { db } from '../firebase-config';
 LogBox.ignoreLogs(['Setting a timer']);
 
 
@@ -40,7 +41,6 @@ export function RoomView({ route, navigation }: Props) {
     }
 
     const [view, setView] = useState<string>('graphs')
-    Notification();
     useEffect(() => {
         const getRoomData = async () => {
             await getRoom(props?.roomId).then(async (res) => {
@@ -52,17 +52,24 @@ export function RoomView({ route, navigation }: Props) {
     }, []);
 
     useEffect(() => {
+        onSnapshot(doc(db, "Rooms", props.roomId), (doc) => {
+            console.log("Current data: ", doc.data());
+            setRoom(doc.data() as Room);
+        });
+    }, []);
+
+    useEffect(() => {
         const getPatientData = async () => {
             const id = room?.patientId;
 
             if (id) {
-                await folkeregisterpatient(id).then((res) => {
+                await getPatient(id).then((res) => {
                     setPatient(res);
                 }).catch();
             }
             
             if (!patient && id) {
-                await getPatient(id).then((res) => {
+                await folkeregisterpatient(id).then((res) => {
                     setPatient(res);
                 }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
             }
@@ -100,7 +107,7 @@ export function RoomView({ route, navigation }: Props) {
         return (
             <View style={roomStyle.container}>
                 <View style={roomStyle.header}>
-                    <Text style={roomStyle.headerText} >Room: {room?.roomNumber}</Text>
+                    <Text style={roomStyle.headerText} >Room: {room?.id}</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                         <Text style={{ fontSize: 20 }}>Patient: {patient?.firstname} {patient?.lastname}</Text>
                         <TouchableOpacity>
