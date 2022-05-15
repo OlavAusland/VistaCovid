@@ -40,7 +40,7 @@ export default function App() {
   return (
 
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='ManageRoles'> 
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Admin'> 
         <Stack.Screen name="VistaCovid" component={VistaCovid}/>
         <Stack.Screen name="Login" component={LoginView}/>
         <Stack.Screen name="Register" component={RegisterView}/>

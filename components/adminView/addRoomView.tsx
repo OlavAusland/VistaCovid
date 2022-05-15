@@ -26,8 +26,8 @@ export function AddRoom()
 
      const SuccessfullAlert = () =>
      Alert.alert(
-       "yay gikk bra",
-       "bitch",
+       "Successfully added room with room number: "+{roomNumber},
+       "",
        [
          { text: "OK", onPress: () => console.log("OK Pressed", roomNumber) }
        ]
@@ -35,8 +35,8 @@ export function AddRoom()
 
      const UnsuccessfullAlert = () =>
      Alert.alert(
-       "bitch det gikk ikke buuu",
-       "bitch",
+       "Could not add room with room number: ",
+       "Room might already exist",
        [
          { text: "OK", onPress: () => console.log("OK Pressed") }
        ]

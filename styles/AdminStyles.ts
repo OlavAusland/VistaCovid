@@ -94,6 +94,15 @@ export const adminStyle = StyleSheet.create({
       alignItems: "center",
       padding:10
    },
+
+   manageRoleText:{
+     fontSize: 20
+   },
+
+   addUserButton:{
+     padding: 20,
+     width: 500
+   },
     searchBar: {
       backgroundColor:'#C1E8FD',
       width: '50%',
@@ -103,7 +112,11 @@ export const adminStyle = StyleSheet.create({
       shadowOffset:{width:0, height:3},
       shadowOpacity:0.8,
       shadowRadius:2,
-      elevation:1
+      elevation:1, 
+      padding: 20
+  },
+  body:{
+    alignItems: "center"
   },
     //--------------modal styling------------------------------
     centeredView: {

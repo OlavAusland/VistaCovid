@@ -1,4 +1,4 @@
-import { db } from "../firebase-config";
+import { auth, db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { Room } from "../domain/RoomType";
@@ -24,21 +24,36 @@ export const deleteUser = async(id: string) => {
     });
 }
 
-// export const getRooms = async (): Promise<Room[]> => {
-//     return await getDocs(collection(db, 'Rooms')).then((res) => {
-//         return res.docs.map((doc) => <Room>({...doc.data(), id: doc.id}));
-//     }).catch((err) => {
-//         throw err;
-//     });
-// }
 
-export const getUser = async (): Promise<User[]> =>{
-    return await getDocs(collection(db, 'User')).then((res)=> {
-        return res.docs.map((doc) => <User>({...doc.data(), id: doc.id})):
+export const getUsers = async(): Promise<User[]> => {
+    return await getDocs(collection(db, 'User')).then((res) =>{
+        return res.docs.map((doc) => <User>({...doc.data()}));
     }).catch((err) => {
         throw err;
     });
-}
+} 
+
+// auth
+// .getUsers([
+//     { uid: 'uid1' },
+//     { email: 'user2@example.com' },
+//     { phoneNumber: '+15555550003' },
+//     { providerId: 'google.com', providerUid: 'google_uid4' },
+//   ])
+//   .then((getUsersResult) => {
+//     console.log('Successfully fetched user data:');
+//     getUsersResult.users.forEach((userRecord) => {
+//       console.log(userRecord);
+//     });
+
+//     console.log('Unable to find users corresponding to these identifiers:');
+//     getUsersResult.notFound.forEach((userIdentifier) => {
+//       console.log(userIdentifier);
+//     });
+//   })
+//   .catch((error) => {
+//     console.log('Error fetching user data:', error);
+//   });
 
 
 export const getLoggedInUser = () => {
@@ -46,6 +61,7 @@ export const getLoggedInUser = () => {
     const user = auth.currentUser;
     return user;
 }
+
 
 // Patients
 
@@ -78,11 +94,11 @@ export const getPatient = async (id: string) => {
 export const addRoom = async (room: Room) => {
     getRoom(room.id).then(async(res)=> {
         if(res == undefined){
-            await setDoc(doc(db, 'Rooms', room.id), room).then((res) => {
+            await setDoc(doc(db, 'Rooms', room.id), room).then(() => {
                 console.log("added new room")
             });
         }
-   }).catch((err)=> {console.log("inside"); throw(err)})
+   }).catch((err)=> {console.log("inside"); throw(err)});
 }
 
 
