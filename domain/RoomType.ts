@@ -20,3 +20,13 @@ export type Room = {
     notes: Array<NoteData> | undefined,
     id: string
 }
+
+export type csvrooms = {
+    data: Array<helthData>
+}
+
+type helthData = {
+    bloodPressure: Array<GraphData> 
+    heartRate: Array<GraphData>
+    oxygenLevel: Array<GraphData>
+}

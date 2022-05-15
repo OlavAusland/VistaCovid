@@ -43,7 +43,14 @@ export function AddRoom()
      );
 
      const AddRoom = () =>{
-         addRoom(newroom).then(() => {SuccessfullAlert()}).catch(() => {UnsuccessfullAlert()})
+        addRoom(newroom).then((res) => {
+            if (res) {
+                 SuccessfullAlert()
+            }
+        }).catch((err) => {
+            console.log("Error: " + err);
+            UnsuccessfullAlert()
+        })
      }
 
     return(

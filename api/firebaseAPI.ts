@@ -88,16 +88,28 @@ export const getPatient = async (id: string) => {
     });
 };
 
-export const addRoom = async (room: Room) => {
-    getRoom(room.id).then(async(res)=> {
-        if(res == undefined){
-            await setDoc(doc(db, 'Rooms', room.id), room).then((res) => {
-                console.log("added new room")
-                console.log(res)
-            });
+export const addRoom = async (room: Room): Promise<boolean> => {
+    try {
+        const response = await getRoom(room.id);
+
+        if (response) {
+            return false;
         }
-   }).catch((err)=> {console.log("inside"); throw(err)});
+    
+        await setDoc(doc(db, 'Rooms', room.id), room).then((res) => {
+            console.log("added new room")
+            console.log(res)
+        });
+    
+        return true;
+    } catch (e: any) {
+        console.log("Error in add room: " + e);
+        throw e;
+    }
+    
+   
 }
+
 
 export const getRole = async (id: string): Promise<string | undefined> => {
     return await getDoc(doc(db, 'User', id)).then((res) => {

@@ -54,15 +54,17 @@ export function RoomView({ route, navigation }: Props) {
     useEffect(() => {
         const getPatientData = async () => {
             const id = room?.patientId;
+            let tempPatient = undefined;
 
             if (id) {
-                await folkeregisterpatient(id).then((res) => {
+                await getPatient(id).then((res) => {
+                    tempPatient = res;
                     setPatient(res);
                 }).catch();
             }
             
-            if (!patient && id) {
-                await getPatient(id).then((res) => {
+            if (!tempPatient && id) {
+                await folkeregisterpatient(id).then((res) => {
                     setPatient(res);
                 }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
             }

@@ -49,15 +49,7 @@ export const HomeView = (props: HomeScreenProps) => {
         }
         getFirebaseRole();
     }, []);
-/* 
-    useEffect(() => {
-        const getUserData = () => {
-             getLoggedInUser().then((res) => {
-                setUser(res);
-            }).catch((err) => { console.log(err) });
-        };
-        getUserData();
-    }, []); */
+
     if(error.errormodalVisible){
         return (
             <Errormodal error={error} handleRequestClose={handleRequestClose} />
