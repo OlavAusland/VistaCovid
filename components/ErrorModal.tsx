@@ -1,11 +1,12 @@
 import { Modal, View, Text, Pressable } from "react-native";
+import { ErrorType } from "../domain/Errortype";
 import { erroStyle } from "../styles/ErrorStyle";
 
 
 type ErrorModalProps = {
-    errormessage: Error | undefined,
+    error: ErrorType
     handleRequestClose: Function
-    errorModalVisible: boolean
+   
 };
 
 export const Errormodal = (props: ErrorModalProps) => {
@@ -14,13 +15,13 @@ export const Errormodal = (props: ErrorModalProps) => {
             animationType="slide"
             statusBarTranslucent={true}
             transparent={true}
-            visible={props.errorModalVisible}
+            visible={props.error.errormodalVisible}
             onRequestClose={() => props.handleRequestClose()}
             testID="patientInfoModal"
         >
             <View style={erroStyle.centeredView}>
                 <View style={erroStyle.modalView}>
-                    <Text style={erroStyle.modalText}>Error: {props.errormessage?.message}</Text>
+                    <Text style={erroStyle.modalText}>Error: {props.error.errorObject?.message}</Text>
                     <View style={{flex:1}}>
                         <Pressable
                             style={[erroStyle.button, erroStyle.buttonClose]}

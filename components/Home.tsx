@@ -25,14 +25,14 @@ export const HomeView = (props: HomeScreenProps) => {
 
     const handleRequestClose = () => {
         setModalVisible(false);
-        setError(false);
+        setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
     }
 
     useEffect(() => {
         const getRoomsData = async () => {
             await getRooms().then((res) => {
                 setRooms(res);
-            }).catch((err) => { console.log(err) });
+            }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true})); });
         };
         getRoomsData();
     }, []);
@@ -40,6 +40,12 @@ export const HomeView = (props: HomeScreenProps) => {
         if(modalVisible){
             return (
                 <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={User} />
+            )
+        }
+      
+        if(error.errormodalVisible){
+            return (
+                <Errormodal error={error} handleRequestClose={handleRequestClose} />
             )
         }
 
@@ -53,9 +59,6 @@ export const HomeView = (props: HomeScreenProps) => {
                     <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
                     <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                 </TouchableOpacity>
-               
-               <Errormodal errormessage={errormessage} handleRequestClose={handleRequestClose} errorModalVisible={errorModalVisible} ></Errormodal>
-
             </View>
             <View style={{ flex: 4 }}>
                 <ScrollView contentContainerStyle={homeStyle.body}>
