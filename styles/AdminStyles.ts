@@ -1,13 +1,15 @@
 import { StyleSheet, Platform} from "react-native";
 
 export const adminStyle = StyleSheet.create({
+  // body:{
+  //   backgroundColor: '#E5FCFF'
+  // },
     container: {
-        //marginTop: 20,
         backgroundColor: '#E5FCFF'
     },
     header: {
         flex: 1,
-        backgroundColor: 'powderblue',
+        backgroundColor: '#E5FCFF',
         padding: 30,
         alignItems: 'center',
     },
@@ -15,22 +17,10 @@ export const adminStyle = StyleSheet.create({
         fontSize: 30,
     },
     //-----------------------Buttons in main admin view---------------------------
-    addRoom: {
-        flex: 2,
-        backgroundColor: 'powderblue',
-        padding: 50,
-        // marginTop:3,
-        // marginBottom:3,
-        // marginLeft:3,
-        // marginRight:3
-    },
-    manageRoom: {
-        flex: 3,
-        backgroundColor:'powderblue',
-        padding: 50,
-        // marginBottom:3,
-        // marginLeft:3,
-        // marginRight:3
+    adminViewButtons:{
+      flex: 1,
+      backgroundColor: '#E5FCFF',
+      padding: 50,
     },
     //--------------------add room styling-----------------------------
     addRoomContainer: {
@@ -54,23 +44,6 @@ export const adminStyle = StyleSheet.create({
       padding: 20,
     },
     //---------------manage room styling-----------------------
-    editRoom:{
-      // height: 40,
-      // margin: 12,
-      // padding: 10,
-    },
-    editRoomNumber:{
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-    },
-    editRoomButton:{
-      flex: 2,
-      backgroundColor: 'powderblue',
-      padding: 50,
-    },
-
     deleteRoom:{
       // height: 40,
       // margin: 12,

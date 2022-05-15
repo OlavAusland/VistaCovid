@@ -11,7 +11,6 @@ export function AddRoom()
 
     const [roomNumber, setRoomNumber] = useState("")
 
- 
     const newroom: Room = {
         id: roomNumber,
         patientId: "",
@@ -36,7 +35,7 @@ export function AddRoom()
      const UnsuccessfullAlert = () =>
      Alert.alert(
        "Could not add room with room number: ",
-       "Room might already exist",
+       "",
        [
          { text: "OK", onPress: () => console.log("OK Pressed") }
        ]

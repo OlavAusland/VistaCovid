@@ -94,7 +94,7 @@ export const getPatient = async (id: string) => {
 export const addRoom = async (room: Room) => {
     getRoom(room.id).then(async(res)=> {
         if(res == undefined){
-            await setDoc(doc(db, 'Rooms', room.id), room).then((res) => {
+            await addDoc(collection(db, 'Rooms', room.id), room).then((res) => {
                 console.log("added new room")
                 console.log(res)
             });
