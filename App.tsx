@@ -1,6 +1,4 @@
 import 'react-native-gesture-handler';
-import { StyleSheet, Text, View, Button} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { DrawerParameters, StackParameters, TabParameters } from './domain/NavigationTypes';
 
 import Icon from 'react-native-vector-icons/Fontisto';
@@ -34,7 +32,9 @@ function Menu() {
     <Drawer.Navigator  screenOptions={{headerTitle:''}} drawerContent={props => {
       return (
         <DrawerContentScrollView>
-          <DrawerItem label="Logout" onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
+          <DrawerItem label="Personnel"/>
+          <DrawerItem label="Information / T&C" onPress={() => {props.navigation.navigate("Informationpage");}} />
+          <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
         </DrawerContentScrollView>
       )
     }}>
