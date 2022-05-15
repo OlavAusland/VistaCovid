@@ -18,7 +18,7 @@ export const adminStyle = StyleSheet.create({
     addRoom: {
         flex: 2,
         backgroundColor: 'powderblue',
-        padding: 50,
+        padding:50,
         // marginTop:3,
         // marginBottom:3,
         // marginLeft:3,

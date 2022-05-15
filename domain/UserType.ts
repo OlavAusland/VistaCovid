@@ -1,8 +1,8 @@
 export enum Roles {
-    ADMIN,                      
-    DOCTOR,
+    NONE,
     NURSE,
-    NONE
+    DOCTOR,
+    ADMIN                      
 };
 
 export type User = {

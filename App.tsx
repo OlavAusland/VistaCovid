@@ -32,8 +32,6 @@ function Menu() {
     <Drawer.Navigator  screenOptions={{headerTitle:''}} drawerContent={props => {
       return (
         <DrawerContentScrollView>
-          <DrawerItem label="Personnel"/>
-          <DrawerItem label="Information / T&C" onPress={() => {props.navigation.navigate("Informationpage");}} />
           <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
         </DrawerContentScrollView>
       )

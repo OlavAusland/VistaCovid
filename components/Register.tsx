@@ -15,7 +15,7 @@ import { dropdownStyles } from '../styles/dropdownStyle';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase-config'
 import { SafetyModal } from './register/SafetyModal';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
 export function RegisterView()
@@ -41,15 +41,19 @@ export function RegisterView()
    
 
     const handleRegister = async() => {
-        await createUserWithEmailAndPassword(auth, user.email, user.password).then((res) => {
-            updateProfile(res.user, {displayName: user.firstName + " " + user.lastName}).then((res) => {
+        await createUserWithEmailAndPassword(auth, user.email, user.password).then(async(res) => {
+            console.log(res.user.uid    )
+            await updateProfile(res.user, {displayName: user.firstName + " " + user.lastName}).then((res) => {
                 console.log('Profile Updated');
             }).catch((err) => {});
-            setDoc(doc(db, 'User', res.user.uid), {role: user.role}).then((res) => {
+
+            await setDoc(doc(db, 'User', res.user.uid), {role: Roles[parseInt(user.role.toString())]}).then((res) => {
                 console.log('Added User Role');
             }).catch((err) => {console.log(err)});
+
             console.log('Successfully Created User!');
-            signOut(auth).then().catch((err) => {console.log(err)});
+            
+            await signOut(auth).then().catch((err) => {console.log(err)});
         }).catch((err) => {console.log('Error! Please Try Again!'); setError(err.message)})
 
     }
@@ -59,11 +63,9 @@ export function RegisterView()
     }
 
     const handleConfirmation = (email: string, password: string) => {
-        console.log("password: " + password + '\n email:' + email)
         signInWithEmailAndPassword(auth, email, password).then(() =>{
             handleRegister().then(() => {signInWithEmailAndPassword(auth, email, password).then(() => {
                 console.log('Successfully Signed In!');
-                console.log(auth.currentUser?.uid)
                 }).catch((err) => {console.log(err)})
             }).catch((err) => {console.log(err)});
         }).catch((err) => {console.log(err)});
