@@ -6,6 +6,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { DropDownType } from '../../domain/DropDownType';
 import { newPatientProps } from '../../domain/AssignPatietTypes';
+import { auth } from '../../firebase-config';
 
 
 
@@ -45,7 +46,7 @@ export const NewPatient = (props: newPatientProps) => {
                 </View>
             </View>
             <View style={{ marginTop: 10 }}>
-                        <Text>Responsible: {/* {props?.user.lastName}, {props?.user.firstName} */}</Text>
+                        <Text>Responsible: s{auth.currentUser?.displayName}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignContent: 'space-between', marginTop: 140 }}>
                         <Pressable onPress={() => props.handleNewPatient()} >

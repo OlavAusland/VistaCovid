@@ -124,6 +124,7 @@ export function RoomView({ route, navigation }: Props) {
                         onPress={() => { setView('notes') }}>
                         <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Notes</Text>
                     </TouchableOpacity>
+                    {/*}
                     <TouchableOpacity style={{ flexBasis: '50%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 30 }}
                         onPress={() => { setDate({ ...date, startDate: { ...date.startDate, visible: true } }) }}>
                         <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Date From</Text>
@@ -132,6 +133,7 @@ export function RoomView({ route, navigation }: Props) {
                         onPress={() => { setDate({ ...date, endDate: { ...date.endDate, visible: true } }) }}>
                         <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Date To</Text>
                     </TouchableOpacity>
+                    */}
                     <TouchableOpacity style={{ flexBasis: '100%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 60 }}>
                         <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Export</Text>
                     </TouchableOpacity>
