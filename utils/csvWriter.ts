@@ -1,15 +1,21 @@
-import RNFS from 'react-native-fs';
+import * as FileSystem from 'expo-file-system';
+const { StorageAccessFramework } = FileSystem;
 
-
-export const writeCSV = (csv: any) => {
-    var path = RNFS.DocumentDirectoryPath + '/healthdata.csv';
-
-    // write the file
-    RNFS.writeFile(path, csv, 'utf8').then((success) => {
-        console.log('FILE WRITTEN!');
-    }).catch((err) => {
-        console.log(err.message);
+export const saveFile = async (filename: string, data: any) => {
+  const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
+  // Check if permission granted
+  if (permissions.granted) {
+    // Get the directory uri that was approved
+    let directoryUri = permissions.directoryUri;
+    // Create file and pass it's SAF URI
+    await StorageAccessFramework.createFileAsync(directoryUri, filename, "application/text").then(async(fileUri) => {
+      // Save data to newly created file
+      await FileSystem.writeAsStringAsync(fileUri, data, { encoding: FileSystem.EncodingType.UTF8 });
+    })
+    .catch((e) => {
+      console.log(e);
     });
-
-    return csv;
+  } else {
+    alert("You must allow permission to save.")
+  }
 }

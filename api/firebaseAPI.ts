@@ -1,7 +1,7 @@
 import { auth, db } from "../firebase-config";
-import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query} from 'firebase/firestore'
+import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query, arrayUnion} from 'firebase/firestore'
 import { User } from "../domain/UserType";
-import { Room } from "../domain/RoomType";
+import { NoteData, Room } from "../domain/RoomType";
 import { FolkeregisterPerson, Patient } from "../domain/PatientType";
 import { getAuth } from "firebase/auth";
 
@@ -30,7 +30,15 @@ export const getUsers = async(): Promise<User[]> => {
     }).catch((err) => {
         throw err;
     });
-} 
+}
+
+export const addNote = async(id: string, note: NoteData) => {
+    await setDoc(doc(db, 'Rooms', id), {notes:arrayUnion(note)}, {merge: true}).then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
+}
 
 // auth
 // .getUsers([
@@ -149,8 +157,8 @@ export const getAvailableRooms = async (): Promise<Room[]> => {
 }
 
 export const getRoom = async (id: string): Promise<Room | undefined> => {
-    return await getDoc(doc(db, 'Rooms', id)).then((res) => {
-        return res.data() as Room;
+    return await getDoc(doc(db, 'Rooms', id)).then((doc) => {
+        return {...doc.data(), id:doc.id} as Room;
     }).catch((err) => {
         throw err;
     }
