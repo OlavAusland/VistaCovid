@@ -96,7 +96,24 @@ export const getPatient = async (id: string) => {
     });
 };
 
+export const addEmptyRoom = async (id: string) => {
+    await setDoc(doc(db, 'Rooms', id), {
+        patientId: '',
+        lastUpdated: Date.now(),
+        heartRate: [],
+        bloodPressure: [],
+        oxygenLevel: [],
+        notes: [],
+        id: id
+    }).then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
 export const addRoom = async (room: Room): Promise<boolean> => {
+    console.log('ADDED ROOM')
     try {
         const response = await getRoom(room.id);
 
@@ -129,16 +146,13 @@ export const getRole = async (id: string): Promise<string | undefined> => {
 
 
 export const deleteRoom = async (id: string) => {
-    getRoom(id).then(async(res)=>{
-        if(res?.patientId == ""){
-            await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
-                console.log('Deleted Room: ', res);
-            }).catch((err) => {
-                console.log(console.log('Failed to delete room with id: ', id));
-                console.log('Error: ', err);
-            });
-        }
-    })
+    console.log("ID: " + id)
+    await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
+        console.log('Deleted Room: ', res);
+    }).catch((err) => {
+        console.log(console.log('Failed to delete room with id: ', id));
+        console.log('Error: ', err);
+    });
 }
 
 

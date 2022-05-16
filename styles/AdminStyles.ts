@@ -72,10 +72,11 @@ export const adminStyle = StyleSheet.create({
     },
 
     deleteRoom:{
-      // height: 40,
-      // margin: 12,
-      // borderWidth: 1,
-      // padding: 10,
+      backgroundColor:'white',
+      marginBottom:50,
+      paddingTop:10,
+      paddingBottom:10,
+      flexDirection:'row'
     },
     deleteRoomNumber:{
       height: 40,

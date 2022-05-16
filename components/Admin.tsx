@@ -23,11 +23,8 @@ export function AdminView()
                     <Text style={adminStyle.headertext}>Admin View</Text>
                 </View>
                 <View>
-                    <View style={adminStyle.addRoom}>
-                        <Button title='Add Room' onPress={() => {navigation.navigate('AddRoom')}}></Button>
-                    </View>
                     <View style={adminStyle.manageRoom}>
-                        <Button title='Delete Room' onPress={() => {navigation.navigate('ManageRoom')}}></Button>
+                        <Button title='Manage Rooms' onPress={() => {navigation.navigate('ManageRoom')}}></Button>
                     </View>
                     <View style={adminStyle.manageRoom}>
                         <Button title='Manage Users' onPress={() => {navigation.navigate('ManageRoles')}}></Button>
