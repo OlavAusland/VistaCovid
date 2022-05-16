@@ -1,41 +1,22 @@
-import { Text, View, TextInput, Pressable, Modal, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { getPatient } from '../../api/folkeregisterModelAPI';
-import { FolkeregisterPerson } from '../../domain/PatientType';
+import { Text, View, Pressable, Modal } from 'react-native';
+import { useEffect } from 'react';
 import { patientInfoStyle } from '../../styles/PatientInfoStyle';
+import { PatientInfoModalProps } from '../../domain/patientInfoType';
+import Gender from 'react-native-vector-icons/Ionicons';
 
-
-type PatientInfoModalProps = {
-    modalVisible: boolean;
-    handleRequestClose: Function;
-    fnr: string;
-}
 
 
 export const PatientInfoModal = (props: PatientInfoModalProps) => {
-    const [patient, setPatient] = useState<FolkeregisterPerson>();
-    const [error, setError] = useState<Error | undefined>(undefined);
-
+    
     useEffect(() => {
-        getPatient(props.fnr).then(patient => {
-            setPatient(patient);
-        }).catch(err => setError(err));
-    }, []);
-
-    if (error) {
-        return <View>
-            <Text>{error.message}</Text>
-            <Text>Fek off ya lil cunt</Text>
-        </View>
-    }
+        console.log(props.patient);
+    }, [props.patient]);
 
     return (
-
         <Modal
             animationType="slide"
             statusBarTranslucent={true}
             transparent={true}
-            visible={props.modalVisible}
             onRequestClose={() => props.handleRequestClose()}
             testID="patientInfoModal"
         >
@@ -45,31 +26,35 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
                     <View style={patientInfoStyle.text}>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Lastname: </Text>
-                            <Text testID='lastname'>{patient?.lastname}</Text>
+                            <Text testID='lastname'>{props.patient?.lastname}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Firstname: </Text>
-                            <Text>{patient?.firstname} {patient?.midlename}</Text>
+                            <Text testID='firstname'>{props.patient?.firstname} {props.patient?.midlename}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>SSN: </Text>
-                            <Text>{patient?.ssn}</Text>
+                            <Text testID='ssn'>{props.patient?.ssn}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Gender: </Text>
-                            <Text>{patient?.gender}</Text>
+                            <Text testID='gender'>{props.patient?.gender}</Text>
+                            {(props.patient?.gender === 'female' || props.patient?.gender === 'kvinne') &&
+                            <Gender name="female" size={18} color="#0274a1"/> }
+                            {(props.patient?.gender === 'male' || props.patient?.gender === 'mann') &&
+                            <Gender name="male" size={18} color="#0274a1"/> }
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Address: </Text>
-                            <Text>{patient?.address} {patient?.housenumber}</Text>
+                            <Text  testID='address'>{props.patient?.address} {props.patient?.housenumber}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>City: </Text>
-                            <Text>{patient?.city}</Text>
+                            <Text  testID='city'>{props.patient?.city}</Text>
                         </Text>
                         <Text style={{ fontSize: 15, marginBottom: 10 }}>
                             <Text style={{ fontWeight: 'bold' }}>Co-Address: </Text>
-                            <Text>{patient?.coAddress}</Text>
+                            <Text  testID='co.address'>{props.patient?.coAddress}</Text>
                         </Text>
                     </View>
                     <Pressable
@@ -83,4 +68,3 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
         </Modal>
     );
 }
-

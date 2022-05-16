@@ -32,5 +32,14 @@ export const assignPatientStyle = StyleSheet.create({
         backgroundColor: 'white',
         paddingLeft:4,
         marginBottom:8
-    }
+    },
+    newPatientButton: { 
+        backgroundColor: '#0274a1',
+        width: 130,
+        height: 30,
+        borderRadius: 10,
+        marginTop: 5,
+        flexDirection:'row',
+       
+    },
 })
