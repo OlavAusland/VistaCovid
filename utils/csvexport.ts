@@ -5,7 +5,9 @@ import { getRoom } from '../api/firebaseAPI';
 import { Room } from '../domain/RoomType';
 import { db } from '../firebase-config';
 import { Parser } from "json2csv";
-import { writeCSV } from './csvWriter';
+import { writeCSV } from './csvwriter';
+import RNFS from 'react-native-fs';
+
 
 
 type csvProps = {
@@ -26,11 +28,10 @@ export const csvexport = async (props: csvProps) => {
     const rooms: CsvData[] = [];
     for (const room of props.rooms) {
         const response = await getRoom(room);
-
+       
         if (!response) {
             throw new Error(`Room ${room} does not exist`);
         }
-
         const data = mapHealthDataToElement(room, response, props.fromDate, props.toDate);
         rooms.push(...data);
     };
@@ -47,10 +48,9 @@ export const csvexport = async (props: csvProps) => {
         console.error(e);
         throw new Error(e);
     }
-
-    writeCSV(csv={csv});
-    /* // Create file with CSV as body
-
+/* 
+    //writeCSV(csv={csv});
+    // Create file with CSV as body
 
     var path = RNFS.DocumentDirectoryPath + '/healthdata.csv';
 
@@ -60,8 +60,8 @@ export const csvexport = async (props: csvProps) => {
     }).catch((err) => {
         console.log(err.message);
     });
-
-    return csv; */
+*/
+    return csv;
 }
 
 const mapHealthDataToElement = (
@@ -74,25 +74,24 @@ const mapHealthDataToElement = (
         throw new Error(`Room ${roomNumber} does not have blood pressure data`);
     }
 
-    return data.bloodPressure.flatMap((e: any, index: number) => {
+    return( data.bloodPressure.flatMap((e: any, index: number) => {
         if (data.heartRate === undefined || data.oxygenLevel === undefined) {
             throw new Error(`Room ${roomNumber} does not have health data`);
         }
-
         const time = new Date(e.time);
-
+        
         if (!isWithinDateRange(time, fromDate, toDate)) {
             return [];
         }
         
-        return {
+        return ({
             room: roomNumber,
             time: new Date(e.time),
             bloodPressure: e.value,
             heartRate: data.heartRate[index].value,
             oxygenLevel: data.oxygenLevel[index].value
-        };
-    });
+        });
+    }));
 }
 
 const isWithinDateRange = (date: Date, fromDate: Date | undefined, toDate: Date | undefined): boolean => {

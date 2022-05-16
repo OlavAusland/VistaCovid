@@ -14,7 +14,6 @@ export function AddRoom() {
     const newroom: Room = {
         id: roomNumber,
         patientId: "",
-        roomNumber: roomNumber,
         lastUpdated: Date.now().toString(),
         heartRate: [],
         bloodPressure: [],

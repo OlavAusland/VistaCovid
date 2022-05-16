@@ -2,9 +2,11 @@ import { getRoom } from "../../api/firebaseAPI";
 import { GraphData, Room } from "../../domain/RoomType";
 import moment from "moment";
 import { csvexport } from "../../utils/csvexport";
+import { writeCSV } from "../../utils/csvwriter";
 
 const date = moment("2022-05-15T21:11:48.620Z");
 
+console.log(date);
 const heartRate: GraphData[] = [
     {
         time: date.valueOf(),
@@ -52,7 +54,6 @@ const oxygenLevel: GraphData[] = [
 
 const mockRoomResponse: Room = {
     patientId: "123351",
-    roomNumber: "A0 001",
     lastUpdated: new Date().toISOString(),
     heartRate,
     bloodPressure,
@@ -62,7 +63,7 @@ const mockRoomResponse: Room = {
 }
 
 jest.mock("../../api/firebaseAPI");
-jest.mock("../../utils/csvexport");
+jest.mock("../../utils/csvwriter");
 /* jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter.js', () => { 
    const { EventEmitter } = require('events'); 
    return EventEmitter; 
@@ -72,6 +73,10 @@ jest.mock("../../utils/csvexport");
 test("Should export health data from firebase to CSV", async () => {
     // @ts-ignore
     getRoom.mockResolvedValueOnce(mockRoomResponse);
+
+    console.log('response:', mockRoomResponse)
+    
+    //writeCSV.mockResolveValueOnce(true);
 
     const healthDataCSV = await csvexport({ rooms: ["A0 001"] });
     console.log(healthDataCSV);
