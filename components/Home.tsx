@@ -1,9 +1,9 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
 import { Room } from '../domain/RoomType';
-import { getLoggedInUser, getRole, getRooms } from '../api/firebaseAPI';
+import { addRoom, getLoggedInUser, getRole, getRooms } from '../api/firebaseAPI';
 import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
 import Icon from 'react-native-vector-icons/Fontisto';
 import { currentUser, Roles } from '../domain/UserType';
@@ -11,9 +11,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParameters, TabParameters } from '../domain/NavigationTypes';
 import { Errormodal } from './ErrorModal';
 import { ErrorType } from '../domain/Errortype';
-import { auth } from '../firebase-config';
+import { auth, db } from '../firebase-config';
 import { AdminView } from './Admin';
-import { sendEmail } from '../utils/email-sender';
+import { collection, doc, onSnapshot, query, where} from 'firebase/firestore';
 
 type  HomeScreenProps = NativeStackScreenProps<TabParameters, 'Home'>
 
@@ -40,6 +40,17 @@ export const HomeView = (props: HomeScreenProps) => {
     }, []);
 
     useEffect(() => {
+        const q = query(collection(db, 'Rooms'), where('patientId', '!=', ''));
+        onSnapshot(q, (querySnapshot) => {
+            const _rooms: Room[] = [];
+            querySnapshot.forEach((doc) => {
+                _rooms.push(doc.data() as Room);
+            });
+            setRooms(_rooms);
+        });
+    }, []);
+
+    useEffect(() => {
         const getFirebaseRole = async() => {
             await getRole(auth.currentUser ? auth.currentUser.uid : 'default').then((role) => {
                 if(role !== undefined)
@@ -49,15 +60,7 @@ export const HomeView = (props: HomeScreenProps) => {
         }
         getFirebaseRole();
     }, []);
-/* 
-    useEffect(() => {
-        const getUserData = () => {
-             getLoggedInUser().then((res) => {
-                setUser(res);
-            }).catch((err) => { console.log(err) });
-        };
-        getUserData();
-    }, []); */
+
     if(error.errormodalVisible){
         return (
             <Errormodal error={error} handleRequestClose={handleRequestClose} />
@@ -95,17 +98,17 @@ export const HomeView = (props: HomeScreenProps) => {
                 <View style={{ flex: 4 }}>
                     <ScrollView contentContainerStyle={[homeStyle.body]}>
                         {rooms.length > 0 &&
-                            rooms.filter((room) => {if(room.patientId != '' && room.roomNumber.includes(keyword)){return room}}).map((room: Room) => {
+                            rooms.filter((room) => {if(room.patientId != '' && room.id.includes(keyword)){return room}}).map((room: Room) => {
                                 return (
-                                    <TouchableOpacity key={'room:' + room.roomNumber} style={homeStyle.card}
+                                    <TouchableOpacity key={'room:' + room.id} style={homeStyle.card}
                                     onPress={() => {props.navigation.push('Room', {roomId:room.id})}}>
                                         <BarChart
                                             data={{
                                                 labels: ['BL', 'O2', 'HR'],
                                                 datasets: [{
-                                                    data: [room.bloodPressure ? room.bloodPressure[room.bloodPressure.length - 1].value : 0,
-                                                    room.oxygenLevel ? room.oxygenLevel[room.oxygenLevel.length - 1].value : 0,
-                                                    room.heartRate ? room.heartRate[room.heartRate.length - 1].value : 0]
+                                                    data: [room.bloodPressure.length > 0 ? room.bloodPressure[room.bloodPressure.length - 1].value : 0,
+                                                    room.oxygenLevel.length > 0 ? room.oxygenLevel[room.oxygenLevel.length - 1].value : 0,
+                                                    room.heartRate.length > 0 ? room.heartRate[room.heartRate.length - 1].value : 0]
                                                 }]
                                             }}
                                             yAxisLabel={''}
@@ -133,7 +136,7 @@ export const HomeView = (props: HomeScreenProps) => {
                                             fromZero={true}
                                         />
                                         <View style={{ flex:9, flexDirection: 'column' }}>
-                                            <Text> Room: {room.roomNumber}</Text>
+                                            <Text> Room: {room.id}</Text>
                                             <Text> Patient: {room.patientId ? room.patientId : 'No Patient'}</Text>
                                         </View>
                                         <View style={{flex:1, backgroundColor:['yellow', 'red', 'green'][~~(Math.random()*3)]}}/>

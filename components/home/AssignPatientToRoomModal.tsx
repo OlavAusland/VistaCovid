@@ -24,7 +24,7 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
         getAvailableRooms().then((room: Room[]) => {
             setDropdown(prev => ({ ...prev, items: [] }));
             room.forEach((room: Room) => {
-                const item: ItemType = { label: room.roomNumber, value: room.id, };
+                const item: ItemType = { label: room.id, value: room.id, };
                 setDropdown(prev => ({ ...prev, items: [...prev.items, item] }));
             })
         })

@@ -15,7 +15,6 @@ import { dropdownStyles } from '../styles/dropdownStyle';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase-config'
 import { SafetyModal } from './register/SafetyModal';
-import { USER_FACING_NOTIFICATIONS } from 'expo-permissions';
 import { ErrorType } from '../domain/Errortype';
 import { addDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';

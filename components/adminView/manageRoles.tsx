@@ -51,7 +51,7 @@ export function ManageRoles(){
                 <View style={adminStyle.addUserButton}>
                 <Button
                 title="AddUser"
-                onPress={()=> {navigation.navigate('CreateUser')}}
+                onPress={()=> {navigation.navigate('Register')}}
                 />
                 </View>
                 <TextInput 
