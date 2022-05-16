@@ -52,7 +52,7 @@ export const HomeView = (props: HomeScreenProps) => {
 
     useEffect(() => {
         const getFirebaseRole = async() => {
-            await getRole(auth.currentUser? auth.currentUser.uid : 'default').then((role) => {
+            await getRole(auth.currentUser ? auth.currentUser.uid : 'default').then((role) => {
                 if(role !== undefined)
                     setUser(prev => ({...prev, role: Roles[role?.toUpperCase() as keyof typeof Roles]}));
                     setIsLoading(false);
