@@ -16,6 +16,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
 import { ErrorType } from '../domain/Errortype';
 import { Errormodal } from './ErrorModal';
+import { csvexport } from '../utils/csvexport';
 LogBox.ignoreLogs(['Setting a timer']);
 
 
@@ -127,7 +128,9 @@ export function RoomView({ route, navigation }: Props) {
                         onPress={() => { setDate({ ...date, endDate: { ...date.endDate, visible: true } }) }}>
                         <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Date To</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexBasis: '100%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 60 }}>
+                    <TouchableOpacity style={{ flexBasis: '100%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 60 }}
+                        onPress={() => {csvexport({ rooms: ["A4 135", "B0 164"], fromDate: new Date() })}}>
+                        
                         <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Export</Text>
                     </TouchableOpacity>
                     <View>

@@ -92,6 +92,8 @@ export const addRoom = async (room: Room): Promise<boolean> => {
     try {
         const response = await getRoom(room.id);
 
+        console.log(response);
+
         if (response) {
             return false;
         }
@@ -106,8 +108,6 @@ export const addRoom = async (room: Room): Promise<boolean> => {
         console.log("Error in add room: " + e);
         throw e;
     }
-    
-   
 }
 
 
