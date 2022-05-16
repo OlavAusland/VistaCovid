@@ -2,7 +2,6 @@ import { getRoom } from "../../api/firebaseAPI";
 import { GraphData, Room } from "../../domain/RoomType";
 import moment from "moment";
 import { csvexport } from "../../utils/csvexport";
-import { writeCSV } from "../../utils/csvwriter";
 
 const date = moment("2022-05-15T21:11:48.620Z");
 

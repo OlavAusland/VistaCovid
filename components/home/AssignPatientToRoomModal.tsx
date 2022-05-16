@@ -1,4 +1,4 @@
-import { Text, View, TextInput, Pressable, Modal, TouchableOpacity } from 'react-native';
+import { Text, View, Modal} from 'react-native';
 import { useEffect, useState } from 'react';
 import { getPatient } from '../../api/folkeregisterAPI';
 import { FolkeregisterPerson } from '../../domain/PatientType';
@@ -21,7 +21,6 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
     const [search, setSearch] = useState<string>("");
     const [newPatient, setNew] = useState<boolean>(false);
-    const [errormodal, setErrormodal] = useState<boolean>(false);
     const [e, setE] = useState<string>('');
 
 
@@ -78,7 +77,7 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
        setNew(true);
     }
     const handleErrorRequestClose = () => {
-        setErrormodal(false)
+        
         setError((prev) =>({...prev, errorObject: undefined, errormodalVisible:false}));
         
     }

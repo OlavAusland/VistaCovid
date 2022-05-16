@@ -156,6 +156,12 @@ export const getAvailableRooms = async (): Promise<Room[]> => {
     return availableRooms;
 }
 
+export const getOccupiedRooms = async (): Promise<Room[]> => {
+    const rooms: Room[] = await getRooms();
+    const occupiedRooms = rooms.filter(room => room.patientId !== null || room.patientId !== undefined || room.patientId !== '');
+    return occupiedRooms;
+}
+
 export const getRoom = async (id: string): Promise<Room | undefined> => {
     return await getDoc(doc(db, 'Rooms', id)).then((doc) => {
         return {...doc.data(), id:doc.id} as Room;

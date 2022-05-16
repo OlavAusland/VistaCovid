@@ -28,6 +28,7 @@
     "@react-navigation/stack": "^6.2.1",
     "@types/json2csv": "^5.0.3",
     "expo": "^45.0.4",
+    "expo-checkbox": "^2.1.0",
     "expo-device": "~4.2.0",
     "expo-location": "^14.2.2",
     "expo-media-library": "^14.1.0",
