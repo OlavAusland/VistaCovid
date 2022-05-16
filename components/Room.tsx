@@ -17,6 +17,7 @@ import { Errormodal } from './ErrorModal';
 import { csvexport } from '../utils/csvexport';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase-config';
+import { SafeAreaView } from 'react-native-safe-area-context';
 LogBox.ignoreLogs(['Setting a timer']);
 
 
@@ -118,7 +119,7 @@ export function RoomView({ route, navigation }: Props) {
     
     } else {
         return (
-            <View style={roomStyle.container}>
+            <SafeAreaView style={roomStyle.container}>
                 <View style={roomStyle.header}>
                     <Text style={roomStyle.headerText} >Room: {room?.id}</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -146,7 +147,7 @@ export function RoomView({ route, navigation }: Props) {
                 <View>
                 </View>
                 {(view === 'graphs' && room !== undefined) ? <GraphView room={room} setModal={setModal} modal={modal} /> : <NotesView room={room} />}
-            </View>
+            </SafeAreaView>
         );
     }
 }

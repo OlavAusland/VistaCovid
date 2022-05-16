@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
 import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
 import { Room } from '../domain/RoomType';
@@ -82,7 +82,7 @@ export const HomeView = (props: HomeScreenProps) => {
     }else if(user.role == Roles.NURSE || user.role == Roles.DOCTOR)
     {
         return (
-            <View style={homeStyle.container}>
+            <SafeAreaView style={homeStyle.container}>
                 <View style={homeStyle.header}>
                     <TextInput onChangeText={(text) => {setKeyword(text)}} placeholder={'Search For Room'} style={homeStyle.searchBar} />
                 </View>
@@ -147,7 +147,7 @@ export const HomeView = (props: HomeScreenProps) => {
                         }
                     </ScrollView>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }else if(isLoading){
         return(

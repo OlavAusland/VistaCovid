@@ -5,8 +5,7 @@ import { getRoom } from '../api/firebaseAPI';
 import { Room } from '../domain/RoomType';
 import { db } from '../firebase-config';
 import { Parser } from "json2csv";
-import { writeCSV } from './csvwriter';
-import RNFS from 'react-native-fs';
+import { saveFile } from './csvWriter';
 
 
 
@@ -48,19 +47,9 @@ export const csvexport = async (props: csvProps) => {
         console.error(e);
         throw new Error(e);
     }
-/* 
-    //writeCSV(csv={csv});
-    // Create file with CSV as body
 
-    var path = RNFS.DocumentDirectoryPath + '/healthdata.csv';
+    saveFile('data.csv', csv);
 
-    // write the file
-    RNFS.writeFile(path, csv, 'utf8').then((success) => {
-        console.log('FILE WRITTEN!');
-    }).catch((err) => {
-        console.log(err.message);
-    });
-*/
     return csv;
 }
 
