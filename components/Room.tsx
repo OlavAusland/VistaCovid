@@ -9,13 +9,13 @@ import { NotesView } from './room/NotesView';
 import { getRoom, getPatient } from '../api/firebaseAPI';
 import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
 import Icon from 'react-native-vector-icons/AntDesign';
-import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { PatientInfoModal } from './room/PatientInfoModal';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
 import { ErrorType } from '../domain/Errortype';
 import { Errormodal } from './ErrorModal';
-import { collection, doc, onSnapshot, query } from 'firebase/firestore';
+import { csvexport } from '../utils/csvexport';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase-config';
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -24,12 +24,12 @@ type Props = NativeStackScreenProps<StackParameters, 'Room'>;
 
 export function RoomView({ route, navigation }: Props) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [date, setDate] = useState({ startDate: { date: new Date(), visible: false }, endDate: { date: new Date(), visible: false } });
     const [patient, setPatient] = useState<Patient | FolkeregisterPerson>()
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
     const [modal, setModal] = useState(false);
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
+    const [csv, setCsv] = useState<string>("");
 
  
 
@@ -53,7 +53,6 @@ export function RoomView({ route, navigation }: Props) {
 
     useEffect(() => {
         onSnapshot(doc(db, "Rooms", props.roomId), (doc) => {
-            console.log("Current data: ", doc.data());
             setRoom(doc.data() as Room);
         });
     }, []);
@@ -61,14 +60,16 @@ export function RoomView({ route, navigation }: Props) {
     useEffect(() => {
         const getPatientData = async () => {
             const id = room?.patientId;
+            let tempPatient = undefined;
 
             if (id) {
                 await getPatient(id).then((res) => {
+                    tempPatient = res;
                     setPatient(res);
                 }).catch();
             }
             
-            if (!patient && id) {
+            if (!tempPatient && id) {
                 await folkeregisterpatient(id).then((res) => {
                     setPatient(res);
                 }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
@@ -77,6 +78,16 @@ export function RoomView({ route, navigation }: Props) {
 
         getPatientData();
     }, [room]);
+
+
+    const handleExport = async() => {
+        if(room){
+            const response = await csvexport({ rooms: [room?.id],});
+            setCsv(response);
+        }
+        
+    }
+
 
     useEffect(() => { const data = room?.heartRate?.map((res) => { return res.value }); }, [room]);
 
@@ -103,6 +114,8 @@ export function RoomView({ route, navigation }: Props) {
                 <Text style={{ alignSelf: 'center', fontSize: 40 }}>Loading...</Text>
             </View>
         );
+
+    
     } else {
         return (
             <View style={roomStyle.container}>
@@ -124,38 +137,13 @@ export function RoomView({ route, navigation }: Props) {
                         onPress={() => { setView('notes') }}>
                         <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Notes</Text>
                     </TouchableOpacity>
-                    {/*}
-                    <TouchableOpacity style={{ flexBasis: '50%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 30 }}
-                        onPress={() => { setDate({ ...date, startDate: { ...date.startDate, visible: true } }) }}>
-                        <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Date From</Text>
+                    <TouchableOpacity style={{ flexBasis: '100%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 60 }}
+                        onPress={() => {handleExport()}}>
+                        
+                        <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Export All</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexBasis: '50%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 30 }}
-                        onPress={() => { setDate({ ...date, endDate: { ...date.endDate, visible: true } }) }}>
-                        <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Date To</Text>
-                    </TouchableOpacity>
-                    */}
-                    <TouchableOpacity style={{ flexBasis: '100%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 60 }}>
-                        <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Export</Text>
-                    </TouchableOpacity>
-                    <View>
-                        <DateTimePickerModal
-                            isVisible={date.endDate.visible}
-                            date={date.endDate.date}
-                            mode="date"
-                            onConfirm={(newDate: Date) => { setDate({ ...date, endDate: { date: newDate, visible: false } }) }}
-                            onCancel={() => { setDate({ ...date, endDate: { ...date.endDate, visible: false } }) }}
-                        />
-                        <DateTimePickerModal
-                            isVisible={date.startDate.visible}
-                            date={date.startDate.date}
-                            mode="date"
-                            onConfirm={(newDate: Date) => { setDate({ ...date, startDate: { date: newDate, visible: false } }) }}
-                            onCancel={() => { setDate({ ...date, startDate: { ...date.startDate, visible: false } }) }}
-                        />
-                    </View>
                 </View>
                 <View>
-
                 </View>
                 {(view === 'graphs' && room !== undefined) ? <GraphView room={room} setModal={setModal} modal={modal} /> : <NotesView room={room} />}
             </View>
