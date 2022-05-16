@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Button, Image, Pressable, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
@@ -11,26 +11,38 @@ import { LoginInfo } from '../domain/UserType';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { isReactNative } from '@firebase/util';
+import { getRole } from '../api/firebaseAPI';
+import { ErrorType } from '../domain/Errortype';
+import { Errormodal } from './ErrorModal';
+
+
 
 
 export function LoginView() {
     const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
 
     const [user, setUser] = useState<LoginInfo>({ displayPassword: true } as LoginInfo);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
 
-    // useEffect(() => {navigation.navigate('VistaCovid', {screen:'Room'});}, []);
+    const handleRequestClose = () => {
+        setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
+    }
+
 
     useEffect(() => { console.log(user.displayPassword) }, [user.displayPassword])
 
     const handleLogin = async () => {
         await signInWithEmailAndPassword(getAuth(), user.email, user.password).then((res) => {
             console.log('Successfully Logged In!');
-            navigation.navigate('VistaCovid', { screen: 'Home' });
-        }).catch((err) => { console.log('Error! Please Try Again!'); setError(err.message); console.log(err) })
+            navigation.navigate('Menu', { screen: 'VistaCovid' });
+        }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true})); });
     }
 
-
+    if(error.errormodalVisible){
+        return (
+            <Errormodal error={error} handleRequestClose={handleRequestClose} />
+        )
+    }
     return (
         <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#FFFFFF' }}>
             <View style={{ marginBottom: 60 }}>
