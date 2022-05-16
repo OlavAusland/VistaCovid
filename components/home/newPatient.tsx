@@ -46,7 +46,7 @@ export const NewPatient = (props: newPatientProps) => {
                 </View>
             </View>
             <View style={{ marginTop: 10 }}>
-                        <Text>Responsible: s{auth.currentUser?.displayName}</Text>
+                        <Text>Responsible: {auth.currentUser?.displayName}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignContent: 'space-between', marginTop: 140 }}>
                         <Pressable onPress={() => props.handleNewPatient()} >
@@ -55,7 +55,7 @@ export const NewPatient = (props: newPatientProps) => {
                             </View>
                         </Pressable>
                         <TouchableOpacity
-                            onPress={() => {props.setNew(false); props.setError('');}} >
+                            onPress={() => {props.setNew(false); props.setError(''); props.setPatient(undefined) }} >
                             <View style={assignPatientStyle.button}>
                                 <Text style={{ color: 'white', alignSelf: 'center', fontSize: 20 }}>Cancel</Text>
                             </View>

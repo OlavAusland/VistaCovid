@@ -19,6 +19,7 @@ export type newPatientProps = {
 
 export type existingPatientProps = {
     patient: FolkeregisterPerson | undefined;
+    setPatient: Function;
     setSearch: Function;
     handleSearch: Function;
     dropdown: DropDownType;

@@ -149,8 +149,8 @@ export const getAvailableRooms = async (): Promise<Room[]> => {
 }
 
 export const getRoom = async (id: string): Promise<Room | undefined> => {
-    return await getDoc(doc(db, 'Rooms', id)).then((res) => {
-        return res.data() as Room;
+    return await getDoc(doc(db, 'Rooms', id)).then((doc) => {
+        return {...doc.data(), id:doc.id} as Room;
     }).catch((err) => {
         throw err;
     }

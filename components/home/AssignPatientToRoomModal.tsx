@@ -10,15 +10,20 @@ import { DropDownType, ItemType } from '../../domain/DropDownType';
 import {ExistingPatient} from './patientExist'
 import {NewPatient} from './newPatient'
 import { AssignPatientModalProps } from '../../domain/AssignPatietTypes';
+import { ErrorType } from '../../domain/Errortype';
+import { Errormodal } from '../ErrorModal';
 
 
 export const AssignPatientModal = (props: AssignPatientModalProps) => {
 
     const [patient, setPatient] = useState<FolkeregisterPerson>();
-    const [search, setSearch] = useState<string>("");
     const [dropdown, setDropdown] = useState<DropDownType>({ open: false, value: "0", items: [], label: "" });
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
+    const [search, setSearch] = useState<string>("");
     const [newPatient, setNew] = useState<boolean>(false);
+    const [errormodal, setErrormodal] = useState<boolean>(false);
+    const [e, setE] = useState<string>('');
+
 
     useEffect(() => {
         getAvailableRooms().then((room: Room[]) => {
@@ -27,7 +32,7 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                 const item: ItemType = { label: room.id, value: room.id, };
                 setDropdown(prev => ({ ...prev, items: [...prev.items, item] }));
             })
-        })
+        }).catch(err => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true})); } )
     }, [props.modalVisible]);
 
     const handleSearch = () => {
@@ -36,11 +41,11 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             const isFnr = fnrRegex.test(search);
 
             if (!isFnr) {
-                setError('Invald SSN') 
+                setE('Invald SSN') 
             }
             getPatient(search).then(result => {
                 setPatient(result)
-            }).catch(err => { setError(err.message) });
+            }).catch(err => { setE(err.message) });
         }
     }
 
@@ -49,14 +54,15 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             addPatientToRoom(dropdown.label, patient.ssn);
             setEmpty();
         }
+        setError((prev) =>({...prev, errorObject: new Error('Some fields are missing, please make sure everything is filed out'), errormodalVisible:true}));
     }
     const handleNewPatient = () => {
         if (patient && dropdown.label) {
-            console.log(patient)
             addPatient(patient)
             addPatientToRoom(dropdown.label, patient.ssn);
             setEmpty();
         }
+        setError((prev) =>({...prev, errorObject: new Error('Some fields are missing, please make sure everything is filed out'), errormodalVisible:true})); 
     }
 
     const setEmpty = () => {
@@ -65,11 +71,22 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
         setSearch("");
         setNew(false)
         setDropdown({ open: false, value: "0", items: [], label: "" });
-        setError('')
+        setE('')
     }
 
     const handleNew = () => {
        setNew(true);
+    }
+    const handleErrorRequestClose = () => {
+        setErrormodal(false)
+        setError((prev) =>({...prev, errorObject: undefined, errormodalVisible:false}));
+        
+    }
+
+    if(error.errormodalVisible){
+        return (
+            <Errormodal error={error} handleRequestClose={handleErrorRequestClose} />
+        )
     }
 
     return (
@@ -95,18 +112,19 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                         handleRequestClose ={props.handleRequestClose}
                         handleNewPatient= {handleNewPatient}
                         setNew ={setNew}
-                        setError={setError}
+                        setError={setE}
                        /> 
                         
                     :<ExistingPatient 
-                        patient={patient} 
+                        patient={patient}
+                        setPatient={setPatient}  
                         setSearch={setSearch} 
                         handleSearch={handleSearch} 
                         dropdown={dropdown} 
                         setDropdown={setDropdown}  
                         handleAddPatient={handleAddPatient}
                         handleNew ={handleNew}
-                        error={error}
+                        error={e}
                         setEmpty={setEmpty}/>
                         }
                 </View>
