@@ -1,37 +1,70 @@
 import { StyleSheet, Platform} from "react-native";
 
 export const adminStyle = StyleSheet.create({
+  body:{
+    // backgroundColor: '#E5FCFF'
+  },
     container: {
-        //marginTop: 20,
-        backgroundColor: '#E5FCFF'
+        // backgroundColor: '#E5FCFF'
     },
     header: {
         flex: 1,
-        backgroundColor: 'powderblue',
-        padding: 30,
+        backgroundColor: '#E5FCFF',
+        paddingTop: 30,
         alignItems: 'center',
     },
     headertext:{
         fontSize: 30,
     },
     //-----------------------Buttons in main admin view---------------------------
-    addRoom: {
+    mainViewButtons: {
         flex: 2,
-        backgroundColor: 'powderblue',
+        backgroundColor: '#E5FCFF',
         padding:50,
-        // marginTop:3,
-        // marginBottom:3,
-        // marginLeft:3,
-        // marginRight:3
+        alignItems: 'center',
     },
-    manageRoom: {
-        flex: 3,
-        backgroundColor:'powderblue',
-        padding: 50,
-        // marginBottom:3,
-        // marginLeft:3,
-        // marginRight:3
+
+    addRoom:{
+      backgroundColor:'#9DD4FB',
+      alignItems: 'center',
+      borderColor: '#0274A1',
+      borderWidth: 2,
+      borderRadius: 10,
+      alignSelf: 'flex-start',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 8,
+      },
+      shadowOpacity: 0.46,
+      shadowRadius: 11.14,
+      
+      elevation: 17,
     },
+    
+    // manageRoom:{
+    //   backgroundColor:'#9DD4FB',
+    //   alignItems: 'center',
+    //   borderColor: '#0274A1',
+    //   borderWidth: 2,
+    //   borderRadius: 10,
+    //   alignSelf: 'flex-start'
+    // },
+
+    manageUsers:{
+      backgroundColor:'#9DD4FB',
+      alignItems: 'center',
+      borderColor: '#0274A1',
+      borderWidth: 2,
+      borderRadius: 10,
+      alignSelf: 'flex-start'
+
+    },
+    buttonText:{
+      padding: 50,
+      fontSize: 25
+    },
+
     //--------------------add room styling-----------------------------
     addRoomContainer: {
         //marginTop: 20,
@@ -115,9 +148,6 @@ export const adminStyle = StyleSheet.create({
       elevation:1, 
       padding: 20
   },
-  body:{
-    alignItems: "center"
-  },
     //--------------modal styling------------------------------
     centeredView: {
         flex: 1,
@@ -139,11 +169,6 @@ export const adminStyle = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
-      },
-      button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
       },
       buttonOpen: {
         backgroundColor: "#F194FF",

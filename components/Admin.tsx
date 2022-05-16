@@ -1,5 +1,4 @@
 import { View, Text, Button, ScrollView, SafeAreaView } from 'react-native';
-import { isPropertySignature } from 'typescript';
 import { addRoom, deleteRoom } from '../api/firebaseAPI';
 import { Room } from '../domain/RoomType';
 import { User } from '../domain/UserType';
@@ -9,6 +8,7 @@ import { adminStyle } from '../styles/AdminStyles';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export function AdminView()
 {
@@ -17,23 +17,29 @@ export function AdminView()
 
 
     return(
-        <ScrollView style={adminStyle.container}>
-            <SafeAreaView>
-                <View style={adminStyle.header}>
-                    <Text style={adminStyle.headertext}>Admin View</Text>
-                </View>
-                <View>
-                    <View style={adminStyle.addRoom}>
-                        <Button title='Add Room' onPress={() => {navigation.navigate('AddRoom')}}></Button>
+        <SafeAreaView>
+            <ScrollView style={adminStyle.container}>
+                    <View style={adminStyle.header}>
+                        <Text style={adminStyle.headertext}>Manage</Text>
                     </View>
-                    <View style={adminStyle.manageRoom}>
-                        <Button title='Delete Room' onPress={() => {navigation.navigate('ManageRoom')}}></Button>
+                    <View>
+                        <View style={adminStyle.mainViewButtons}>
+                            <TouchableOpacity
+                            style={adminStyle.addRoom}
+                            onPress={()=>{navigation.navigate('ManageRoom')}}>
+                                <Text style={adminStyle.buttonText}>Manage Room</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={adminStyle.mainViewButtons}>
+                            <TouchableOpacity
+                            style={adminStyle.addRoom}
+                            onPress={()=>{navigation.navigate('ManageRoles')}}>
+                                <Text style={adminStyle.buttonText}>Manage Users</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={adminStyle.manageRoom}>
-                        <Button title='Manage Users' onPress={() => {navigation.navigate('ManageRoles')}}></Button>
-                    </View>
-                </View>
-            </SafeAreaView>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
+
     );
 }
