@@ -48,7 +48,7 @@ export const csvexport = async (props: csvProps) => {
         throw new Error(e);
     }
 
-    saveFile('data.csv', csv);
+    saveFile('data', csv);
 
     return csv;
 }
