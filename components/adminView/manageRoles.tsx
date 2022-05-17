@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import React, { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable, FlatList, TouchableOpacity } from "react-native";
+import React, { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 import { SearchBar } from 'react-native-elements';
 
 // navigation
@@ -9,11 +9,12 @@ import { StackParameters } from '../../domain/NavigationTypes';
 import { adminStyle } from "../../styles/AdminStyles";
 import { Room } from "../../domain/RoomType";
 import { User } from "../../domain/UserType";
-import { getUsers } from "../../api/firebaseAPI";
+import { deletePatient, getUsers, deleteUser } from "../../api/firebaseAPI";
 import { roomStyle } from "../../styles/RoomStyles";
 import { isPropertySignature } from "typescript";
 import { ErrorType } from "../../domain/Errortype";
 import { Errormodal } from "../ErrorModal";
+import Icon from "react-native-vector-icons/Feather";
 
 export function ManageRoles(){
 
@@ -21,6 +22,7 @@ export function ManageRoles(){
 
     const [searchWord, setSearchWord] = useState("");
     const [users, setUsers] = useState<User[]>([])
+    const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
 
     const handleRequestClose = () => {
@@ -43,34 +45,90 @@ export function ManageRoles(){
     }
 
     return(
-        <SafeAreaView>
-            <View style={adminStyle.managerolesheader}>
-                <Text style={adminStyle.manageRoleText}>
-                    Manage users
-                </Text>
-                <View style={adminStyle.addUserButton}>
-                <Button
-                title="AddUser"
-                onPress={()=> {navigation.navigate('Register')}}
-                />
-                </View>
-                <TextInput 
-                onChangeText={(text) => {setSearchWord(text)}} 
-                placeholder={"search for user"} style={adminStyle.searchBar}/>
+        <SafeAreaView style={{flex:1}}>
+            <View style={[styles.header, styles.shadow]}>
+                <TextInput
+                    placeholder="room number"
+                    onChangeText={(text) => {setSearch(text)}}
+                    style={styles.search}/>
             </View>
-            <View>
-                <ScrollView contentContainerStyle={adminStyle.body}>
-                    {users.length > 0 && users.filter((user)=> {if(user.role.toString(2)){return user}}).map((user: User) => {
-                        <TouchableOpacity key={'user' + user.email} onPress={()=> navigation.push('CreateUser')}>
-                            <View>
-                                <Text>User: {user.firstName} {user.lastName}</Text>
-                                <Text>Role: {user.role}</Text>
+            <ScrollView contentContainerStyle={{flex:1, alignItems:'center'}}>
+                {users.map((user) => {
+                    return(
+                        <View  key={'users' + user.id} style={styles.cardContainer}>
+                            <View style={styles.card}>
+                                <Icon style={{alignSelf:'center'}} name='clipboard' size={80}/>
+                                <Text style={{flex:1}}>Patient: {user.id}</Text>
                             </View>
-                        </TouchableOpacity>
-                    })
-                    }
-                </ScrollView>
-            </View>
+                            <TouchableOpacity onPress={() =>{deleteUser(user.id)}} style={styles.delete}>
+                                <Icon name='trash-2' color={'white'} size={40}/>
+                            </TouchableOpacity>
+                        </View>
+                    );
+                })}
+            </ScrollView>
         </SafeAreaView>
     );
 }
+
+export const styles = StyleSheet.create({
+    header:{
+        backgroundColor:'white',
+        paddingTop:40,
+        paddingBottom:10
+    },
+    delete: {
+        backgroundColor:'red', 
+        flexBasis:'15%', 
+        height:100, 
+        justifyContent:'center', 
+        alignItems:'center', 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0,height: 3},
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65, 
+        elevation: 6
+    },
+    cardContainer:{
+        width:'90%',
+        marginTop:25,
+        flexDirection:'row', 
+        justifyContent:'space-between', 
+        alignItems:'center', 
+    },
+    shadow:{
+        shadowColor: "#000", 
+        shadowOffset: { width: 0,height: 3,},
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65, 
+        elevation: 6
+    },
+    card: {
+        flexDirection:'row', 
+        backgroundColor:'white', 
+        flexBasis:'84%', 
+        height:100, 
+        justifyContent:'center', 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0,height: 3,},
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65, 
+        elevation: 6
+    },
+    add:{
+        marginTop:25,
+        backgroundColor:'white',
+        width:'90%',
+        height:75,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:10
+    },
+    search:{
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        borderRadius:10,
+        padding: 10,
+    }
+})
