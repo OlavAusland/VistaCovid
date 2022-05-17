@@ -15,6 +15,7 @@ export type User = {
     phone: string | undefined,
     address: string | undefined,
     city: string | undefined,
+    id: string
 }
 
 export type LoginInfo = {

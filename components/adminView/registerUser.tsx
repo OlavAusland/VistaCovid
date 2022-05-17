@@ -12,9 +12,9 @@ export function CreateUser(){
     const [user, setUser] = useState<User>({
         email:'',  password:'', firstName:'', 
         lastName:'', role:Roles.NONE, address:undefined,
-        phone: undefined, city: undefined, code: undefined
+        phone: undefined, city: undefined, code: undefined, id:''
     });
-
+    
     const [dropdown, setDropdown] = useState<DropDownType>({ 
         open: false, 
         value: "0", 

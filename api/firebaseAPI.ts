@@ -3,7 +3,7 @@ import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query, arr
 import { User } from "../domain/UserType";
 import { NoteData, Room } from "../domain/RoomType";
 import { FolkeregisterPerson, Patient } from "../domain/PatientType";
-import { getAuth } from "firebase/auth";
+import { getAuth, deleteUser} from "firebase/auth";
 
 // USERS
 
@@ -15,7 +15,8 @@ export const addUser = async(user: User, id:string) => {
     });
 }
 
-export const deleteUser = async(id: string) => {
+export const deleteUserById = async(id: string) => {
+    await 
     await deleteDoc(doc(db, 'Users', id)).then((res) => {
         console.log(res);
     }).catch((err) => {
@@ -26,7 +27,7 @@ export const deleteUser = async(id: string) => {
 
 export const getUsers = async(): Promise<User[]> => {
     return await getDocs(collection(db, 'User')).then((res) =>{
-        return res.docs.map((doc) => <User>({...doc.data()}));
+        return res.docs.map((doc) => <User>({...doc.data(), id: doc.id}));
     }).catch((err) => {
         throw err;
     });
@@ -39,7 +40,13 @@ export const addNote = async(id: string, note: NoteData) => {
         console.log(err);
     });
 }
-
+/*
+export const getAllUsers = async() => {
+    adminApp.auth().getUsers().then((users: any) => {
+        console.log(users)
+    })
+}
+*/
 // auth
 // .getUsers([
 //     { uid: 'uid1' },
@@ -96,7 +103,24 @@ export const getPatient = async (id: string) => {
     });
 };
 
+export const addEmptyRoom = async (id: string) => {
+    await setDoc(doc(db, 'Rooms', id), {
+        patientId: '',
+        lastUpdated: Date.now(),
+        heartRate: [],
+        bloodPressure: [],
+        oxygenLevel: [],
+        notes: [],
+        id: id
+    }).then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
 export const addRoom = async (room: Room): Promise<boolean> => {
+    console.log('ADDED ROOM')
     try {
         const response = await getRoom(room.id);
 
@@ -129,16 +153,13 @@ export const getRole = async (id: string): Promise<string | undefined> => {
 
 
 export const deleteRoom = async (id: string) => {
-    getRoom(id).then(async(res)=>{
-        if(res?.patientId == ""){
-            await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
-                console.log('Deleted Room: ', res);
-            }).catch((err) => {
-                console.log(console.log('Failed to delete room with id: ', id));
-                console.log('Error: ', err);
-            });
-        }
-    })
+    console.log("ID: " + id)
+    await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
+        console.log('Deleted Room: ', res);
+    }).catch((err) => {
+        console.log(console.log('Failed to delete room with id: ', id));
+        console.log('Error: ', err);
+    });
 }
 
 
