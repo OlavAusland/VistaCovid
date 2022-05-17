@@ -87,11 +87,11 @@ const isWithinDateRange = (date: Date, fromDate: Date | undefined, toDate: Date 
     if (fromDate === undefined && toDate === undefined) {
         return true;
     } else if (fromDate === undefined && toDate !== undefined) {
-        return date < toDate;
+        return date <= toDate;
     } else if (fromDate !== undefined && toDate === undefined) {
-        return date > fromDate;
+        return date >= fromDate;
     } else if (fromDate && toDate) {
-        return date > fromDate && date < toDate;
+        return date >= fromDate && date <= toDate;
     } else {
         throw new Error('Invalid date range');
     }

@@ -85,3 +85,45 @@ test("Should export health data from firebase to CSV", async () => {
 });
 
 // Tests with a given fromDate, returns all data after given date for a given room
+test("Should export health data from firebase to CSV from date", async () => {
+    // @ts-ignore
+    getRoom.mockResolvedValueOnce(mockRoomResponse);
+
+    console.log('response:', mockRoomResponse)
+    
+    //writeCSV.mockResolveValueOnce(true);
+
+    const healthDataCSV = await csvexport({ rooms: ["A0 001"], fromDate: new Date('2022-05-15T21:15:48.620Z') , });
+    console.log(healthDataCSV);
+    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"bloodPressure\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40\n\"A0 001\",\"2022-05-15T21:17:48.620Z\",80,75,30");
+
+});
+
+// Tests with a given toDate, returns all data before given date for a given room
+test("Should export health data from firebase to CSV from date", async () => {
+    // @ts-ignore
+    getRoom.mockResolvedValueOnce(mockRoomResponse);
+
+    console.log('response:', mockRoomResponse)
+    
+    //writeCSV.mockResolveValueOnce(true);
+
+    const healthDataCSV = await csvexport({ rooms: ["A0 001"], toDate: new Date('2022-05-15T21:15:48.620Z') , });
+    console.log(healthDataCSV);
+    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"bloodPressure\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:14:48.620Z" 
+    + "\",100,95,50\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40");
+});
+
+// Tests with a given toDate, returns all data before given date for a given room
+test("Should export health data from firebase to CSV from date", async () => {
+    // @ts-ignore
+    getRoom.mockResolvedValueOnce(mockRoomResponse);
+
+    console.log('response:', mockRoomResponse)
+    
+    //writeCSV.mockResolveValueOnce(true);
+
+    const healthDataCSV = await csvexport({ rooms: ["A0 001"],fromDate: new Date('2022-05-15T21:15:48.620Z'), toDate: new Date('2022-05-15T21:15:48.620Z') , });
+    console.log(healthDataCSV);
+    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"bloodPressure\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40");
+});
