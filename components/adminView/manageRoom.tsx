@@ -50,7 +50,7 @@ export function ManageRoom()
                     return(
                         <View  key={room.id} style={styles.cardContainer}>
                             <View style={styles.card}>
-                                <Icon style={{alignSelf:'center'}} name='clipboard' size={80} onPress={() => { setModalVisible(true) }} />
+                                <Icon style={{alignSelf:'center'}} name='clipboard' size={80}/>
                                 <Text style={{flex:1}}>Room: {room.id}</Text>
                                 <Text style={{flex:1}}>Patient: {room.patientId}</Text>
                             </View>
@@ -86,7 +86,7 @@ export const styles = StyleSheet.create({
         justifyContent:'center', 
         alignItems:'center', 
         shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3,},
+        shadowOffset: { width: 0,height: 3},
         shadowOpacity: 0.27,
         shadowRadius: 4.65, 
         elevation: 6
@@ -107,7 +107,7 @@ export const styles = StyleSheet.create({
     },
     card: {
         flexDirection:'row', 
-        backgroundColor:'white', 
+        backgroundColor:'#79CAED', 
         flexBasis:'84%', 
         height:100, 
         justifyContent:'center', 

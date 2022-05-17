@@ -34,6 +34,9 @@ function Menu() {
       return (
         <DrawerContentScrollView>
           <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
+          <DrawerContentScrollView>
+            {[1,2,3,4,5,6].map((i) => {return (<DrawerItem style={{backgroundColor:''}}label={`Tab ${i}`} key={i} onPress={() => {}}/>)})}
+          </DrawerContentScrollView>
         </DrawerContentScrollView>
       )
     }}>
