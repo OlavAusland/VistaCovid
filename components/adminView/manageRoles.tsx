@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
-import React, { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable, FlatList, TouchableOpacity, StyleSheet } from "react-native";
+import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 import { SearchBar } from 'react-native-elements';
 
 // navigation
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from '../../domain/NavigationTypes';
-import { adminStyle } from "../../styles/AdminStyles";
-import { Room } from "../../domain/RoomType";
 import { User } from "../../domain/UserType";
-import { deletePatient, getUsers, deleteUserById } from "../../api/firebaseAPI";
-import { roomStyle } from "../../styles/RoomStyles";
-import { isPropertySignature } from "typescript";
+import { getUsers, deleteUserById } from "../../api/firebaseAPI";
 import { ErrorType } from "../../domain/Errortype";
 import { Errormodal } from "../ErrorModal";
 import Icon from "react-native-vector-icons/Feather";

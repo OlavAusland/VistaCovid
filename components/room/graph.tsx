@@ -2,13 +2,13 @@ import { LineChart } from 'react-native-chart-kit';
 import { LineChartData } from '../../domain/GraphTypes';
 import { Platform, Dimensions, TouchableOpacity} from 'react-native';
 import { Room, GraphData} from '../../domain/RoomType';
-import React from 'react';
 
 export type GraphProps = {
     data: GraphData[] | undefined,
     name: string,
     setModal: (modal: boolean) => void,
-    modal: boolean
+    modal: boolean,
+    color: string
 }
 
 export const LineGraph = (props: GraphProps) => {
@@ -34,9 +34,8 @@ export const LineGraph = (props: GraphProps) => {
             xAxisLabel='s'
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
-                backgroundColor: "#FFFFFF",
-                backgroundGradientFrom: "#9dd9fb",
-                backgroundGradientTo: "#9dd9fb",
+                backgroundGradientFrom: props.color,
+                backgroundGradientTo: props.color,
                 decimalPlaces: 1, // optional, defaults to 2dp
                 color: () => '#C1E8FD',
                 labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
