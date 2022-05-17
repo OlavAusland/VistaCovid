@@ -9,7 +9,7 @@ import { StackParameters } from '../../domain/NavigationTypes';
 import { adminStyle } from "../../styles/AdminStyles";
 import { Room } from "../../domain/RoomType";
 import { User } from "../../domain/UserType";
-import { deletePatient, getUsers, deleteUser } from "../../api/firebaseAPI";
+import { deletePatient, getUsers, deleteUserById } from "../../api/firebaseAPI";
 import { roomStyle } from "../../styles/RoomStyles";
 import { isPropertySignature } from "typescript";
 import { ErrorType } from "../../domain/Errortype";
@@ -60,7 +60,7 @@ export function ManageRoles(){
                                 <Icon style={{alignSelf:'center'}} name='clipboard' size={80}/>
                                 <Text style={{flex:1}}>Patient: {user.id}</Text>
                             </View>
-                            <TouchableOpacity onPress={() =>{deleteUser(user.id)}} style={styles.delete}>
+                            <TouchableOpacity onPress={() =>{deleteUserById(user.id)}} style={styles.delete}>
                                 <Icon name='trash-2' color={'white'} size={40}/>
                             </TouchableOpacity>
                         </View>
@@ -105,7 +105,7 @@ export const styles = StyleSheet.create({
     },
     card: {
         flexDirection:'row', 
-        backgroundColor:'white', 
+        backgroundColor:'#79CAED', 
         flexBasis:'84%', 
         height:100, 
         justifyContent:'center', 
