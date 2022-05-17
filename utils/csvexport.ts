@@ -27,7 +27,7 @@ export const csvexport = async (props: csvProps) => {
     const rooms: CsvData[] = [];
     for (const room of props.rooms) {
         const response = await getRoom(room);
-       
+
         if (!response) {
             throw new Error(`Room ${room} does not exist`);
         }
@@ -36,7 +36,7 @@ export const csvexport = async (props: csvProps) => {
     };
 
     // Write to CSV 
-    const fields = [ "room", "time", "heartRate", "bloodPressure", "oxygenLevel" ];
+    const fields = ["room", "time", "heartRate", "bloodPressure", "oxygenLevel"];
     const opts = { fields, eol: "\n" };
     let csv;
     try {
@@ -48,14 +48,14 @@ export const csvexport = async (props: csvProps) => {
         throw new Error(e);
     }
 
-    saveFile('data', csv);
+    //saveFile('data', csv);
 
     return csv;
 }
 
 const mapHealthDataToElement = (
     roomNumber: string,
-    data: Room, 
+    data: Room,
     fromDate: Date | undefined,
     toDate: Date | undefined
 ): CsvData[] => {
@@ -63,16 +63,16 @@ const mapHealthDataToElement = (
         throw new Error(`Room ${roomNumber} does not have blood pressure data`);
     }
 
-    return( data.bloodPressure.flatMap((e: any, index: number) => {
+    return (data.bloodPressure.flatMap((e: any, index: number) => {
         if (data.heartRate === undefined || data.oxygenLevel === undefined) {
             throw new Error(`Room ${roomNumber} does not have health data`);
         }
         const time = new Date(e.time);
-        
+
         if (!isWithinDateRange(time, fromDate, toDate)) {
             return [];
         }
-        
+
         return ({
             room: roomNumber,
             time: new Date(e.time),

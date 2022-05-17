@@ -1,20 +1,23 @@
 import { StyleSheet, Platform } from "react-native"
+import { color } from "react-native-reanimated";
 
-export const exportStyles = StyleSheet.create({
+export const previewStyles = StyleSheet.create({
     container: {
         alignContent: 'flex-end',
         alignSelf: 'flex-end',
         width: Platform.OS === 'android' ? '100%' : '50%',
-        backgroundColor: '#000000',
+        backgroundColor: '#ffffff',
         borderRadius: 10,
         flex: 1,
     },
     header: {
         flex: 1,
+        marginBottom:2,
+        backgroundColor:'white'
     },
     headerText: {
         fontSize: 30,
-        color: '#ffffff',
+        color: '#000000',
         textAlign: 'center',
         fontWeight: 'bold',
         marginTop: 50,
@@ -32,50 +35,18 @@ export const exportStyles = StyleSheet.create({
         flex: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#ffffff', 
     },
     bodyRoom: {
-        flex: 5,
         alignItems: 'center',
         width: '100%',
-        backgroundColor: 'red',
+        padding: 25,
     },
-    bodyText: {
-        fontSize: 30,
-        color: '#000000',
-        textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-    },
-    bodyDate: {
-        flex: 2,
-        fontSize: 20,
-        color: '#000000',
-        textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 30,
-        backgroundColor: 'blue',
-        width: '100%',
-    },
-    bodyScroll: {
-        flex: 3,
-        backgroundColor: 'white',
-        width: '80%',
-        padding: 10,
 
-    },
-    bodyScrollcontent: {
-        flexDirection: 'row',
-    },
-    bodyScrollText: {
-        fontSize: 30,
-        marginLeft: 10,
-
-    },
     footer: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: 'grey',
+
 
     },
     footerText: {
@@ -84,7 +55,16 @@ export const exportStyles = StyleSheet.create({
         alignSelf: 'center',
 
     },
-
+    shadow: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 6
+    },
+    pressables: {
+        flex: 1,
+    }
 
 
 

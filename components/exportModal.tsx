@@ -5,6 +5,8 @@ import Checkbox from "expo-checkbox";
 import { exportStyles } from '../styles/ExportModalStyle';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getOccupiedRooms } from '../api/firebaseAPI';
+import { csvexport } from '../utils/csvexport';
+import { PreviewModal } from './previewModal';
 
 
 type exportModalProps = {
@@ -13,6 +15,8 @@ type exportModalProps = {
 
 export const Exportmodal = (props: exportModalProps) => {
     const [checkedRooms, setCheckedRooms] = useState(new Map());
+    const [previevVisible, setPreviewVisible] = useState(false);
+    const [csv, setCsv] = useState<string>("");
 
     useEffect(() => {
         const getRooms = async () => {
@@ -32,6 +36,30 @@ export const Exportmodal = (props: exportModalProps) => {
     const handleCheckbox = (key:any, isChecked: any) => {
         setCheckedRooms(new Map(checkedRooms.set(key, isChecked)));
     }
+
+    const handleExport = () => {
+        const roomsToExport:string[] = [];
+        checkedRooms.forEach((value, key) => {
+            if (value) {
+                roomsToExport.push(key);
+            }
+        });
+        console.log(roomsToExport);
+        handleexportcsv(roomsToExport);
+        setPreviewVisible(true);
+        
+    }
+
+    const handleexportcsv = async(roomsToExport: string[]) => {
+        console.log('rooms:', roomsToExport);
+             const responce = await csvexport({rooms: roomsToExport});
+                setCsv(responce);
+    }
+
+    if (previevVisible) {
+        return(<PreviewModal csv={csv} setPreviewVisible={setPreviewVisible}/>)
+    }
+
 
     return (
         <Modal
@@ -69,15 +97,25 @@ export const Exportmodal = (props: exportModalProps) => {
                             Select date range
                         </Text>
                     </View>
+                    
                 </View>
-
+                <View style={exportStyles.footer}>
+                <Pressable
+                    onPress={() => handleExport()}
+                    style={{ flex: 1 }} >
+                    <View style={exportStyles.button}>
+                        <Text style={exportStyles.footerText}>Export</Text>
+                    </View>
+                </Pressable>
                 <Pressable
                     onPress={() => props.handleRequestClose()}
                     style={{ flex: 1 }} >
                     <View style={exportStyles.button}>
-                        <Text style={{ color: 'white', alignSelf: 'center', fontSize: 20 }}>Close</Text>
+                        <Text style={exportStyles.footerText}>Close</Text>
                     </View>
                 </Pressable>
+                </View>
+                
             </View>
         </Modal>
     );
