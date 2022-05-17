@@ -79,17 +79,21 @@ export const Exportmodal = (props: exportModalProps) => {
                             Choose rooms to export
                         </Text>
                         <View style={exportStyles.bodyScroll}>
+                            <ScrollView>
                             {checkedRooms.size > 0 &&
                                 Array.from(checkedRooms).map(([key, value], index) => {
                                     return (
+                                        
                                         <View key={'En key' + index} style={exportStyles.bodyScrollcontent}>
                                             <Checkbox key={"checkbox-" + key} value={value} onValueChange={(isChecked) => handleCheckbox(key, isChecked) } />
                                             <Text style={exportStyles.bodyScrollText}>{key}</Text>
+                                           
                                         </View>
                                     );
                                 })
 
                             }
+                            </ScrollView>
                         </View>
                     </View>
                     <View style={exportStyles.bodyDate}>
