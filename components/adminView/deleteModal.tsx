@@ -1,5 +1,5 @@
 import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { adminStyle } from "../../styles/AdminStyles";
 import {deleteRoom} from "../../api/firebaseAPI";
 

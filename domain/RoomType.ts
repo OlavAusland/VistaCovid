@@ -6,8 +6,9 @@ export type GraphData = {
 }
 
 export type NoteData = {
-    role: string,
-    note: string
+    author: string,
+    note: string,
+    date: number
 }
 
 export type Room = {

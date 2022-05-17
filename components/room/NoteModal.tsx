@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Modal, View, Text, Button} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { addNote, getRole } from '../../api/firebaseAPI';
@@ -14,8 +14,9 @@ type NoteModalType = {
 
 export const NoteModal = (props: NoteModalType) => {
 
-    const [note, setNote] = useState<NoteData>({role: 'ADMIN', note: ''});
+    const [note, setNote] = useState<NoteData>({author: auth.currentUser ? auth.currentUser.uid : '' , note: '', date: Date.now()});
     const handleSubmit = () => {
+        setNote({...note, date: Date.now()});
         addNote(props.room.id, note);
     }
 

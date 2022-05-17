@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Text, Image } from "react-native"
-import React, { useReducer, useState } from "react"
+import { useReducer, useState } from "react"
 import Icon from 'react-native-vector-icons/Fontisto';
 import { auth } from "../firebase-config";
 

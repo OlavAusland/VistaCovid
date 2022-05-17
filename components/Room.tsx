@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, LogBox, } from 'react-native';
+import { View, Text, TouchableOpacity, LogBox, StyleSheet, Platform } from 'react-native';
 import { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
 import { Room } from '../domain/RoomType';
@@ -111,7 +111,7 @@ export function RoomView({ route, navigation }: Props) {
 
     if (fetching) {
         return (
-            <View style={roomStyle.container}>
+            <View style={styles.container}>
                 <Text style={{ alignSelf: 'center', fontSize: 40 }}>Loading...</Text>
             </View>
         );
@@ -119,8 +119,8 @@ export function RoomView({ route, navigation }: Props) {
     
     } else {
         return (
-            <SafeAreaView style={roomStyle.container}>
-                <View style={roomStyle.header}>
+            <SafeAreaView style={[styles.container]}>
+                <View style={[styles.header, styles.shadow]}>
                     <Text style={roomStyle.headerText} >Room: {room?.id}</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                         <Text style={{ fontSize: 20 }}>Patient: {patient?.firstname} {patient?.lastname}</Text>
@@ -128,26 +128,71 @@ export function RoomView({ route, navigation }: Props) {
                             <Icon name='infocirlceo' size={20} style={{ alignSelf: 'center', paddingTop: 5, paddingLeft: 5 }} onPress={() => { handlePress() }} />
                         </TouchableOpacity>
                     </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={[styles.graphButton, styles.shadow]}
+                            onPress={() => { setView('graphs') }}>
+                            <Text style={styles.buttonTextSize}>Graphs</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.notesButton, styles.shadow]}
+                            onPress={() => { setView('notes') }}>
+                            <Text style={styles.buttonTextSize}>Notes</Text>
+                        </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <TouchableOpacity style={{ flexBasis: '50%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 30 }}
-                        onPress={() => { setView('graphs') }}>
-                        <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Graphs</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexBasis: '50%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 30 }}
-                        onPress={() => { setView('notes') }}>
-                        <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Notes</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexBasis: '100%', justifyContent: 'center', backgroundColor: '#9DD4FB', height: 60 }}
-                        onPress={() => {handleExport()}}>
-                        
-                        <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Export All</Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
                 </View>
                 {(view === 'graphs' && room !== undefined) ? <GraphView room={room} setModal={setModal} modal={modal} /> : <NotesView room={room} />}
             </SafeAreaView>
         );
     }
 }
+
+export const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignSelf:'center', 
+        width: Platform.OS === 'android' ? '100%' : '50%',
+        backgroundColor:'white'
+    },
+    header: {
+        justifyContent:'center',
+        alignItems:'center',
+        paddingTop:10,
+        paddingBottom:10,
+        backgroundColor:'white'
+    },
+    graphButton:{
+        flexBasis: '45%', 
+        justifyContent: 'center', 
+        backgroundColor: '#9DD4FB', 
+        height: 60,
+        borderRadius:10
+    },
+    notesButton:{
+        flexBasis: '45%', 
+        justifyContent: 'center',
+        backgroundColor: '#9DD4FB',
+        height: 60,
+        borderRadius:10
+    },
+    buttonContainer:{
+        flexDirection: 'row', 
+        flexWrap: 'wrap', 
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        marginBottom: 10,
+        paddingTop:20,
+        width:'100%'
+    },
+    buttonTextSize:{
+        fontSize:20,
+        alignSelf: 'center', 
+        fontWeight: 'bold' 
+    },
+    shadow:{
+        shadowColor: "#000", 
+        shadowOffset: { width: 0,height: 3},
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65, 
+        elevation: 6
+    }
+});

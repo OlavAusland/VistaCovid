@@ -1,11 +1,9 @@
-import React, { Alert, Button, Modal, SafeAreaView, TouchableOpacity, ScrollView, TextInput, View, Text, StyleSheet, Touchable, Platform} from "react-native";
+import { SafeAreaView, TouchableOpacity, ScrollView, TextInput, View, Text, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { addEmptyRoom, addRoom, deleteRoom, getRooms } from "../../api/firebaseAPI";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from "../../domain/NavigationTypes";
-import { adminStyle } from "../../styles/AdminStyles";
-import {DeleteRoomModal} from "./deleteModal";
 import {Room} from "../../domain/RoomType"
 import Icon from "react-native-vector-icons/Feather";
 import { collection, doc, onSnapshot } from "firebase/firestore";
