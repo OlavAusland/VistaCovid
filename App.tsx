@@ -26,7 +26,7 @@ import { auth, db } from './firebase-config';
 //NOTIFICATIONS
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
+import { Platform, Vibration } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { collection, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { GraphData, Room } from './domain/RoomType';
@@ -47,8 +47,7 @@ Notifications.setNotificationHandler({
 
 const DetectDanger = (min:number, max:number, data:GraphData[]) => {
   const values = data.length > 0 ? data.map((res: GraphData) => {return res.value}) : [];
-  const danger = values.filter((res: number) => {return res > max || res < min});
-  return danger.some((res: number) => {return res > max || res < min});
+  return values.some((res: number) => {return res > max || res < min});
 }
 
 // APP
@@ -104,15 +103,16 @@ function VistaCovid(){
     onSnapshot(q, (querySnapshot) => {
         querySnapshot.forEach(async(doc) => {
           const room = {...doc.data(), id:doc.id} as Room;
+          console.log(room.id)
           
           if(DetectDanger(10, 100, room.heartRate))
-            await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}: 
-            Blood Pressure = ${room.respirationRate[room.respirationRate.length -1].value}`}).then(() => console.log('sent'));
-          if(DetectDanger(10, 100, room.respirationRate))
-            await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}: 
+            sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}: 
             Heart Rate = ${room.heartRate[room.heartRate.length -1].value}`}).then(() => console.log('sent'));
+          if(DetectDanger(10, 100, room.respirationRate))
+            sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}: 
+            Respiration Rate = ${room.respirationRate[room.respirationRate.length -1].value}`}).then(() => console.log('sent'));
           if(DetectDanger(10, 100, room.oxygenLevel))
-            await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}:\n
+            sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}:\n
             Oxygen Level = ${room.oxygenLevel[room.oxygenLevel.length -1].value}`}).then(() => console.log('sent'));
         });
     });
@@ -128,7 +128,7 @@ function VistaCovid(){
 }
 
 // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
-async function sendPushNotification(expoPushToken: string, message: object) {
+async function sendPushNotification(message: object) {
   await fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
@@ -138,6 +138,7 @@ async function sendPushNotification(expoPushToken: string, message: object) {
     },
     body: JSON.stringify(message),
   });
+  Vibration.vibrate(1000);
 }
 
 async function registerForPushNotificationsAsync() {
