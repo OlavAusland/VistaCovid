@@ -1,13 +1,10 @@
+import { Dimensions, Platform, TouchableOpacity } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { LineChartData } from '../../domain/GraphTypes';
-import { Platform, Dimensions, TouchableOpacity} from 'react-native';
-import { Room, GraphData} from '../../domain/RoomType';
+import { GraphData } from '../../domain/RoomType';
 
 export type GraphProps = {
     data: GraphData[] | undefined,
     name: string,
-    setModal: (modal: boolean) => void,
-    modal: boolean,
     color: string
 }
 
@@ -17,8 +14,7 @@ export const LineGraph = (props: GraphProps) => {
     const yData = props.data?.map((res: GraphData) => {return res.value});
 
     return(
-        <TouchableOpacity
-        onPress={() => {props.setModal(true)}}>
+        <TouchableOpacity>
             <LineChart
             data={{
                 labels: [],
@@ -34,6 +30,8 @@ export const LineGraph = (props: GraphProps) => {
             xAxisLabel='s'
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
+                useShadowColorFromDataset:true,
+                fillShadowGradientOpacity:0.5,
                 backgroundGradientFrom: props.color,
                 backgroundGradientTo: props.color,
                 decimalPlaces: 1, // optional, defaults to 2dp

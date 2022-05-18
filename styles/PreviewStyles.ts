@@ -1,5 +1,4 @@
-import { StyleSheet, Platform } from "react-native"
-import { color } from "react-native-reanimated";
+import { Platform, StyleSheet } from "react-native";
 
 export const previewStyles = StyleSheet.create({
     container: {

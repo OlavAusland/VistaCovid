@@ -1,19 +1,17 @@
-import { View, Text, TextInput, Button, Image, Pressable, TouchableOpacity } from 'react-native';
-import { useState, useEffect, createContext } from 'react';
+
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParameters } from '../domain/NavigationTypes';
-import { loginStyle } from '../styles/LoginStyles';
-
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase-config';
-import { LoginInfo } from '../domain/UserType';
-
+import { useEffect, useState } from 'react';
+import { Image, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { isReactNative } from '@firebase/util';
-import { getRole } from '../api/firebaseAPI';
 import { ErrorType } from '../domain/Errortype';
+import { StackParameters } from '../domain/NavigationTypes';
+import { LoginInfo } from '../domain/UserType';
+import { loginStyle } from '../styles/LoginStyles';
 import { Errormodal } from './ErrorModal';
+
+
 
 
 
@@ -44,34 +42,31 @@ export function LoginView() {
         )
     }
     return (
-        <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#FFFFFF' }}>
-            <View style={{ marginBottom: 60 }}>
-                <Image style={{ height: 270, width: 270 }} source={require('../assets/images/vista_covid-removebg-preview.png')}></Image>
+        <View style={loginStyle.container}>
+            <View style={loginStyle.topLine}>
+                <Image style={loginStyle.logo} source={require('../assets/images/vista_covid-removebg-preview.png')}></Image>
             </View>
-            <View style={{ width: '85%', borderRadius: 8, backgroundColor: '#9dd4fb', flexDirection: 'row', marginBottom: 8 }}>
-                    <View style={{ height: '85%', marginLeft: 10, marginTop: 3, marginRight: 2 }}>
+            <View style={loginStyle.inputBar}>
+                    <View style={loginStyle.icons}>
                         <Icon name="envelope" size={30} color="#0274a1" />
                     </View>
                     <TextInput onChangeText={text => { setUser(prev => ({ ...prev, email: text })) }} placeholder="Email" style={loginStyle.input } />
-                </View>
-            <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-
-
-                <View style={{ width: '85%', borderRadius: 8, backgroundColor: '#9dd4fb', flexDirection: 'row', marginBottom: 8 }}>
-                    <View style={{ height: '85%', marginLeft: 10, marginTop: 3, marginRight: 2 }}>
+            </View>
+            <View style={loginStyle.bottomLine}>
+                <View style={loginStyle.inputBar}>
+                    <View style={loginStyle.icons}>
                         <Icon name="key" size={30} color="#0274a1" />
                     </View>
                     <TextInput secureTextEntry={user.displayPassword} onChangeText={text => { setUser(prev => ({ ...prev, password: text })) }} placeholder="Password" style={loginStyle.input} />
                     <View style={{ height: 40 }}>
-                        <TouchableOpacity style={{ height: '100%', alignSelf: 'center', paddingRight: 20, paddingTop: 6 }}>
+                        <TouchableOpacity style={loginStyle.eyeIcon}>
                             <Icon name="eye" size={25} color="#0274a1" onPress={() => { console.log('tried to change!'); setUser({ ...user, displayPassword: !user.displayPassword }) }} />
                         </TouchableOpacity>
                     </View>
                 </View>         
-                
             </View>
             {/*error && <Text style={{ color: 'rgb(255, 0, 0)', fontSize: 18, alignSelf: 'center' }}>{error}</Text>*/}
-            <View style={{ width: '85%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', backgroundColor:'#0274a1', borderRadius: 8}}>
+            <View style={loginStyle.loginLogo}>
                 <View style={{ height: '60%'}}>
                     <Icon name="user-o" size={30} color="#FFFFFF" />
                 </View>
@@ -85,3 +80,5 @@ export function LoginView() {
         </View>
     );
 }
+
+

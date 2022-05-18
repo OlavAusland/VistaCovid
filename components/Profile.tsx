@@ -1,12 +1,11 @@
-import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native"
-import { useEffect, useReducer, useState } from "react"
+import { View, TouchableOpacity, Text, Image, StyleSheet, ScrollView } from "react-native"
 import Icon from 'react-native-vector-icons/AntDesign';
-import { auth, storage } from "../firebase-config";
 import * as ImagePicker from 'expo-image-picker';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { updateProfile } from "firebase/auth";
-import { profileStyle } from "../styles/ProfileStyles";
-import { ScrollView } from "react-native-gesture-handler";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useEffect, useState } from "react";
+import { auth, storage } from "../firebase-config";
+import { profileStyle } from '../styles/ProfileStyles';
 
 export const ProfileView = () => {
     const [image, setImage] = useState<ImagePicker.ImageInfo>();

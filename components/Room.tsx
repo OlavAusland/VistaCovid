@@ -1,23 +1,23 @@
-import { View, Text, TouchableOpacity, LogBox, StyleSheet, Platform } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { roomStyle } from '../styles/RoomStyles';
-import { Room } from '../domain/RoomType';
+import { LogBox, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { getPatient, getRoom } from '../api/firebaseAPI';
+import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
+import { ErrorType } from '../domain/Errortype';
+import { StackParameters } from '../domain/NavigationTypes';
 import { Patient } from '../domain/PatientType';
-
+import { Room } from '../domain/RoomType';
+import { db } from '../firebase-config';
+import { roomStyle } from '../styles/RoomStyles';
+import { csvexport } from '../utils/csvexport';
+import { Errormodal } from './ErrorModal';
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
-import { getRoom, getPatient } from '../api/firebaseAPI';
-import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { PatientInfoModal } from './room/PatientInfoModal';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackParameters } from '../domain/NavigationTypes';
-import { ErrorType } from '../domain/Errortype';
-import { Errormodal } from './ErrorModal';
-import { csvexport } from '../utils/csvexport';
-import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase-config';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 LogBox.ignoreLogs(['Setting a timer']);
 
 
@@ -31,6 +31,7 @@ export function RoomView({ route, navigation }: Props) {
     const [modal, setModal] = useState(false);
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
     const [csv, setCsv] = useState<string>("");
+    const [view, setView] = useState<string>('graphs')
 
  
 
@@ -41,7 +42,6 @@ export function RoomView({ route, navigation }: Props) {
         setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
     }
 
-    const [view, setView] = useState<string>('graphs')
     useEffect(() => {
         const getRoomData = async () => {
             await getRoom(props?.roomId).then(async (res) => {
@@ -83,7 +83,7 @@ export function RoomView({ route, navigation }: Props) {
 
     const handleExport = async() => {
         if(room){
-            const response = await csvexport({ rooms: [room?.id],});
+            const response = await csvexport([room?.id], undefined, undefined);
             setCsv(response);
         }
         
@@ -111,7 +111,7 @@ export function RoomView({ route, navigation }: Props) {
 
     if (fetching) {
         return (
-            <View style={styles.container}>
+            <View style={roomStyle.container}>
                 <Text style={{ alignSelf: 'center', fontSize: 40 }}>Loading...</Text>
             </View>
         );
@@ -119,8 +119,8 @@ export function RoomView({ route, navigation }: Props) {
     
     } else {
         return (
-            <SafeAreaView style={[styles.container]}>
-                <View style={[styles.header, styles.shadow]}>
+            <SafeAreaView style={[roomStyle.container]}>
+                <View style={[roomStyle.header, roomStyle.shadow]}>
                     <Text style={roomStyle.headerText} >Room: {room?.id}</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                         <Text style={{ fontSize: 20 }}>Patient: {patient?.firstname} {patient?.lastname}</Text>
@@ -128,71 +128,19 @@ export function RoomView({ route, navigation }: Props) {
                             <Icon name='infocirlceo' size={20} style={{ alignSelf: 'center', paddingTop: 5, paddingLeft: 5 }} onPress={() => { handlePress() }} />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.graphButton, styles.shadow]}
+                    <View style={roomStyle.buttonContainer}>
+                        <TouchableOpacity style={[roomStyle.graphButton, roomStyle.shadow]}
                             onPress={() => { setView('graphs') }}>
-                            <Text style={styles.buttonTextSize}>Graphs</Text>
+                            <Text style={roomStyle.buttonTextSize}>Graphs</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.notesButton, styles.shadow]}
+                        <TouchableOpacity style={[roomStyle.notesButton, roomStyle.shadow]}
                             onPress={() => { setView('notes') }}>
-                            <Text style={styles.buttonTextSize}>Notes</Text>
+                            <Text style={roomStyle.buttonTextSize}>Notes</Text>
                         </TouchableOpacity>
                 </View>
                 </View>
-                {(view === 'graphs' && room !== undefined) ? <GraphView room={room} setModal={setModal} modal={modal} /> : <NotesView room={room} />}
+                {(view === 'graphs' && room !== undefined) ? <GraphView room={room}/> : <NotesView room={room} />}
             </SafeAreaView>
         );
     }
 }
-
-export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignSelf:'center', 
-        width: Platform.OS === 'android' ? '100%' : '50%',
-        backgroundColor:'white'
-    },
-    header: {
-        justifyContent:'center',
-        alignItems:'center',
-        paddingTop:10,
-        paddingBottom:10,
-        backgroundColor:'white'
-    },
-    graphButton:{
-        flexBasis: '45%', 
-        justifyContent: 'center', 
-        backgroundColor: '#9DD4FB', 
-        height: 60,
-        borderRadius:10
-    },
-    notesButton:{
-        flexBasis: '45%', 
-        justifyContent: 'center',
-        backgroundColor: '#9DD4FB',
-        height: 60,
-        borderRadius:10
-    },
-    buttonContainer:{
-        flexDirection: 'row', 
-        flexWrap: 'wrap', 
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        marginBottom: 10,
-        paddingTop:20,
-        width:'100%'
-    },
-    buttonTextSize:{
-        fontSize:20,
-        alignSelf: 'center', 
-        fontWeight: 'bold' 
-    },
-    shadow:{
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    }
-});

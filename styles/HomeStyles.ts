@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export const homeStyle = StyleSheet.create({
     container: {
@@ -23,22 +23,52 @@ export const homeStyle = StyleSheet.create({
         shadowOffset:{width:0, height:3},
         shadowOpacity:0.8,
         shadowRadius:2,
-        elevation:1
+        elevation:1,
+        paddingLeft:10
     },
     body: {
         alignItems:'center'
     },
     card: {
         width: '90%',
-        height: 200,
+        height: 250,
+        flexWrap:'wrap',
         backgroundColor:'#C1E8FD',
-        flexDirection:'row',
+        flexDirection:'column',
         shadowColor:'rgba(0, 0, 0, 0.2)',
         borderRadius:5,
         shadowOffset:{width:0, height:3},
         shadowOpacity:0.8,
         shadowRadius:2,
-        elevation:1,
+        elevation:6,
         marginBottom:25
+    },
+    shadow:{
+        shadowColor: "#000", 
+        shadowOffset: { width: 0,height: 3},
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65, 
+        elevation: 6
+    }, 
+    visibleModal: { 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        backgroundColor: '#C1E8FD' 
+    },
+    assignPatient: { 
+        fontSize: 20, 
+        paddingTop: 5 
+    },
+    bedPatient: { 
+        alignSelf: 'center', 
+        paddingLeft: 10 
+    },
+    roomPatient: { 
+        flex:9, 
+        flexDirection: 'column' 
+    },
+    patientStatus: {
+        flex:1, 
+        backgroundColor:['yellow', 'red', 'green'][~~(Math.random()*3)]
     }
 });

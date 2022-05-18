@@ -14,7 +14,7 @@ export type Room = {
     patientId: string,
     lastUpdated: string | undefined,
     heartRate: Array<GraphData> 
-    bloodPressure: Array<GraphData> 
+    respirationRate: Array<GraphData> 
     oxygenLevel: Array<GraphData> 
     notes: Array<NoteData> | undefined,
     id: string
@@ -25,7 +25,7 @@ export type csvrooms = {
 }
 
 type helthData = {
-    bloodPressure: Array<GraphData> 
+    respirationRate: Array<GraphData> 
     heartRate: Array<GraphData>
     oxygenLevel: Array<GraphData>
 }

@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react";
-import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable, FlatList, TouchableOpacity, StyleSheet } from "react-native";
+
 import { SearchBar } from 'react-native-elements';
+import { manageRolesStyles } from '../../styles/ManageRolesStyles';
+
 
 // navigation
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useEffect, useState } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Icon from "react-native-vector-icons/Feather";
+import { deleteUserById, getUsers } from "../../api/firebaseAPI";
+import { ErrorType } from "../../domain/Errortype";
 import { StackParameters } from '../../domain/NavigationTypes';
 import { User } from "../../domain/UserType";
-import { getUsers, deleteUserById } from "../../api/firebaseAPI";
-import { ErrorType } from "../../domain/Errortype";
 import { Errormodal } from "../ErrorModal";
-import Icon from "react-native-vector-icons/Feather";
+
 
 export function ManageRoles(){
 
@@ -42,21 +46,21 @@ export function ManageRoles(){
 
     return(
         <SafeAreaView style={{flex:1}}>
-            <View style={[styles.header, styles.shadow]}>
+            <View style={[manageRolesStyles.header, manageRolesStyles.shadow]}>
                 <TextInput
                     placeholder="room number"
                     onChangeText={(text) => {setSearch(text)}}
-                    style={styles.search}/>
+                    style={manageRolesStyles.search}/>
             </View>
             <ScrollView contentContainerStyle={{flex:1, alignItems:'center'}}>
                 {users.map((user) => {
                     return(
-                        <View  key={'users' + user.id} style={styles.cardContainer}>
-                            <View style={styles.card}>
+                        <View  key={'users' + user.id} style={manageRolesStyles.cardContainer}>
+                            <View style={manageRolesStyles.card}>
                                 <Icon style={{alignSelf:'center'}} name='clipboard' size={80}/>
                                 <Text style={{flex:1}}>Patient: {user.id}</Text>
                             </View>
-                            <TouchableOpacity onPress={() =>{deleteUserById(user.id)}} style={styles.delete}>
+                            <TouchableOpacity onPress={() =>{deleteUserById(user.id)}} style={manageRolesStyles.delete}>
                                 <Icon name='trash-2' color={'white'} size={40}/>
                             </TouchableOpacity>
                         </View>
@@ -66,65 +70,3 @@ export function ManageRoles(){
         </SafeAreaView>
     );
 }
-
-export const styles = StyleSheet.create({
-    header:{
-        backgroundColor:'white',
-        paddingTop:40,
-        paddingBottom:10
-    },
-    delete: {
-        backgroundColor:'red', 
-        flexBasis:'15%', 
-        height:100, 
-        justifyContent:'center', 
-        alignItems:'center', 
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    },
-    cardContainer:{
-        width:'90%',
-        marginTop:25,
-        flexDirection:'row', 
-        justifyContent:'space-between', 
-        alignItems:'center', 
-    },
-    shadow:{
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3,},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    },
-    card: {
-        flexDirection:'row', 
-        backgroundColor:'#79CAED', 
-        flexBasis:'84%', 
-        height:100, 
-        justifyContent:'center', 
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3,},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    },
-    add:{
-        marginTop:25,
-        backgroundColor:'white',
-        width:'90%',
-        height:75,
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius:10
-    },
-    search:{
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        borderRadius:10,
-        padding: 10,
-    }
-})

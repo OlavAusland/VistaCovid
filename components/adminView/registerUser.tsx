@@ -1,11 +1,10 @@
 import { useState } from "react";
-import React, { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable } from "react-native";
+import React, { Button, SafeAreaView, ScrollView, Text, TextInput, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import { addUser } from '../../api/firebaseAPI';
-import { User, Roles } from '../../domain/UserType';
-import { dropdownStyles } from '../../styles/dropdownStyle';
-import { DropDownType} from '../../domain/DropDownType';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { DropDownType } from '../../domain/DropDownType';
+import { Roles, User } from '../../domain/UserType';
+import { dropdownStyles } from '../../styles/dropdownStyle';
 
 
 export function CreateUser(){
