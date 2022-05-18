@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Button, Image, Pressable, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';

@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
 import { homeStyle } from '../styles/HomeStyles';
 import { BarChart } from 'react-native-chart-kit';
 import { Room } from '../domain/RoomType';
@@ -14,6 +14,7 @@ import { ErrorType } from '../domain/Errortype';
 import { auth, db } from '../firebase-config';
 import { AdminView } from './Admin';
 import { collection, doc, onSnapshot, query, where} from 'firebase/firestore';
+import { Exportmodal } from './exportModal';
 
 type  HomeScreenProps = NativeStackScreenProps<TabParameters, 'Home'>
 
@@ -52,7 +53,7 @@ export const HomeView = (props: HomeScreenProps) => {
 
     useEffect(() => {
         const getFirebaseRole = async() => {
-            await getRole(auth.currentUser? auth.currentUser.uid : 'default').then((role) => {
+            await getRole(auth.currentUser ? auth.currentUser.uid : 'default').then((role) => {
                 if(role !== undefined)
                     setUser(prev => ({...prev, role: Roles[role?.toUpperCase() as keyof typeof Roles]}));
                     setIsLoading(false);
@@ -70,6 +71,7 @@ export const HomeView = (props: HomeScreenProps) => {
     if(modalVisible){
         return (
             <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+            //<Exportmodal handleRequestClose={handleRequestClose}/>
         )
     }
 
@@ -82,7 +84,7 @@ export const HomeView = (props: HomeScreenProps) => {
     }else if(user.role == Roles.NURSE || user.role == Roles.DOCTOR)
     {
         return (
-            <View style={homeStyle.container}>
+            <SafeAreaView style={homeStyle.container}>
                 <View style={homeStyle.header}>
                     <TextInput onChangeText={(text) => {setKeyword(text)}} placeholder={'Search For Room'} style={homeStyle.searchBar} />
                 </View>
@@ -147,7 +149,7 @@ export const HomeView = (props: HomeScreenProps) => {
                         }
                     </ScrollView>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }else if(isLoading){
         return(

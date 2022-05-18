@@ -1,9 +1,9 @@
 import { auth, db } from "../firebase-config";
-import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query} from 'firebase/firestore'
+import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query, arrayUnion} from 'firebase/firestore'
 import { User } from "../domain/UserType";
-import { Room } from "../domain/RoomType";
-import { FolkeregisterPerson, Patient } from "../domain/PatientType";
-import { getAuth } from "firebase/auth";
+import { NoteData, Room } from "../domain/RoomType";
+import { Patient } from "../domain/PatientType";
+import { getAuth, deleteUser} from "firebase/auth";
 
 // USERS
 
@@ -15,7 +15,8 @@ export const addUser = async(user: User, id:string) => {
     });
 }
 
-export const deleteUser = async(id: string) => {
+export const deleteUserById = async(id: string) => {
+    await 
     await deleteDoc(doc(db, 'Users', id)).then((res) => {
         console.log(res);
     }).catch((err) => {
@@ -26,12 +27,26 @@ export const deleteUser = async(id: string) => {
 
 export const getUsers = async(): Promise<User[]> => {
     return await getDocs(collection(db, 'User')).then((res) =>{
-        return res.docs.map((doc) => <User>({...doc.data()}));
+        return res.docs.map((doc) => <User>({...doc.data(), id: doc.id}));
     }).catch((err) => {
         throw err;
     });
-} 
+}
 
+export const addNote = async(id: string, note: NoteData) => {
+    await setDoc(doc(db, 'Rooms', id), {notes:arrayUnion(note)}, {merge: true}).then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+/*
+export const getAllUsers = async() => {
+    adminApp.auth().getUsers().then((users: any) => {
+        console.log(users)
+    })
+}
+*/
 // auth
 // .getUsers([
 //     { uid: 'uid1' },
@@ -64,7 +79,7 @@ export const getLoggedInUser = () => {
 
 // Patients
 
-export const addPatient = async (user: FolkeregisterPerson) => {
+export const addPatient = async (user: Patient) => {
     await setDoc(doc(db, 'Patients', user.ssn), user).then((res) => {
         console.log(res);
     }).catch((err) => {
@@ -88,16 +103,45 @@ export const getPatient = async (id: string) => {
     });
 };
 
-export const addRoom = async (room: Room) => {
-    getRoom(room.id).then(async(res)=> {
-        if(res == undefined){
-            await setDoc(doc(db, 'Rooms', room.id), room).then((res) => {
-                console.log("added new room")
-                console.log(res)
-            });
-        }
-   }).catch((err)=> {console.log("inside"); throw(err)});
+export const addEmptyRoom = async (id: string) => {
+    await setDoc(doc(db, 'Rooms', id), {
+        patientId: '',
+        lastUpdated: Date.now(),
+        heartRate: [],
+        bloodPressure: [],
+        oxygenLevel: [],
+        notes: [],
+        id: id
+    }).then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
 }
+
+export const addRoom = async (room: Room): Promise<boolean> => {
+    console.log('ADDED ROOM')
+    try {
+        const response = await getRoom(room.id);
+
+        console.log(response);
+
+        if (response) {
+            return false;
+        }
+    
+        await setDoc(doc(db, 'Rooms', room.id), room).then((res) => {
+            console.log("added new room")
+            console.log(res)
+        });
+    
+        return true;
+    } catch (e: any) {
+        console.log("Error in add room: " + e);
+        throw e;
+    }
+}
+
 
 export const getRole = async (id: string): Promise<string | undefined> => {
     return await getDoc(doc(db, 'User', id)).then((res) => {
@@ -109,16 +153,13 @@ export const getRole = async (id: string): Promise<string | undefined> => {
 
 
 export const deleteRoom = async (id: string) => {
-    getRoom(id).then(async(res)=>{
-        if(res?.patientId == ""){
-            await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
-                console.log('Deleted Room: ', res);
-            }).catch((err) => {
-                console.log(console.log('Failed to delete room with id: ', id));
-                console.log('Error: ', err);
-            });
-        }
-    })
+    console.log("ID: " + id)
+    await deleteDoc(doc(db, 'Rooms', id)).then((res) => {
+        console.log('Deleted Room: ', res);
+    }).catch((err) => {
+        console.log(console.log('Failed to delete room with id: ', id));
+        console.log('Error: ', err);
+    });
 }
 
 
@@ -136,9 +177,15 @@ export const getAvailableRooms = async (): Promise<Room[]> => {
     return availableRooms;
 }
 
+export const getOccupiedRooms = async (): Promise<Room[]> => {
+    const rooms: Room[] = await getRooms();
+    const occupiedRooms = rooms.filter(room => room.patientId !== null || room.patientId !== undefined || room.patientId !== '');
+    return occupiedRooms;
+}
+
 export const getRoom = async (id: string): Promise<Room | undefined> => {
-    return await getDoc(doc(db, 'Rooms', id)).then((res) => {
-        return res.data() as Room;
+    return await getDoc(doc(db, 'Rooms', id)).then((doc) => {
+        return {...doc.data(), id:doc.id} as Room;
     }).catch((err) => {
         throw err;
     }

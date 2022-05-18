@@ -1,6 +1,6 @@
-import { Patient, FolkeregisterPerson } from "./PatientType";
+import { Patient } from "./PatientType";
 
 export type PatientInfoModalProps = {
     handleRequestClose: Function;
-    patient: Patient | FolkeregisterPerson | undefined;
+    patient: Patient | undefined;
 }

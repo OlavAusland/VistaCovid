@@ -223,6 +223,7 @@ exports[`renders correctly 1`] = `
         >
           <Text>
             Responsible: 
+            SHEES
           </Text>
         </View>
         <View

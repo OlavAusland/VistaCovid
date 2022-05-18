@@ -1,24 +1,29 @@
-import { Text, View, TextInput, Pressable, Modal, TouchableOpacity } from 'react-native';
+import { Text, View, Modal } from 'react-native';
 import { useEffect, useState } from 'react';
-import { getPatient } from '../../api/folkeregisterAPI';
-import { FolkeregisterPerson } from '../../domain/PatientType';
+import * as folkeregisterAPI from '../../api/folkeregisterAPI';
+import * as firebaseAPI from '../../api/firebaseAPI';
+import { Patient } from '../../domain/PatientType';
 import { assignPatientStyle } from '../../styles/AssignPatientStyle';
 import { addPatient, getAvailableRooms } from '../../api/firebaseAPI';
 import { Room } from '../../domain/RoomType';
 import { addPatientToRoom } from '../../api/firebaseAPI';
 import { DropDownType, ItemType } from '../../domain/DropDownType';
-import {ExistingPatient} from './patientExist'
-import {NewPatient} from './newPatient'
+import { ExistingPatient } from './patientExist'
+import { NewPatient } from './newPatient'
 import { AssignPatientModalProps } from '../../domain/AssignPatietTypes';
+import { ErrorType } from '../../domain/Errortype';
+import { Errormodal } from '../ErrorModal';
 
 
 export const AssignPatientModal = (props: AssignPatientModalProps) => {
 
-    const [patient, setPatient] = useState<FolkeregisterPerson>();
-    const [search, setSearch] = useState<string>("");
+    const [patient, setPatient] = useState<Patient>();
     const [dropdown, setDropdown] = useState<DropDownType>({ open: false, value: "0", items: [], label: "" });
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<ErrorType>({ errorObject: undefined, errormodalVisible: false });
+    const [search, setSearch] = useState<string>("");
     const [newPatient, setNew] = useState<boolean>(false);
+    const [e, setE] = useState<string>('');
+
 
     useEffect(() => {
         getAvailableRooms().then((room: Room[]) => {
@@ -27,7 +32,7 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
                 const item: ItemType = { label: room.id, value: room.id, };
                 setDropdown(prev => ({ ...prev, items: [...prev.items, item] }));
             })
-        })
+        }).catch(err => { setError((prev) => ({ ...prev, errorObject: err, errormodalVisible: true })); })
     }, [props.modalVisible]);
 
     const handleSearch = () => {
@@ -36,11 +41,19 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             const isFnr = fnrRegex.test(search);
 
             if (!isFnr) {
-                setError('Invald SSN') 
+                setError((prev) => ({ ...prev, errorObject: new Error('Invalid SSN'), errormodalVisible: true }));
             }
-            getPatient(search).then(result => {
-                setPatient(result)
-            }).catch(err => { setError(err.message) });
+
+            const firepatient = firebaseAPI.getPatient(search).then((res) => {
+                setPatient(res)
+            }).catch(err => { console.log(err) })
+
+            if (!firepatient) {
+                folkeregisterAPI.getPatient(search).then(result => {
+                    setPatient(result)
+                }).catch(err => { setE(err.message) });
+            }
+
         }
     }
 
@@ -49,14 +62,16 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             addPatientToRoom(dropdown.label, patient.ssn);
             setEmpty();
         }
+        setError((prev) => ({ ...prev, errorObject: new Error('Some fields are missing, please make sure everything is filed out'), errormodalVisible: true }));
     }
+
     const handleNewPatient = () => {
         if (patient && dropdown.label) {
-            console.log(patient)
             addPatient(patient)
             addPatientToRoom(dropdown.label, patient.ssn);
             setEmpty();
         }
+        setError((prev) => ({ ...prev, errorObject: new Error('Some fields are missing, please make sure everything is filed out'), errormodalVisible: true }));
     }
 
     const setEmpty = () => {
@@ -65,11 +80,21 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
         setSearch("");
         setNew(false)
         setDropdown({ open: false, value: "0", items: [], label: "" });
-        setError('')
+        setE('')
     }
 
     const handleNew = () => {
-       setNew(true);
+        setNew(true);
+    }
+
+    const handleErrorRequestClose = () => {
+        setError((prev) => ({ ...prev, errorObject: undefined, errormodalVisible: false }));
+    }
+
+    if (error.errormodalVisible) {
+        return (
+            <Errormodal error={error} handleRequestClose={handleErrorRequestClose} />
+        )
     }
 
     return (
@@ -81,34 +106,35 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             visible={props.modalVisible}
             onRequestClose={() => props.handleRequestClose()}
         >
-            <View style={{ top: '5%'}}>
+            <View style={{ top: '5%' }}>
                 <View style={assignPatientStyle.container}>
-                    <Text style={{ fontSize: 40, marginBottom: 60 }}>Admit patient</Text>
-                    {newPatient? 
-                    <NewPatient 
-                        setPatient={setPatient} 
-                        patient={patient}
-                        setSearch={setSearch} 
-                        handleSearch={handleSearch} 
-                        dropdown={dropdown} 
-                        setDropdown={setDropdown} 
-                        handleRequestClose ={props.handleRequestClose}
-                        handleNewPatient= {handleNewPatient}
-                        setNew ={setNew}
-                        setError={setError}
-                       /> 
-                        
-                    :<ExistingPatient 
-                        patient={patient} 
-                        setSearch={setSearch} 
-                        handleSearch={handleSearch} 
-                        dropdown={dropdown} 
-                        setDropdown={setDropdown}  
-                        handleAddPatient={handleAddPatient}
-                        handleNew ={handleNew}
-                        error={error}
-                        setEmpty={setEmpty}/>
-                        }
+                    <Text style={assignPatientStyle.header}>Admit patient</Text>
+                    {newPatient ?
+                        <NewPatient
+                            setPatient={setPatient}
+                            patient={patient}
+                            setSearch={setSearch}
+                            handleSearch={handleSearch}
+                            dropdown={dropdown}
+                            setDropdown={setDropdown}
+                            handleRequestClose={props.handleRequestClose}
+                            handleNewPatient={handleNewPatient}
+                            setNew={setNew}
+                            setError={setE}
+                        />
+
+                        : <ExistingPatient
+                            patient={patient}
+                            setPatient={setPatient}
+                            setSearch={setSearch}
+                            handleSearch={handleSearch}
+                            dropdown={dropdown}
+                            setDropdown={setDropdown}
+                            handleAddPatient={handleAddPatient}
+                            handleNew={handleNew}
+                            error={e}
+                            setEmpty={setEmpty} />
+                    }
                 </View>
             </View>
         </Modal>

@@ -1,6 +1,6 @@
 export type StackParameters = {
     Menu : object,
-    Register : object,
+    Register : object | undefined,
     Profile : object,
     Login : object,
     Home : object,
