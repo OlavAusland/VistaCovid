@@ -19,7 +19,8 @@ export const ProfileView = () => {
         const photoURL = auth.currentUser.uid + '_pp';
         updateProfile(auth.currentUser, {photoURL: photoURL})
         uploadImage(photoURL).then(() => {
-            getDownloadURL(ref(storage, auth.currentUser?.photoURL)).then((url) => {setAvatar(url)})
+            if(auth.currentUser && auth.currentUser.photoURL)
+                getDownloadURL(ref(storage, auth.currentUser?.photoURL)).then((url) => {setAvatar(url)}).catch((err) => {console.log(err)})
         });
     }
 
@@ -56,7 +57,7 @@ export const ProfileView = () => {
 
     return (
         <View style={{flex:1}}>
-            <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:"row", backgroundColor:'white'}}>
+            <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:"row", backgroundColor:'white', elevation:6}}>
                 <Image
                     style={{ flex:1, width:200,height:200, borderRadius:100}}
                     source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
