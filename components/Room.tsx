@@ -139,7 +139,7 @@ export function RoomView({ route, navigation }: Props) {
                         </TouchableOpacity>
                 </View>
                 </View>
-                {(view === 'graphs' && room !== undefined) ? <GraphView room={room} setModal={setModal} modal={modal} /> : <NotesView room={room} />}
+                {(view === 'graphs' && room !== undefined) ? <GraphView room={room}/> : <NotesView room={room} />}
             </SafeAreaView>
         );
     }
@@ -193,6 +193,6 @@ export const styles = StyleSheet.create({
         shadowOffset: { width: 0,height: 3},
         shadowOpacity: 0.27,
         shadowRadius: 4.65, 
-        elevation: 6
+        elevation: 2
     }
 });

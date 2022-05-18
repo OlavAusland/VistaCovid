@@ -102,16 +102,16 @@ export const HomeView = (props: HomeScreenProps) => {
                                             </View>
                                             <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
                                                 <View style={{flexDirection:'row'}}>
-                                                    <Icon size={20} name={'heartbeat'}/>
-                                                    <Text>{room.heartRate[room.heartRate.length - 1].value}</Text>                                                    
+                                                    {/*<Icon size={20} name={'heartbeat'}/>*/}
+                                                    <Text>❤️‍🔥{room.heartRate[room.heartRate.length - 1].value}</Text>                                                    
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
-                                                    <Icon size={20} name={'lungs'}/>
-                                                    <Text>{room.heartRate[room.oxygenLevel.length - 1].value}</Text>
+                                                    {/*<Icon size={20} name={'lungs'}/>*/}
+                                                    <Text>🫁{room.respirationRate[room.respirationRate.length - 1].value}</Text>
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
-                                                    <Icon size={20} name={'wind'}/>
-                                                    <Text>{room.heartRate[room.bloodPressure.length - 1].value}</Text>
+                                                    {/*<Icon size={20} name={'wind'}/>*/}
+                                                    <Text>💨{room.oxygenLevel[room.oxygenLevel.length - 1].value}</Text>
                                                 </View>
                                             </View>
                                         </View>
@@ -122,7 +122,7 @@ export const HomeView = (props: HomeScreenProps) => {
                                                     labels:[],
                                                     datasets:[
                                                         {
-                                                            data: room.bloodPressure ? extractXAxis(room.bloodPressure).slice(-5) : [],
+                                                            data: room.respirationRate ? extractXAxis(room.respirationRate).slice(-5) : [],
                                                             strokeWidth: 2,
                                                             color: (opacity = 0.1) => `rgba(235, 64, 52,${opacity})`
                                                         },
@@ -137,7 +137,7 @@ export const HomeView = (props: HomeScreenProps) => {
                                                             color: (opacity = 1) => `rgba(110, 215, 224,${opacity})`
                                                         }
                                                     ],
-                                                    legend: ['BP', 'HR', 'O2']
+                                                    legend: ['RR', 'HR', 'O₂']
                                                 }}
                                                 width={Dimensions.get('window').width}
                                                 height={125}
