@@ -33,5 +33,4 @@ export type existingPatientProps = {
 export type AssignPatientModalProps = {
     modalVisible: boolean;
     handleRequestClose: Function;
-    user: currentUser
 }

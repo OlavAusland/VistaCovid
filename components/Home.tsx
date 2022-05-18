@@ -70,7 +70,7 @@ export const HomeView = (props: HomeScreenProps) => {
 
     if(modalVisible){
         return (
-            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose}/>
             //<Exportmodal handleRequestClose={handleRequestClose}/>
         )
     }
@@ -90,6 +90,14 @@ export const HomeView = (props: HomeScreenProps) => {
                 </View>
                 <View style={{ flex: 9 }}>
                     <ScrollView contentContainerStyle={[homeStyle.body]}>
+                        { user.role == Roles.DOCTOR &&
+                        <View style={{ paddingBottom: 10, width:'90%', paddingTop:10}}>
+                            <TouchableOpacity onPress={() => { setModalVisible(true) }} style={[styles.shadow, { flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD', borderRadius:10}]}>
+                                <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
+                                <Icon name='address-book' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                            </TouchableOpacity>
+                        </View>
+                        }
                         {rooms.length > 0 &&
                             rooms.filter((room) => {if(room.patientId != '' && room.id.includes(keyword)){return room}}).sort((a, b) => a.id.localeCompare(b.id)).map((room: Room) => {
                                 return (
@@ -160,16 +168,6 @@ export const HomeView = (props: HomeScreenProps) => {
                             })
                         }
                     </ScrollView>
-                    {/*
-                    { user.role == Roles.DOCTOR &&
-                    <View style={{ paddingBottom: 10 }}>
-                        <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
-                            <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
-                            <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
-                        </TouchableOpacity>
-                    </View>
-                    }
-                */}
                 </View>
             </SafeAreaView>
         );
