@@ -14,10 +14,12 @@ export const profileStyle = StyleSheet.create({
         backgroundColor:'rgba(0, 0, 0, 0)'
     },
     first: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        flex:1
     },
     second:{
-        backgroundColor: '#E5FDFF'
+        backgroundColor: '#E5FDFF',
+        flex:1
     },
 
     header:{
