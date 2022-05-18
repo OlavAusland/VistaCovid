@@ -2,32 +2,11 @@
 import { Platform, StyleSheet } from 'react-native';
 
 export const roomStyle = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignSelf: 'center',
-        width: Platform.OS === ('android' || 'IOS') ? '100%' : '100%',
-        backgroundColor: 'white'
-    },
-    header: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 10,
-        paddingBottom: 10,
-        backgroundColor: 'white'
-    },
     headerText: {
         fontSize: 40,
         fontWeight: 'bold'
     },
-    graphButton: {
-        flexBasis: '45%',
-        justifyContent: 'center',
-        backgroundColor: '#9DD4FB',
-        height: 60,
-        borderRadius: 10
-    },
+
     notesButton: {
         flexBasis: '45%',
         justifyContent: 'center',
@@ -58,7 +37,40 @@ export const roomStyle = StyleSheet.create({
     },
     graphContainer: { 
         flexBasis: Platform.OS === 'android' ? '80%' : '80%',
+        justifyContent:'center',
+        alignItems:'center'
+        
+    },
+    notesContainer: {
+        width: Platform.OS === ('android' || 'ios') ? '80%' : '100%',
+    },
+    noteContainer : {
+        backgroundColor: 'rgba(0, 0, 0, 0.05)',
+        borderRadius: 5,
+        paddingLeft: 5,
+        width:'100%',
+        marginBottom:10
+    },
+        container: {
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center' },
-}
-);
+        alignSelf:'center', 
+        width: Platform.OS === 'android' ? '100%' : '50%',
+        backgroundColor:'white'
+    },
+        header: {
+        justifyContent:'center',
+        alignItems:'center',
+        paddingTop:10,
+        paddingBottom:10,
+        backgroundColor:'white'
+    },
+    graphButton:{
+        flexBasis: '45%', 
+        justifyContent: 'center', 
+        backgroundColor: '#9DD4FB', 
+        height: 60,
+        borderRadius:10
+    },
+   
+});

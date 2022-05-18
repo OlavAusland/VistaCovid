@@ -52,15 +52,15 @@ export const ProfileView = () => {
     }, []);
 
     return (
-        <View style={{flex:1}}>
+        <View style={styles.singleFlex}>
             <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:"row", backgroundColor:'white', elevation:6}}>
                 <Image
-                    style={{ flex:1, width:200,height:200, borderRadius:100}}
+                    style={styles.imgStyle}
                     source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
                 />
                 <View style={{flex:1, flexDirection:'column', justifyContent:'center'}}>
                     <Text style={{flex:1, marginTop:50}}>Name: {auth.currentUser?.displayName}</Text>
-                    <Text style={{flex:1}}>Email: {auth.currentUser?.email}</Text>
+                    <Text style={styles.singleFlex}>Email: {auth.currentUser?.email}</Text>
                 </View>
             </View>
             <View style={{flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
@@ -76,3 +76,29 @@ export const ProfileView = () => {
     )
 }
 
+export const styles = StyleSheet.create({
+    upload:{
+        width:'75%',
+        backgroundColor:'#9DD4FB',
+        paddingTop:10,
+        paddingBottom:10,
+        borderRadius:10,
+        alignItems:'center'
+    },
+    shadow:{
+        shadowColor: "#000", 
+        shadowOffset: { width: 0,height: 3,},
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65, 
+        elevation: 6
+    },
+    imgStyle: { 
+        flex:1, 
+        width:200,
+        height:200, 
+        borderRadius:100
+    },
+    singleFlex: {
+        flex:1
+    },
+})

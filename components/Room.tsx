@@ -144,4 +144,3 @@ export function RoomView({ route, navigation }: Props) {
         );
     }
 }
-
