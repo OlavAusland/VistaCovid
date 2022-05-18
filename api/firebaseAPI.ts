@@ -108,7 +108,7 @@ export const addEmptyRoom = async (id: string) => {
         patientId: '',
         lastUpdated: Date.now(),
         heartRate: [],
-        bloodPressure: [],
+        respirationRate: [],
         oxygenLevel: [],
         notes: [],
         id: id
@@ -192,7 +192,7 @@ export const getRoom = async (id: string): Promise<Room | undefined> => {
 );}
 
 export const addPatientToRoom = async (roomId: string, patientId: string) => {
-    await setDoc(doc(db, 'Rooms', roomId), {patientId: patientId}, {merge: true})
+    await setDoc(doc(db, 'Rooms', roomId), {id: roomId, patientId: patientId}, {merge: true})
     
 }
 

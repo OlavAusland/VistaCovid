@@ -1,3 +1,5 @@
+import { Modal } from "react-native"
+
 export type StackParameters = {
     Menu : object,
     Register : object | undefined,
@@ -12,6 +14,7 @@ export type StackParameters = {
     ManageRoles : object | undefined,
     Room: {roomId: string},
     CreateUser: object | undefined
+    Export: object | undefined,
 }
 
 export type TabParameters = {

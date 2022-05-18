@@ -1,9 +1,11 @@
+import { View, TouchableOpacity, Text, Image, StyleSheet, ScrollView } from "react-native"
+import Icon from 'react-native-vector-icons/AntDesign';
 import * as ImagePicker from 'expo-image-picker';
 import { updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth, storage } from "../firebase-config";
+import { profileStyle } from '../styles/ProfileStyles';
 
 export const ProfileView = () => {
     const [image, setImage] = useState<ImagePicker.ImageInfo>();
@@ -51,44 +53,44 @@ export const ProfileView = () => {
     }, []);
 
     return (
-        <View style={{flex:1}}>
-            <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:"row", backgroundColor:'white', elevation:6}}>
-                <Image
-                    style={{ flex:1, width:200,height:200, borderRadius:100}}
-                    source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
-                />
-                <View style={{flex:1, flexDirection:'column', justifyContent:'center'}}>
-                    <Text style={{flex:1, marginTop:50}}>Name: {auth.currentUser?.displayName}</Text>
-                    <Text style={{flex:1}}>Email: {auth.currentUser?.email}</Text>
+        <ScrollView>
+            <View>
+                <View style={profileStyle.first}>
+                    <View >
+                        <Text style={profileStyle.header}>PROFILE</Text>
+                    </View>
+                    <View style={profileStyle.row1}>
+                        <Image
+                            style={profileStyle.imageStyle}
+                            source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
+                        />
+                        <Text>{}</Text>
+                    </View>
+                </View>
+                <View style={profileStyle.second}>
+                    <View style={profileStyle.userStyle}>
+                        <View style={profileStyle.box}>
+                            <Icon name='user' size={30}></Icon>
+                            <Text style={profileStyle.textStyle}>Name: {auth.currentUser?.displayName}</Text>
+                        </View>
+                        <View style={profileStyle.box}>
+                            <Icon name='mail'size={30}></Icon>
+                            <Text style={profileStyle.textStyle}>Email: {auth.currentUser?.email}</Text>
+                        </View>
+                        <View style={profileStyle.box}>
+                            <Icon name='phone'size={30}></Icon>
+                            <Text style={profileStyle.textStyle}>Tlf:{auth.currentUser?.phoneNumber}</Text>
+                        </View>
+                    </View>
+                    <View style={profileStyle.uploadImageButtonStyle}>
+                            <TouchableOpacity style={[profileStyle.upload, profileStyle.shadow]}
+                            onPress={() => {pickImage();handleUpload();}}>
+                                <Text style={profileStyle.buttonTextStyle}>Upload Image</Text>
+                            </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-            <View style={{flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
-                    <TouchableOpacity style={[styles.upload, styles.shadow]}
-                    onPress={() => {pickImage();handleUpload();}}>
-                        <Text style={{fontSize:20}}>Upload Image</Text>
-                    </TouchableOpacity>
-            </View>
-            <View style={{flex:1, backgroundColor:'white'}}>
-                <Text>{auth.currentUser?.displayName}</Text>
-            </View>
-        </View>
+        </ScrollView>
     )
 }
 
-export const styles = StyleSheet.create({
-    upload:{
-        width:'75%',
-        backgroundColor:'#9DD4FB',
-        paddingTop:10,
-        paddingBottom:10,
-        borderRadius:10,
-        alignItems:'center'
-    },
-    shadow:{
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3,},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    }
-})
