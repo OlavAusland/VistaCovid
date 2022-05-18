@@ -25,7 +25,7 @@ export type csvrooms = {
 }
 
 type helthData = {
-    bloodPressure: Array<GraphData> 
+    respirationRate: Array<GraphData> 
     heartRate: Array<GraphData>
     oxygenLevel: Array<GraphData>
 }

@@ -108,7 +108,7 @@ export const addEmptyRoom = async (id: string) => {
         patientId: '',
         lastUpdated: Date.now(),
         heartRate: [],
-        bloodPressure: [],
+        respirationRate: [],
         oxygenLevel: [],
         notes: [],
         id: id

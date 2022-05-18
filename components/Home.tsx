@@ -70,7 +70,7 @@ export const HomeView = (props: HomeScreenProps) => {
 
     if(modalVisible){
         return (
-            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose}/>
             //<Exportmodal handleRequestClose={handleRequestClose}/>
         )
     }
@@ -85,15 +85,23 @@ export const HomeView = (props: HomeScreenProps) => {
     {
         return (
             <SafeAreaView style={homeStyle.container}>
-                <View style={[homeStyle.header, styles.shadow, {backgroundColor:'white'}]}>
+                <View style={[homeStyle.header, homeStyle.shadow, {backgroundColor:'white'}]}>
                     <TextInput onChangeText={(text) => {setKeyword(text)}} placeholder={'Search For Room'} style={homeStyle.searchBar} />
                 </View>
                 <View style={{ flex: 9 }}>
                     <ScrollView contentContainerStyle={[homeStyle.body]}>
+                        { user.role == Roles.DOCTOR &&
+                        <View style={{ paddingBottom: 10, width:'90%', paddingTop:10}}>
+                            <TouchableOpacity onPress={() => { setModalVisible(true) }} style={[homeStyle.shadow, { flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD', borderRadius:10}]}>
+                                <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
+                                <Icon name='address-book' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                            </TouchableOpacity>
+                        </View>
+                        }
                         {rooms.length > 0 &&
                             rooms.filter((room) => {if(room.patientId != '' && room.id.includes(keyword)){return room}}).sort((a, b) => a.id.localeCompare(b.id)).map((room: Room) => {
                                 return (
-                                    <TouchableOpacity key={'room:' + room.id} style={[homeStyle.card, styles.shadow, {overflow:'hidden'}]}
+                                    <TouchableOpacity key={'room:' + room.id} style={[homeStyle.card, homeStyle.shadow, {overflow:'hidden'}]}
                                     onPress={() => {props.navigation.push('Room', {roomId:room.id})}}>
                                         <View style={{flex:1, padding:10, flexDirection:'row', flexWrap:'wrap'}}>
                                             <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between'}}>
@@ -102,16 +110,16 @@ export const HomeView = (props: HomeScreenProps) => {
                                             </View>
                                             <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
                                                 <View style={{flexDirection:'row'}}>
-                                                    {/*<Icon size={20} name={'heartbeat'}/>*/}
-                                                    <Text>❤️‍🔥{room.heartRate[room.heartRate.length - 1].value}</Text>                                                    
+                                                    <Icon size={20} name={'heartbeat'}/>
+                                                    <Text>{room.heartRate[room.heartRate.length - 1].value}</Text>                                                    
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
-                                                    {/*<Icon size={20} name={'lungs'}/>*/}
-                                                    <Text>🫁{room.respirationRate[room.respirationRate.length - 1].value}</Text>
+                                                    <Icon size={20} name={'lungs'}/>
+                                                    <Text>{room.respirationRate[room.respirationRate.length - 1].value}</Text>
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
-                                                    {/*<Icon size={20} name={'wind'}/>*/}
-                                                    <Text>💨{room.oxygenLevel[room.oxygenLevel.length - 1].value}</Text>
+                                                    <Icon size={20} name={'wind'}/>
+                                                    <Text>{room.oxygenLevel[room.oxygenLevel.length - 1].value}</Text>
                                                 </View>
                                             </View>
                                         </View>
@@ -122,22 +130,22 @@ export const HomeView = (props: HomeScreenProps) => {
                                                     labels:[],
                                                     datasets:[
                                                         {
-                                                            data: room.respirationRate ? extractXAxis(room.respirationRate).slice(-5) : [],
-                                                            strokeWidth: 2,
-                                                            color: (opacity = 0.1) => `rgba(235, 64, 52,${opacity})`
-                                                        },
-                                                        {
                                                             data: room.heartRate ? extractXAxis(room.heartRate).slice(-5) : [],
                                                             strokeWidth:2,
-                                                            color: (opacity = 1) => `rgba(237, 184, 85,${opacity})`
+                                                            color: (opacity = 0.1) => `rgba(235, 64, 52,${opacity})`
                                                         }, 
+                                                        {
+                                                            data: room.respirationRate ? extractXAxis(room.respirationRate).slice(-5) : [],
+                                                            strokeWidth: 2,
+                                                            color: (opacity = 1) => `rgba(237, 184, 85,${opacity})`
+                                                        },
                                                         {
                                                             data: room.oxygenLevel ? extractXAxis(room.oxygenLevel).slice(-5) : [],
                                                             strokeWidth:2,
                                                             color: (opacity = 1) => `rgba(110, 215, 224,${opacity})`
                                                         }
                                                     ],
-                                                    legend: ['RR', 'HR', 'O₂']
+                                                    legend: ['HR', 'RR', 'O₂']
                                                 }}
                                                 width={Dimensions.get('window').width}
                                                 height={125}
@@ -160,16 +168,6 @@ export const HomeView = (props: HomeScreenProps) => {
                             })
                         }
                     </ScrollView>
-                    {/*
-                    { user.role == Roles.DOCTOR &&
-                    <View style={{ paddingBottom: 10 }}>
-                        <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
-                            <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
-                            <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
-                        </TouchableOpacity>
-                    </View>
-                    }
-                */}
                 </View>
             </SafeAreaView>
         );
@@ -188,12 +186,3 @@ export const HomeView = (props: HomeScreenProps) => {
     };
 }
 
-export const styles = StyleSheet.create({
-    shadow:{
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    }
-})
