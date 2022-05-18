@@ -1,11 +1,17 @@
 import {AssignPatientModal} from '../../components/home/AssignPatientToRoomModal';
-import { PatientInfoModal } from '../../components/room/PatientInfoModal';
-import { render, waitFor } from '@testing-library/react-native';
-import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Roles } from '../../domain/UserType';
 
-test('renders correctly', async() => {
-  const tree = render(<AssignPatientModal modalVisible={true} handleRequestClose={jest.fn()} />);
-  await waitFor(() => {
-    expect(tree.toJSON()).toMatchSnapshot();
-  });
-}); 
+const currentUser = {
+  email: 'hanne@gamil.com',
+  firstName: 'Hanne', 
+  lastName: 'Olsen',
+  role: Roles.NURSE,
+  id: '38hsiha29120ijbef929120'
+}
+
+
+test("renders correctly", () => {
+  const tree = render(<AssignPatientModal modalVisible={true} handleRequestClose={jest.fn()} user={currentUser}/>).toJSON();
+  expect(tree).toMatchSnapshot();
+});

@@ -1,7 +1,6 @@
 import { useState } from "react";
-import React, { Modal, View, Text, Button, TextInput } from "react-native";
-import { compute_rest_props } from "svelte/internal";
-import { auth } from '../../firebase-config'
+import React, { Button, Modal, TextInput, View } from "react-native";
+import { auth } from '../../firebase-config';
 
 type SafetyModalProps = {
     modalVisible: boolean,

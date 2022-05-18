@@ -1,20 +1,22 @@
-import { View, Text, TextInput, Button } from 'react-native';
-import React, { useState, useEffect} from 'react';
-import { registerStyle } from '../styles/RegisterStyles';
-
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParameters } from '../domain/NavigationTypes';
-import { User, Roles} from '../domain/UserType';
+// * AUTH
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import React, { useState } from 'react';
+import { Button, Text, TextInput, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { DropDownType} from '../domain/DropDownType';
+import { DropDownType } from '../domain/DropDownType';
+import { ErrorType } from '../domain/Errortype';
+import { StackParameters } from '../domain/NavigationTypes';
+import { Roles, User } from '../domain/UserType';
+import { auth, db } from '../firebase-config';
 import { dropdownStyles } from '../styles/dropdownStyle';
-
-// * AUTH
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../firebase-config'
+import { registerStyle } from '../styles/RegisterStyles';
 import { SafetyModal } from './register/SafetyModal';
+
+
 
 export function RegisterView()
 {
@@ -24,10 +26,11 @@ export function RegisterView()
     const [user, setUser] = useState<User>({
         email:'',  password:'', firstName:'', 
         lastName:'', role:Roles.NONE, address:undefined,
-        phone: undefined, city: undefined, code: undefined
+        phone: undefined, city: undefined, code: undefined,
+        id: '',
     });
 
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [dropdown, setDropdown] = useState<DropDownType>({ 
         open: false, 
@@ -39,26 +42,36 @@ export function RegisterView()
    
 
     const handleRegister = async() => {
-        await createUserWithEmailAndPassword(auth, user.email, user.password).then((res) => {
+        await createUserWithEmailAndPassword(auth, user.email, user.password).then(async(res) => {
+            console.log(res.user.uid    )
+            await updateProfile(res.user, {displayName: user.firstName + " " + user.lastName}).then((res) => {
+                console.log('Profile Updated');
+            }).catch((err) => {});
+
+            await setDoc(doc(db, 'User', res.user.uid), {role: Roles[parseInt(user.role.toString())]}).then((res) => {
+                console.log('Added User Role');
+            }).catch((err) => {console.log(err)});
+
             console.log('Successfully Created User!');
-            signOut(auth).then().catch((err) => {console.log(err)});
+            
+            await signOut(auth).then().catch((err) => {console.log(err)});
         }).catch((err) => {console.log('Error! Please Try Again!'); setError(err.message)})
 
     }
 
     const handleRequestClose = () => {
         setModalVisible(false);
+        setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
     }
 
     const handleConfirmation = (email: string, password: string) => {
-        console.log("password: " + password + '\n email:' + email)
         signInWithEmailAndPassword(auth, email, password).then(() =>{
             handleRegister().then(() => {signInWithEmailAndPassword(auth, email, password).then(() => {
                 console.log('Successfully Signed In!');
                 console.log(auth.currentUser?.uid)
-                }).catch((err) => {console.log(err)})
-            }).catch((err) => {console.log(err)});
-        }).catch((err) => {console.log(err)});
+                }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
+            }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
+        }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
     }
 
 

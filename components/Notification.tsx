@@ -1,8 +1,6 @@
-import { StatusBar } from "expo-status-bar";
+import { addNotificationReceivedListener } from "expo-notifications";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
 import createSender from "../utils/register";
-import { addNotificationReceivedListener, removeNotificationSubscription} from "expo-notifications";
 
 export default function Notification() {
   // Function that will hold our push notification send function (an object with the function)
@@ -22,7 +20,7 @@ export default function Notification() {
       console.log(typeof sendFunc);
       setSender({ sendFunc });
     });
-  }, []);
+  }, [false]);
 
   // useEffect that will send push alert
   useEffect(() => {

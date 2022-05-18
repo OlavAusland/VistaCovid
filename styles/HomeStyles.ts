@@ -12,33 +12,36 @@ export const homeStyle = StyleSheet.create({
     header: {
         flex:1,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        marginBottom:25
     },
     searchBar: {
         backgroundColor:'#C1E8FD',
-        width: '50%',
+        width: '90%',
         height: 30,
         borderRadius:5,
         shadowColor:'rgba(0, 0, 0, 0.2)',
         shadowOffset:{width:0, height:3},
         shadowOpacity:0.8,
         shadowRadius:2,
-        elevation:1
+        elevation:1,
+        paddingLeft:10
     },
     body: {
         alignItems:'center'
     },
     card: {
         width: '90%',
-        height: 200,
+        height: 250,
+        flexWrap:'wrap',
         backgroundColor:'#C1E8FD',
-        flexDirection:'row',
+        flexDirection:'column',
         shadowColor:'rgba(0, 0, 0, 0.2)',
         borderRadius:5,
         shadowOffset:{width:0, height:3},
         shadowOpacity:0.8,
         shadowRadius:2,
-        elevation:1,
+        elevation:6,
         marginBottom:25
     }
 });
