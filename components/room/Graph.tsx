@@ -6,6 +6,7 @@ export type GraphProps = {
     data: GraphData[] | undefined,
     name: string,
     setModal: (modal: boolean) => void,
+    color: string
 }
 
 export const LineGraph = (props: GraphProps) => {
