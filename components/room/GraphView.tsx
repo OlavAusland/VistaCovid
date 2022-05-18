@@ -1,7 +1,7 @@
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
-import { LineGraph } from './Graph';
-import { roomStyle } from '../../styles/RoomStyles';
+import { ScrollView, View } from 'react-native';
 import { Room } from '../../domain/RoomType';
+import { roomStyle } from '../../styles/RoomStyles';
+import { LineGraph } from './Graph';
 
 export type GraphViewProps = {
     room: Room,

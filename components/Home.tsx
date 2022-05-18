@@ -1,20 +1,21 @@
-import { useEffect, useReducer, useState } from 'react';
-import { View, Text, Button, TextInput, ScrollView, Dimensions, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
-import { homeStyle } from '../styles/HomeStyles';
-import { BarChart, LineChart } from 'react-native-chart-kit';
-import { GraphData, Room } from '../domain/RoomType';
-import { addRoom, getLoggedInUser, getRole, getRooms } from '../api/firebaseAPI';
-import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import { currentUser, Roles } from '../domain/UserType';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackParameters, TabParameters } from '../domain/NavigationTypes';
-import { Errormodal } from './ErrorModal';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { LineChart } from 'react-native-chart-kit';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { getRole, getRooms } from '../api/firebaseAPI';
 import { ErrorType } from '../domain/Errortype';
+import { TabParameters } from '../domain/NavigationTypes';
+import { GraphData, Room } from '../domain/RoomType';
+import { currentUser, Roles } from '../domain/UserType';
 import { auth, db } from '../firebase-config';
+import { homeStyle } from '../styles/HomeStyles';
 import { AdminView } from './Admin';
-import { collection, doc, onSnapshot, query, where} from 'firebase/firestore';
+
 import { Export } from './Export';
+import { Errormodal } from './ErrorModal';
+import { AssignPatientModal } from "./home/AssignPatientToRoomModal";
 
 type  HomeScreenProps = NativeStackScreenProps<TabParameters, 'Home'>
 

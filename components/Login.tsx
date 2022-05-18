@@ -1,19 +1,16 @@
-import { View, Text, TextInput, Button, Image, Pressable, TouchableOpacity } from 'react-native';
-import { useState, useEffect, createContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParameters } from '../domain/NavigationTypes';
-import { loginStyle } from '../styles/LoginStyles';
-
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase-config';
-import { LoginInfo } from '../domain/UserType';
-
+import { useEffect, useState } from 'react';
+import { Image, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { isReactNative } from '@firebase/util';
-import { getRole } from '../api/firebaseAPI';
 import { ErrorType } from '../domain/Errortype';
+import { StackParameters } from '../domain/NavigationTypes';
+import { LoginInfo } from '../domain/UserType';
+import { loginStyle } from '../styles/LoginStyles';
 import { Errormodal } from './ErrorModal';
+
+
 
 
 

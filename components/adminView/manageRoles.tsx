@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
-import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable, FlatList, TouchableOpacity, StyleSheet } from "react-native";
-import { SearchBar } from 'react-native-elements';
-
 // navigation
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useEffect, useState } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Icon from "react-native-vector-icons/Feather";
+import { deleteUserById, getUsers } from "../../api/firebaseAPI";
+import { ErrorType } from "../../domain/Errortype";
 import { StackParameters } from '../../domain/NavigationTypes';
 import { User } from "../../domain/UserType";
-import { getUsers, deleteUserById } from "../../api/firebaseAPI";
-import { ErrorType } from "../../domain/Errortype";
 import { Errormodal } from "../ErrorModal";
-import Icon from "react-native-vector-icons/Feather";
+
 
 export function ManageRoles(){
 

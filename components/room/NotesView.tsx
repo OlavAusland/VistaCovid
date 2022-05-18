@@ -1,11 +1,9 @@
-import { View, Text, ScrollView, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { roomStyle } from '../../styles/RoomStyles';
-import { NoteData } from '../../domain/RoomType';
 import { useState } from 'react';
-import { NoteModal } from './NoteModal';
-import { Roles } from '../../domain/UserType';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { NoteData } from '../../domain/RoomType';
 import { auth } from '../../firebase-config';
+import { NoteModal } from './NoteModal';
 
 export const NotesView = (props: any) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);

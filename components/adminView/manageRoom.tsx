@@ -1,12 +1,12 @@
-import { SafeAreaView, TouchableOpacity, ScrollView, TextInput, View, Text, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
-import { addEmptyRoom, addRoom, deleteRoom, getRooms } from "../../api/firebaseAPI";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParameters } from "../../domain/NavigationTypes";
-import {Room} from "../../domain/RoomType"
+import { collection, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { addEmptyRoom, deleteRoom, getRooms } from "../../api/firebaseAPI";
+import { StackParameters } from "../../domain/NavigationTypes";
+import { Room } from "../../domain/RoomType";
 import { db } from "../../firebase-config";
 
 export function ManageRoom()

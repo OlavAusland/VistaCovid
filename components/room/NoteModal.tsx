@@ -1,10 +1,9 @@
-import { useRef, useState } from 'react';
-import { Modal, View, Text, Button} from 'react-native';
+import { useState } from 'react';
+import { Button, Modal, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { addNote, getRole } from '../../api/firebaseAPI';
+import { addNote } from '../../api/firebaseAPI';
 import { NoteData, Room } from '../../domain/RoomType';
 import { auth } from '../../firebase-config';
-import { Roles } from '../../domain/UserType';
 
 type NoteModalType = {
     isVisible: boolean,

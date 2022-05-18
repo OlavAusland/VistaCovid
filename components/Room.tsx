@@ -1,23 +1,23 @@
-import { View, Text, TouchableOpacity, LogBox, StyleSheet, Platform } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { roomStyle } from '../styles/RoomStyles';
-import { Room } from '../domain/RoomType';
+import { LogBox, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { getPatient, getRoom } from '../api/firebaseAPI';
+import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
+import { ErrorType } from '../domain/Errortype';
+import { StackParameters } from '../domain/NavigationTypes';
 import { Patient } from '../domain/PatientType';
-
+import { Room } from '../domain/RoomType';
+import { db } from '../firebase-config';
+import { roomStyle } from '../styles/RoomStyles';
+import { csvexport } from '../utils/csvexport';
+import { Errormodal } from './ErrorModal';
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
-import { getRoom, getPatient } from '../api/firebaseAPI';
-import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { PatientInfoModal } from './room/PatientInfoModal';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackParameters } from '../domain/NavigationTypes';
-import { ErrorType } from '../domain/Errortype';
-import { Errormodal } from './ErrorModal';
-import { csvexport } from '../utils/csvexport';
-import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase-config';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 LogBox.ignoreLogs(['Setting a timer']);
 
 

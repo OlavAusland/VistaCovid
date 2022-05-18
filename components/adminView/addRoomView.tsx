@@ -1,10 +1,8 @@
 import { useState } from "react";
-import React, { ScrollView, TextInput, View, Text, Button, SafeAreaView, Alert } from "react-native";
-import { adminStyle } from "../../styles/AdminStyles";
+import React, { Alert, Button, SafeAreaView, ScrollView, Text, TextInput, View } from "react-native";
+import { addRoom } from "../../api/firebaseAPI";
 import { Room } from "../../domain/RoomType";
-import { addRoom, getRooms } from "../../api/firebaseAPI";
-import { NoteData } from "../../domain/RoomType";
-import { Roles } from "../../domain/UserType";
+import { adminStyle } from "../../styles/AdminStyles";
 
 export function AddRoom() {
 
