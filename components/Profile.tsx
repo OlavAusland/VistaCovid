@@ -54,15 +54,15 @@ export const ProfileView = () => {
 
     return (
         <View style={profileStyle.body}>
-            <View style={profileStyle.column1}>
+            <View style={profileStyle.row1}>
                 <Image
                     style={profileStyle.imageStyle}
                     source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
                 />
-                <View style={profileStyle.userStyle}>
+            </View>
+            <View style={profileStyle.userStyle}>
                     <Text style={profileStyle.nameStyle}>Name: {auth.currentUser?.displayName}</Text>
                     <Text style={profileStyle.emailStyle}>Email: {auth.currentUser?.email}</Text>
-                </View>
             </View>
             <View style={profileStyle.uploadImageButtonStyle}>
                     <TouchableOpacity style={[profileStyle.upload, profileStyle.shadow]}
@@ -70,9 +70,6 @@ export const ProfileView = () => {
                         <Text style={profileStyle.buttonTextStyle}>Upload Image</Text>
                     </TouchableOpacity>
             </View>
-            {/* <View style={profileStyle.nameStyle}>
-                <Text>SkoleBolle{auth.currentUser?.displayName}</Text>
-            </View> */}
         </View>
     )
 }

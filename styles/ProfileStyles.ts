@@ -12,20 +12,20 @@ export const profileStyle = StyleSheet.create({
     body:{
         flex: 1
     },
-    column1:{
+    row1:{
         flex:1, 
         justifyContent:'center', 
         alignItems:'center', 
         flexDirection:"row", 
         backgroundColor:'white', 
-        elevation:6
+        elevation:6,
+        padding: 60
     },
     imageStyle:{
         flex:1, 
-        width: 200,
-        height: 200,
-        borderRadius: 200/2,
-        paddingLeft: 20
+        width: 300,
+        height: 300,
+        borderRadius: 300/2,
     },
     nameStyle:{
         flex:1,
@@ -37,10 +37,15 @@ export const profileStyle = StyleSheet.create({
         fontSize: 20
     },
     userStyle:{
-        flex:1, flexDirection:'column', justifyContent:'center'
+        flex:1, 
+        flexDirection:'column', 
+        justifyContent:'center'
     },
     uploadImageButtonStyle:{
-        flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'
+        flex:1, 
+        backgroundColor:'white', 
+        justifyContent:'center', 
+        alignItems:'center'
     },
     buttonTextStyle:{
         fontSize:20

@@ -49,7 +49,7 @@ export function AdminView()
                             <View style={adminStyle.mainViewButtons}>
                                 <TouchableOpacity
                                 style={adminStyle.TOmain}
-                                onPress={()=>{navigation.navigate('ManageRoles')}}>
+                                onPress={()=>{navigation.navigate('Register')}}>
                                     <Icon name='adduser' size={30} style={adminStyle.buttonIcon} ></Icon>
                                     <Text style={adminStyle.buttonText2}>REGISTER USER</Text>
                                     <Icon name='arrowright' size={30} style={adminStyle.arrowIcon}></Icon>
