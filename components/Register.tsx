@@ -1,23 +1,22 @@
-import { View, Text, TextInput, Button } from 'react-native';
-import React, { useState, useEffect} from 'react';
-import { registerStyle } from '../styles/RegisterStyles';
-
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParameters } from '../domain/NavigationTypes';
-import { User, Roles} from '../domain/UserType';
+// * AUTH
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import React, { useState } from 'react';
+import { Button, Text, TextInput, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { DropDownType} from '../domain/DropDownType';
-import { dropdownStyles } from '../styles/dropdownStyle';
-
-// * AUTH
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
-import { auth } from '../firebase-config'
-import { SafetyModal } from './register/SafetyModal';
+import { DropDownType } from '../domain/DropDownType';
 import { ErrorType } from '../domain/Errortype';
-import { addDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase-config';
+import { StackParameters } from '../domain/NavigationTypes';
+import { Roles, User } from '../domain/UserType';
+import { auth, db } from '../firebase-config';
+import { dropdownStyles } from '../styles/dropdownStyle';
+import { registerStyle } from '../styles/RegisterStyles';
+import { SafetyModal } from './register/SafetyModal';
+
+
 
 export function RegisterView()
 {

@@ -1,10 +1,10 @@
-import { View, Text, Button, ScrollView, SafeAreaView } from 'react-native';
-import { adminStyle } from '../styles/AdminStyles';
-
 // navigation
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Button, SafeAreaView, ScrollView, View } from 'react-native';
 import { StackParameters } from '../domain/NavigationTypes';
+import { adminStyle } from '../styles/AdminStyles';
+
 
 export function AdminView()
 {

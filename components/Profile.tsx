@@ -1,10 +1,9 @@
-import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native"
-import { useEffect, useReducer, useState } from "react"
-import Icon from 'react-native-vector-icons/Fontisto';
-import { auth, storage } from "../firebase-config";
 import * as ImagePicker from 'expo-image-picker';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { updateProfile } from "firebase/auth";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useEffect, useState } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { auth, storage } from "../firebase-config";
 
 export const ProfileView = () => {
     const [image, setImage] = useState<ImagePicker.ImageInfo>();

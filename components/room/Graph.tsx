@@ -1,7 +1,6 @@
+import { Dimensions, Platform, TouchableOpacity } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { LineChartData } from '../../domain/GraphTypes';
-import { Platform, Dimensions, TouchableOpacity} from 'react-native';
-import { Room, GraphData} from '../../domain/RoomType';
+import { GraphData } from '../../domain/RoomType';
 
 export type GraphProps = {
     data: GraphData[] | undefined,

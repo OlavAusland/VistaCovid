@@ -1,7 +1,5 @@
-import { Alert, Button, Modal, SafeAreaView, ScrollView, TextInput, View, Text, Pressable } from "react-native";
-import { useEffect, useState } from "react";
+import { Modal, Pressable, Text, View } from "react-native";
 import { adminStyle } from "../../styles/AdminStyles";
-import {deleteRoom} from "../../api/firebaseAPI";
 
 type DeleteRoomModal={
     modalVisible: boolean;
