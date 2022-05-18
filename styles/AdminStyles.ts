@@ -21,7 +21,6 @@ export const adminStyle = StyleSheet.create({
         fontSize: 30,
         color: '#0274A1',
         letterSpacing: 5,
-        fontFamily: 'Verdana'
     },
     //-----------------------Buttons in main admin view---------------------------
     mainViewButtons: {
@@ -56,7 +55,6 @@ export const adminStyle = StyleSheet.create({
       paddingTop: 40,
       fontSize: 25,
       color: 'white',
-      // fontFamily: 'Verdana'
 
     },
     buttonText2:{

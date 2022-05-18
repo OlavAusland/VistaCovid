@@ -1,51 +1,62 @@
 import { StyleSheet, Platform} from "react-native";
-
+//COLORS (light to dark):
+// FFF2EA
+// #E5FDFF
+// #C1E8FD
+// #9DD4FB
+// #0274A1
 export const profileStyle = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignContent:'center',
         alignSelf:'center',
         width: Platform.OS === 'android' ? '100%' : '50%',
         backgroundColor:'rgba(0, 0, 0, 0)'
     },
-    body:{
-        flex: 1
+    first: {
+        backgroundColor: 'white'
+    },
+    second:{
+        backgroundColor: '#E5FDFF'
+    },
+
+    header:{
+        fontSize: 30,
+        alignSelf: 'center',
+        letterSpacing: 3,
     },
     row1:{
-        flex:1, 
-        justifyContent:'center', 
         alignItems:'center', 
-        flexDirection:"row", 
-        backgroundColor:'white', 
-        elevation:6,
-        padding: 60
+        padding: 5
     },
     imageStyle:{
-        flex:1, 
-        width: 300,
-        height: 300,
-        borderRadius: 300/2,
+        width: 200,
+        height: 200,
+        borderRadius: 10,        
     },
-    nameStyle:{
-        flex:1,
-        marginTop:50,
+    textStyle:{
         fontSize: 20
     },
-    emailStyle:{
-        flex: 1,
-        fontSize: 20
-    },
+  
     userStyle:{
-        flex:1, 
-        flexDirection:'column', 
-        justifyContent:'center'
+        alignItems: 'center',
+        backgroundColor: '#E5FDFF',
+        padding: 10,
     },
+
+    box: {
+        backgroundColor: '#E5FDFF',
+        padding: 20,
+        borderRadius: 5,
+        flexDirection: 'row'
+
+    },
+
     uploadImageButtonStyle:{
-        flex:1, 
-        backgroundColor:'white', 
         justifyContent:'center', 
-        alignItems:'center'
+        alignItems:'center',
+        paddingTop: 10,
+        paddingBottom: 10
     },
     buttonTextStyle:{
         fontSize:20
@@ -56,13 +67,19 @@ export const profileStyle = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         borderRadius:10,
-        alignItems:'center'
+        alignItems:'center',
+        borderColor: 'white',
+        borderWidth: 4
     },
     shadow:{
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3,},
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
         shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
+        shadowRadius: 4.65,
+        
+        elevation: 6,
     }
 })
