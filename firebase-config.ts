@@ -3,6 +3,7 @@ import { initializeApp} from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
 import { getStorage } from 'firebase/storage'
+import { getMessaging } from "firebase/messaging";
 
 /*
 //! SETING UP ADMIN

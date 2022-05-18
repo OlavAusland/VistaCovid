@@ -1,12 +1,6 @@
-import { collection, getDocs } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
-
+import { Parser } from "json2csv";
 import { getRoom } from '../api/firebaseAPI';
 import { Room } from '../domain/RoomType';
-import { db } from '../firebase-config';
-import { Parser } from "json2csv";
-import { saveFile } from './csvWriter';
-
 
 
 type csvProps = {
