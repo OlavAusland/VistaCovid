@@ -5,6 +5,7 @@ import { User } from '../domain/UserType';
 import { adminStyle } from '../styles/AdminStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Fontisto';
+import Icon3 from 'react-native-vector-icons/MaterialIcons';
 
 
 // navigation
@@ -21,30 +22,50 @@ export function AdminView()
 
     return(
         <SafeAreaView>
-            <ScrollView style={adminStyle.body}>
+            <ScrollView>
+                <View style={adminStyle.body}>
                     <View style={adminStyle.header}>
-                        <Text style={adminStyle.headertext}>OVERSRKIVT</Text>
-                    </View>
-                    <View>
-                        <View style={adminStyle.mainViewButtons}>
-                            <TouchableOpacity
-                            style={adminStyle.TOmain}
-                            onPress={()=>{navigation.navigate('ManageRoom')}}>
-                                <Icon2 name='bed-patient'size={30} style={adminStyle.icon}></Icon2>
-                                <Text style={adminStyle.buttonText1}>MANAGE ROOMS</Text>
-                                <Icon name='arrowright' size={30} style={adminStyle.arowIcon}></Icon>
-                            </TouchableOpacity>
+                            <Text style={adminStyle.headertext}>ADMIN</Text>
                         </View>
-                        <View style={adminStyle.mainViewButtons}>
-                            <TouchableOpacity
-                            style={adminStyle.TOmain}
-                            onPress={()=>{navigation.navigate('ManageRoles')}}>
-                                <Icon name='addusergroup' size={30} style={adminStyle.icon} ></Icon>
-                                <Text style={adminStyle.buttonText2}>MANAGE USERS</Text>
-                                <Icon name='arrowright' size={30} style={adminStyle.arowIcon}></Icon>
-                            </TouchableOpacity>
+                        <View>
+                            <View style={adminStyle.mainViewButtons}>
+                                <TouchableOpacity
+                                style={adminStyle.TOmain}
+                                onPress={() => navigation.navigate('AddRoom')}>
+                                    <Icon2 name='bed-patient'size={30} style={adminStyle.buttonIcon}></Icon2>
+                                    <Text style={adminStyle.buttonText3}>ADD ROOM</Text>
+                                    <Icon name='arrowright' size={30} style={adminStyle.arrowIcon}></Icon>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={adminStyle.mainViewButtons}>
+                                <TouchableOpacity
+                                style={adminStyle.TOmain}
+                                onPress={()=>{navigation.navigate('ManageRoom')}}>
+                                    <Icon3 name='meeting-room' size={30} style={adminStyle.buttonIcon} ></Icon3>
+                                    <Text style={adminStyle.buttonText1}>MANAGE ROOMS</Text>
+                                    <Icon name='arrowright' size={30} style={adminStyle.arrowIcon}></Icon>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={adminStyle.mainViewButtons}>
+                                <TouchableOpacity
+                                style={adminStyle.TOmain}
+                                onPress={()=>{navigation.navigate('ManageRoles')}}>
+                                    <Icon name='adduser' size={30} style={adminStyle.buttonIcon} ></Icon>
+                                    <Text style={adminStyle.buttonText2}>REGISTER USER</Text>
+                                    <Icon name='arrowright' size={30} style={adminStyle.arrowIcon}></Icon>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={adminStyle.mainViewButtons}>
+                                <TouchableOpacity
+                                style={adminStyle.TOmain}
+                                onPress={()=>{navigation.navigate('ManageRoles')}}>
+                                    <Icon name='addusergroup' size={30} style={adminStyle.buttonIcon} ></Icon>
+                                    <Text style={adminStyle.buttonText2}>MANAGE USERS</Text>
+                                    <Icon name='arrowright' size={30} style={adminStyle.arrowIcon}></Icon>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
+                </View>
             </ScrollView>
         </SafeAreaView>
 

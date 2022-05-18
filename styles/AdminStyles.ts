@@ -8,11 +8,11 @@ import { StyleSheet, Platform} from "react-native";
 
 export const adminStyle = StyleSheet.create({
   body:{
-    backgroundColor: '#FFF2EA'
+    backgroundColor: 'white'
   },
     header: {
         flex: 1,
-        backgroundColor: '#FFF2EA',
+        backgroundColor: 'white',
         paddingTop: 30,
         paddingBottom: 20,
         alignItems: 'center',
@@ -28,7 +28,7 @@ export const adminStyle = StyleSheet.create({
         flex: 2,
         padding:40,
         alignItems: 'center',
-        backgroundColor: '#FFF2EA'
+        backgroundColor: 'white'
     },
 
     TOmain:{
@@ -56,7 +56,7 @@ export const adminStyle = StyleSheet.create({
       paddingTop: 40,
       fontSize: 25,
       color: 'white',
-      fontFamily: 'Verdana'
+      // fontFamily: 'Verdana'
 
     },
     buttonText2:{
@@ -67,15 +67,22 @@ export const adminStyle = StyleSheet.create({
       fontSize: 25,
       color: 'white'
     },
-    icon:{
+    buttonText3:{
+      paddingLeft: 50,
+      paddingRight: 60,
+      paddingBottom: 40,
+      paddingTop: 40,
+      fontSize: 25,
+      color: 'white'
+    },
+    buttonIcon:{
       color: "#0274a1",
       paddingLeft: 10
     },
-    arowIcon:{
+    arrowIcon:{
       color: "#0274a1",
       paddingRight: 15,
       paddingLeft: 30
-
     },
 
     //--------------------add room styling-----------------------------
