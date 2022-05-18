@@ -108,7 +108,7 @@ function VistaCovid(){
             await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}: 
             Heart Rate = ${room.heartRate[room.heartRate.length -1].value}`}).then(() => console.log('sent'));
           if(DetectDanger(10, 100, room.oxygenLevel))
-            await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}: 
+            await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}:\n
             Oxygen Level = ${room.oxygenLevel[room.oxygenLevel.length -1].value}`}).then(() => console.log('sent'));
         });
     });
