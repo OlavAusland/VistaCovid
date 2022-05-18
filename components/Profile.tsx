@@ -4,13 +4,12 @@ import Icon from 'react-native-vector-icons/Fontisto';
 import { auth, storage } from "../firebase-config";
 import * as ImagePicker from 'expo-image-picker';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { UploadImageModal } from "./profile/UploadImageModal";
 import { updateProfile } from "firebase/auth";
 
 export const ProfileView = () => {
     const [image, setImage] = useState<ImagePicker.ImageInfo>();
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [avatar, setAvatar] = useState(undefined);
+    const [avatar, setAvatar] = useState<string>();
     
 
     const handleCloseModal = () => {setModalVisible(false);}
@@ -19,7 +18,9 @@ export const ProfileView = () => {
         if(auth.currentUser === null){throw new Error("User is not logged in");}
         const photoURL = auth.currentUser.uid + '_pp';
         updateProfile(auth.currentUser, {photoURL: photoURL})
-        uploadImage(photoURL)
+        uploadImage(photoURL).then(() => {
+            getDownloadURL(ref(storage, auth.currentUser?.photoURL)).then((url) => {setAvatar(url)})
+        });
     }
 
     const uploadImage = async (name: string) => {
@@ -35,12 +36,14 @@ export const ProfileView = () => {
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [1, 1],
-            quality: 1,
+            quality: 0.3
         });
         if(!result.cancelled){
             setImage(result);
         }
     }
+    
+    useEffect(() => {handleUpload();}, [image])
 
     useEffect(() => {
         const getAvatar = async () => {
@@ -48,11 +51,11 @@ export const ProfileView = () => {
                 await getDownloadURL(ref(storage, auth.currentUser.photoURL)).then((url) => setAvatar(url)).catch((error) => console.log(error));
         };
         getAvatar();
+
     }, []);
 
     return (
         <View style={{flex:1}}>
-            <UploadImageModal image={image} isVisible={modalVisible} handleRequestClose={handleCloseModal} />
             <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:"row", backgroundColor:'white', elevation:6}}>
                 <Image
                     style={{ flex:1, width:200,height:200, borderRadius:100}}
