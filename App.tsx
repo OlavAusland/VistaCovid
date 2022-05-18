@@ -71,13 +71,13 @@ function Menu() {
 }
 
 function VistaCovid(){
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
+  const [expoPushToken, setExpoPushToken] = useState<string>('');
+  const [notification, setNotification] = useState<any>(false);
+  const notificationListener = useRef<any>();
+  const responseListener = useRef<any>();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then((token: string | undefined) => {if(token !== undefined){setExpoPushToken(token)}});
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
