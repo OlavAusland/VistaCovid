@@ -4,6 +4,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth, storage } from "../firebase-config";
+import { profileStyle } from '../styles/ProfileStyles';
 
 export const ProfileView = () => {
     const [image, setImage] = useState<ImagePicker.ImageInfo>();
@@ -63,7 +64,7 @@ export const ProfileView = () => {
                 </View>
             </View>
             <View style={{flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
-                    <TouchableOpacity style={[styles.upload, styles.shadow]}
+                    <TouchableOpacity style={[profileStyle.upload, profileStyle.shadow]}
                     onPress={() => {pickImage();handleUpload();}}>
                         <Text style={{fontSize:20}}>Upload Image</Text>
                     </TouchableOpacity>
@@ -75,20 +76,3 @@ export const ProfileView = () => {
     )
 }
 
-export const styles = StyleSheet.create({
-    upload:{
-        width:'75%',
-        backgroundColor:'#9DD4FB',
-        paddingTop:10,
-        paddingBottom:10,
-        borderRadius:10,
-        alignItems:'center'
-    },
-    shadow:{
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3,},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    }
-})

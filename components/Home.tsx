@@ -72,7 +72,7 @@ export const HomeView = (props: HomeScreenProps) => {
 
     if(modalVisible){
         return (
-            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose}/>
         )
     }
 
@@ -86,7 +86,7 @@ export const HomeView = (props: HomeScreenProps) => {
     {
         return (
             <SafeAreaView style={homeStyle.container}>
-                <View style={[homeStyle.header, styles.shadow, {backgroundColor:'white'}]}>
+                <View style={[homeStyle.header, homeStyle.shadow, {backgroundColor:'white'}]}>
                     <TextInput onChangeText={(text) => {setKeyword(text)}} placeholder={'Search For Room'} style={homeStyle.searchBar} />
                 </View>
                 <View style={{ flex: 9 }}>
@@ -94,7 +94,7 @@ export const HomeView = (props: HomeScreenProps) => {
                         {rooms.length > 0 &&
                             rooms.filter((room) => {if(room.patientId != '' && room.id.includes(keyword)){return room}}).sort((a, b) => a.id.localeCompare(b.id)).map((room: Room) => {
                                 return (
-                                    <TouchableOpacity key={'room:' + room.id} style={[homeStyle.card, styles.shadow, {overflow:'hidden'}]}
+                                    <TouchableOpacity key={'room:' + room.id} style={[homeStyle.card, homeStyle.shadow, {overflow:'hidden'}]}
                                     onPress={() => {props.navigation.push('Room', {roomId:room.id})}}>
                                         <View style={{flex:1, padding:10, flexDirection:'row', flexWrap:'wrap'}}>
                                             <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between'}}>
@@ -189,12 +189,3 @@ export const HomeView = (props: HomeScreenProps) => {
     };
 }
 
-export const styles = StyleSheet.create({
-    shadow:{
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    }
-})
