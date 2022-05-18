@@ -100,12 +100,12 @@ if (previewVisible) {
 return(
     <View style={{flex:1}}>
         {dateChooser()}
-        <View style={[exportStyles.shadow, {flex:2, justifyContent:'center', alignItems:'center', backgroundColor:'#9DD4FB'}]}> 
+        <View style={[exportStyles.shadow, exportStyles.header]}> 
             <Text style={{fontSize:35, fontWeight:'bold'}}>Export Data To File</Text>
             <Text style={{fontSize:20}}>Choose Rooms To Export:</Text>
         </View>
-        <View style={{flex:6, }}>
-            <ScrollView style={[{}]}>     
+        <View style={{flex:6}}>
+            <ScrollView>     
                 {checkedRooms.size > 0 &&
                     Array.from(checkedRooms).map(([key, value], index) => {
                         return (
@@ -122,15 +122,13 @@ return(
                 }           
             </ScrollView>
         </View>
-        <View style={[exportStyles.shadow, {flex:1, backgroundColor:'#9DD4FB', paddingTop:5}]}>
+        <View style={[exportStyles.shadow, exportStyles.footer]}>
             <View style={{flex:1, justifyContent:'center'}}>
                 <View style={{flexDirection:'row', justifyContent:'space-around', alignItems:'center'}}>
-                    <TouchableOpacity onPress={() => setDate({ ...date, showDatePicker: "from"})} 
-                    style={{flexBasis:'45%', justifyContent:'center', alignItems:'center', backgroundColor:'#0274a1', paddingTop:10, paddingBottom:10, borderRadius:10}}>
+                    <TouchableOpacity onPress={() => setDate({ ...date, showDatePicker: "from"})} style={exportStyles.dateButton}>
                         <Text style={{color:'white'}}>Start Date</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setDate({ ...date, showDatePicker: "to"})} 
-                    style={{flexBasis:'45%', justifyContent:'center', alignItems:'center', backgroundColor:'#0274a1', paddingTop:10, paddingBottom:10, borderRadius:10}}>
+                    <TouchableOpacity onPress={() => setDate({ ...date, showDatePicker: "to"})} style={exportStyles.dateButton}>
                         <Text style={{color:'white'}}>End Date</Text>
                     </TouchableOpacity>
                 </View>
@@ -138,7 +136,7 @@ return(
             <View style={[{flex:1, justifyContent:'center', alignItems:'center'}]}>
                 <TouchableOpacity
                 onPress={() => handleExport()}
-                style={[{backgroundColor:'#0274a1', width:'95%', alignItems:'center', justifyContent:'center', paddingTop:10, paddingBottom:10, borderRadius:10}]}>
+                style={exportStyles.exportButton}>
                     <Text style={{color:'white'}}>Export</Text>
                 </TouchableOpacity>
             </View>

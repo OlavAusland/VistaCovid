@@ -1,5 +1,5 @@
 import moment, { Moment } from "moment";
-import { RefObject, useEffect, useState } from "react";
+import { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 type DateChooserProps = {
