@@ -112,7 +112,7 @@ export const HomeView = (props: HomeScreenProps) => {
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
                                                     <Icon size={20} name={'wind'}/>
-                                                    <Text>{room.heartRate[room.bloodPressure.length - 1].value}</Text>
+                                                    <Text>{room.heartRate[room.respirationRate.length - 1].value}</Text>
                                                 </View>
                                             </View>
                                         </View>
@@ -123,7 +123,7 @@ export const HomeView = (props: HomeScreenProps) => {
                                                     labels:[],
                                                     datasets:[
                                                         {
-                                                            data: room.bloodPressure ? extractXAxis(room.bloodPressure).slice(-5) : [],
+                                                            data: room.respirationRate ? extractXAxis(room.respirationRate).slice(-5) : [],
                                                             strokeWidth: 2,
                                                             color: (opacity = 0.1) => `rgba(235, 64, 52,${opacity})`
                                                         },

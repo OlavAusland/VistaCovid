@@ -17,7 +17,7 @@ export  const GraphView = (props: GraphViewProps) => {
                             modal={props.modal} setModal={props.setModal}/>
             </View>
             <View style={roomStyle.graphContainer}>
-                <LineGraph color={'#edb855'} data={props.room?.bloodPressure} name={'Blood Pressure'}
+                <LineGraph color={'#edb855'} data={props.room?.respirationRate} name={'Respiration Rate'}
                             modal={props.modal} setModal={props.setModal}/>
             </View>
             <View style={roomStyle.graphContainer}>

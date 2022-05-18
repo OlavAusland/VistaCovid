@@ -14,7 +14,7 @@ export function AddRoom() {
         patientId: "",
         lastUpdated: Date.now().toString(),
         heartRate: [],
-        bloodPressure: [],
+        respirationRate: [],
         oxygenLevel: [],
         notes: []
     }

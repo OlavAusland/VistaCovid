@@ -1,6 +1,6 @@
 import { getRoom } from "../../api/firebaseAPI";
 import { GraphData, Room } from "../../domain/RoomType";
-import moment from "moment";
+import moment, { Moment } from 'moment';
 import { csvexport } from "../../utils/csvexport";
 
 const date = moment("2022-05-15T21:11:48.620Z");
@@ -21,7 +21,7 @@ const heartRate: GraphData[] = [
     }
 ]
 
-const bloodPressure: GraphData[] = [
+const respirationRate: GraphData[] = [
     {
         time: date.valueOf(),
         value: 95
@@ -55,7 +55,7 @@ const mockRoomResponse: Room = {
     patientId: "123351",
     lastUpdated: new Date().toISOString(),
     heartRate,
-    bloodPressure,
+    respirationRate: respirationRate,
     oxygenLevel,
     notes: undefined,
     id: "aaaa"
@@ -71,9 +71,9 @@ test("Should export health data from firebase to CSV", async () => {
 
     console.log('response:', mockRoomResponse)
     
-    const healthDataCSV = await csvexport({ rooms: ["A0 001"] });
+    const healthDataCSV = await csvexport( {rooms: ["A0 001"], fromDate: undefined, toDate: undefined} );
     console.log(healthDataCSV);
-    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"bloodPressure\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:14:48.620Z" 
+    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"respirationRate\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:14:48.620Z" 
         + "\",100,95,50\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40\n\"A0 001\",\"2022-05-15T21:17:48.620Z\",80,75,30");
 
 });
@@ -85,9 +85,9 @@ test("Should export health data from firebase to CSV from date", async () => {
 
     console.log('response:', mockRoomResponse)
 
-    const healthDataCSV = await csvexport({ rooms: ["A0 001"], fromDate: new Date('2022-05-15T21:15:48.620Z') , });
+    const healthDataCSV = await csvexport({ rooms: ["A0 001"], fromDate: moment('2022-05-15T21:15:48.620Z') ,toDate: undefined });
     console.log(healthDataCSV);
-    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"bloodPressure\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40\n\"A0 001\",\"2022-05-15T21:17:48.620Z\",80,75,30");
+    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"respirationRate\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40\n\"A0 001\",\"2022-05-15T21:17:48.620Z\",80,75,30");
 
 });
 
@@ -98,9 +98,9 @@ test("Should export health data from firebase to CSV from date", async () => {
 
     console.log('response:', mockRoomResponse)
 
-    const healthDataCSV = await csvexport({ rooms: ["A0 001"], toDate: new Date('2022-05-15T21:15:48.620Z') , });
+    const healthDataCSV = await csvexport({ rooms: ["A0 001"], fromDate:undefined, toDate: moment('2022-05-15T21:15:48.620Z') , });
     console.log(healthDataCSV);
-    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"bloodPressure\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:14:48.620Z" 
+    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"respirationRate\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:14:48.620Z" 
     + "\",100,95,50\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40");
 });
 
@@ -111,7 +111,7 @@ test("Should export health data from firebase to CSV from date", async () => {
 
     console.log('response:', mockRoomResponse)
 
-    const healthDataCSV = await csvexport({ rooms: ["A0 001"],fromDate: new Date('2022-05-15T21:15:48.620Z'), toDate: new Date('2022-05-15T21:15:48.620Z') , });
+    const healthDataCSV = await csvexport({ rooms: ["A0 001"], fromDate: moment('2022-05-15T21:15:48.620Z'), toDate: moment('2022-05-15T21:15:48.620Z') });
     console.log(healthDataCSV);
-    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"bloodPressure\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40");
+    expect(healthDataCSV).toBe("\"room\",\"time\",\"heartRate\",\"respirationRate\",\"oxygenLevel\"\n\"A0 001\",\"2022-05-15T21:15:48.620Z\",90,85,40");
 });
