@@ -5,14 +5,13 @@ export const previewStyles = StyleSheet.create({
         alignContent: 'flex-end',
         alignSelf: 'flex-end',
         width: Platform.OS === 'android' ? '100%' : '50%',
-        backgroundColor: '#ffffff',
         borderRadius: 10,
         flex: 1,
     },
     header: {
         flex: 1,
         marginBottom:2,
-        backgroundColor:'white'
+        backgroundColor:'#9DD4FB'
     },
     headerText: {
         fontSize: 30,
@@ -33,18 +32,18 @@ export const previewStyles = StyleSheet.create({
     body: {
         flex: 5,
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#ffffff', 
+        justifyContent: 'center'
     },
     bodyRoom: {
         alignItems: 'center',
         width: '100%',
-        padding: 25,
+        padding: 25
     },
 
     footer: {
         flex: 1,
         flexDirection: 'row',
+        backgroundColor:'#9DD4FB'
 
 
     },
