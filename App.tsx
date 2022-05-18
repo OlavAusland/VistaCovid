@@ -20,7 +20,7 @@ import { CreateUser } from './components/adminView/registerUser';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList, DrawerView } from '@react-navigation/drawer';
 import { auth, db } from './firebase-config';
 
 //NOTIFICATIONS
@@ -60,7 +60,11 @@ function Menu() {
         <DrawerContentScrollView>
           <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
           <DrawerContentScrollView>
-            {[1,2,3,4,5,6].map((i) => {return (<DrawerItem style={{backgroundColor:''}}label={`Tab ${i}`} key={i} onPress={() => {}}/>)})}
+            {[1,2,3,4,5,6].map((i) => {
+              return (
+                <DrawerItem style={{backgroundColor:''}}label={`Tab ${i}`} key={i} onPress={() => {}}/>
+              )
+              })}
           </DrawerContentScrollView>
         </DrawerContentScrollView>
       )
@@ -103,8 +107,8 @@ function VistaCovid(){
           
           if(DetectDanger(10, 100, room.heartRate))
             await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}: 
-            Blood Pressure = ${room.bloodPressure[room.bloodPressure.length -1].value}`}).then(() => console.log('sent'));
-          if(DetectDanger(10, 100, room.bloodPressure))
+            Blood Pressure = ${room.respirationRate[room.respirationRate.length -1].value}`}).then(() => console.log('sent'));
+          if(DetectDanger(10, 100, room.respirationRate))
             await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}: 
             Heart Rate = ${room.heartRate[room.heartRate.length -1].value}`}).then(() => console.log('sent'));
           if(DetectDanger(10, 100, room.oxygenLevel))
