@@ -1,35 +1,32 @@
-import 'react-native-gesture-handler';
-import { DrawerParameters, StackParameters, TabParameters } from './domain/NavigationTypes';
-
-import Icon from 'react-native-vector-icons/Fontisto';
-
-//Views
-import { RegisterView } from './components/Register';
-import { ProfileView } from './components/Profile';
-import { LoginView } from './components/Login';
-import { RoomView } from './components/Room';
-import { AdminView } from './components/Admin';
-import { AddRoom } from './components/adminView/addRoomView';
-import { ManageRoom } from './components/adminView/manageRoom';
-import { HomeView } from './components/Home';
-import { ManageRoles } from './components/adminView/manageRoles';
-import { CreateUser } from './components/adminView/registerUser';
-
-
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList, DrawerView } from '@react-navigation/drawer';
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { useEffect, useRef, useState } from 'react';
+import { Platform } from 'react-native';
+import 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Fontisto';
+import { getRole } from './api/firebaseAPI';
+import { AdminView } from './components/Admin';
+import { AddRoom } from './components/adminView/addRoomView';
+import { ManageRoles } from './components/adminView/manageRoles';
+import { ManageRoom } from './components/adminView/manageRoom';
+import { CreateUser } from './components/adminView/registerUser';
+import { Export } from './components/Export';
+import { HomeView } from './components/Home';
+import { LoginView } from './components/Login';
+import { ProfileView } from './components/Profile';
+//Views
+import { RegisterView } from './components/Register';
+import { RoomView } from './components/Room';
+import { DrawerParameters, StackParameters, TabParameters } from './domain/NavigationTypes';
+import { GraphData, Room } from './domain/RoomType';
 import { auth, db } from './firebase-config';
 
-//NOTIFICATIONS
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
-import { collection, getDocs, onSnapshot, query, where } from 'firebase/firestore';
-import { GraphData, Room } from './domain/RoomType';
 
 const Stack = createNativeStackNavigator<StackParameters>();
 const Tab = createMaterialTopTabNavigator<TabParameters>();
@@ -54,11 +51,25 @@ const DetectDanger = (min:number, max:number, data:GraphData[]) => {
 // APP
 
 function Menu() {
+const [role, setRole] = useState<string>();
+
+  useEffect(() => {
+    const getFirebaseRole = async() => {
+      if(auth.currentUser){ 
+        const role = await getRole(auth.currentUser?.uid);
+        setRole(role?.toLowerCase());
+      }
+    }; getFirebaseRole();
+  }, []);
+
+
+
+
   return (
     <Drawer.Navigator  screenOptions={{headerTitle:'VistaCovid'}} drawerContent={props => {
       return (
         <DrawerContentScrollView>
-          <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
+         {role === "doctor" && <DrawerItem label="Export" onPress={() => {props.navigation.navigate("Export");}} />}
           <DrawerContentScrollView>
             {[1,2,3,4,5,6].map((i) => {
               return (
@@ -66,12 +77,14 @@ function Menu() {
               )
               })}
           </DrawerContentScrollView>
+          <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
         </DrawerContentScrollView>
       )
     }}>
       <Drawer.Screen name="VistaCovid" component={VistaCovid}/>
     </Drawer.Navigator>
   );
+  
 }
 
 function VistaCovid(){
@@ -183,7 +196,7 @@ export default function App() {
         <Stack.Screen name="ManageRoom" component={ManageRoom}/>
         <Stack.Screen name="ManageRoles" component={ManageRoles}/>
         <Stack.Screen name="CreateUser" component={CreateUser}/>
-
+        <Stack.Screen name="Export" component={Export}/>
         <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
         {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
       </Stack.Navigator>

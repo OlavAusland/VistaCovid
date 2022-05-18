@@ -1,6 +1,7 @@
 import { useState } from "react";
-import React, { Button, Modal, TextInput, View } from "react-native";
-import { auth } from '../../firebase-config';
+import { safetyModalStyle } from '../../styles/SafetyModalStyles';
+import React, { Modal, View, Text, Button, TextInput } from "react-native";
+import { auth } from '../../firebase-config'
 
 type SafetyModalProps = {
     modalVisible: boolean,
@@ -24,14 +25,14 @@ export const SafetyModal = (props: SafetyModalProps) => {
             visible={props.modalVisible}
             onRequestClose={() => {() => props.handleRequestClose()}}
         >
-            <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                <View style={{backgroundColor:"#DDDDDD", width:"90%", height:250, shadowColor:'black'}}>
-                    <View style={{flex:1, alignItems:'center', marginTop:'5%'}}>
-                        <TextInput editable={false} value={admin.email} placeholder="Email" style={{height: 40, width:'90%', borderColor: 'gray', borderWidth: 1}}/>
+            <View style={safetyModalStyle.container}>
+                <View style={safetyModalStyle.div}>
+                    <View style={safetyModalStyle.inputSection}>
+                        <TextInput editable={false} value={admin.email} placeholder="Email" style={safetyModalStyle.input}/>
                         <TextInput placeholder="Password" onChangeText={text => setAdmin(prev => ({...prev, password:text}))}
-                         style={{height: 40, width:'90%', borderColor: 'gray', borderWidth: 1}}/>
+                         style={safetyModalStyle.input}/>
                     </View>
-                    <View style={{flex:1, justifyContent:'flex-end'}}>
+                    <View style={safetyModalStyle.options}>
                         <Button title={"Confirm"} onPress={() => {props.handleConfirmation(admin.email, admin.password);props.handleRequestClose();}}/>
                         <Button title={"Close"} onPress={() => props.handleRequestClose()}/>
                     </View>
