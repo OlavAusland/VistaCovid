@@ -70,8 +70,8 @@ export const HomeView = (props: HomeScreenProps) => {
 
     if(modalVisible){
         return (
-            //<AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
-            <Exportmodal handleRequestClose={handleRequestClose}/>
+            <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
+            //<Exportmodal handleRequestClose={handleRequestClose}/>
         )
     }
 

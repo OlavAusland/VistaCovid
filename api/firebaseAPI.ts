@@ -2,7 +2,7 @@ import { auth, db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query, arrayUnion} from 'firebase/firestore'
 import { User } from "../domain/UserType";
 import { NoteData, Room } from "../domain/RoomType";
-import { FolkeregisterPerson, Patient } from "../domain/PatientType";
+import { Patient } from "../domain/PatientType";
 import { getAuth, deleteUser} from "firebase/auth";
 
 // USERS
@@ -79,7 +79,7 @@ export const getLoggedInUser = () => {
 
 // Patients
 
-export const addPatient = async (user: FolkeregisterPerson) => {
+export const addPatient = async (user: Patient) => {
     await setDoc(doc(db, 'Patients', user.ssn), user).then((res) => {
         console.log(res);
     }).catch((err) => {

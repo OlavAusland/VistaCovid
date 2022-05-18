@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, LogBox, StyleSheet, Platform } from 'reac
 import { useEffect, useState } from 'react';
 import { roomStyle } from '../styles/RoomStyles';
 import { Room } from '../domain/RoomType';
-import { FolkeregisterPerson, Patient } from '../domain/PatientType';
+import { Patient } from '../domain/PatientType';
 
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
@@ -25,7 +25,7 @@ type Props = NativeStackScreenProps<StackParameters, 'Room'>;
 
 export function RoomView({ route, navigation }: Props) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [patient, setPatient] = useState<Patient | FolkeregisterPerson>()
+    const [patient, setPatient] = useState<Patient>()
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
     const [modal, setModal] = useState(false);

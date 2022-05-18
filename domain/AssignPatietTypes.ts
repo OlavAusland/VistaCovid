@@ -1,11 +1,11 @@
 import { DropDownType } from "./DropDownType";
-import { FolkeregisterPerson } from "./PatientType";
+import { Patient } from "./PatientType";
 import { currentUser } from "./UserType";
 
 
 export type newPatientProps = {
     setPatient: Function;
-    patient: FolkeregisterPerson | undefined;
+    patient:  Patient | undefined;
     setSearch: Function;
     handleSearch: Function;
     dropdown: DropDownType;
@@ -18,7 +18,7 @@ export type newPatientProps = {
 
 
 export type existingPatientProps = {
-    patient: FolkeregisterPerson | undefined;
+    patient: Patient | undefined;
     setPatient: Function;
     setSearch: Function;
     handleSearch: Function;

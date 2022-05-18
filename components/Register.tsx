@@ -27,7 +27,8 @@ export function RegisterView()
     const [user, setUser] = useState<User>({
         email:'',  password:'', firstName:'', 
         lastName:'', role:Roles.NONE, address:undefined,
-        phone: undefined, city: undefined, code: undefined
+        phone: undefined, city: undefined, code: undefined,
+        id: '',
     });
 
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
