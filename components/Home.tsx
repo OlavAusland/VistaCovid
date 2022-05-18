@@ -1,11 +1,11 @@
 import { useEffect, useReducer, useState } from 'react';
-import { View, Text, Button, TextInput, ScrollView, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, Button, TextInput, ScrollView, Dimensions, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { homeStyle } from '../styles/HomeStyles';
-import { BarChart } from 'react-native-chart-kit';
-import { Room } from '../domain/RoomType';
+import { BarChart, LineChart } from 'react-native-chart-kit';
+import { GraphData, Room } from '../domain/RoomType';
 import { addRoom, getLoggedInUser, getRole, getRooms } from '../api/firebaseAPI';
 import { AssignPatientModal } from "./home/AssignPatientToRoomModal"
-import Icon from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { currentUser, Roles } from '../domain/UserType';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParameters, TabParameters } from '../domain/NavigationTypes';
@@ -26,6 +26,7 @@ export const HomeView = (props: HomeScreenProps) => {
     const [user, setUser] = useState<currentUser>({email: '', firstName: '', lastName: '', role: Roles.NONE, id:''});
     const [isLoading, setIsLoading] = useState(true);
 
+    const extractXAxis = (data: GraphData[]) => {return data.map(d => d.value);}
 
     const handleRequestClose = () => {
         setModalVisible(false);
@@ -85,69 +86,91 @@ export const HomeView = (props: HomeScreenProps) => {
     {
         return (
             <SafeAreaView style={homeStyle.container}>
-                <View style={homeStyle.header}>
+                <View style={[homeStyle.header, styles.shadow, {backgroundColor:'white'}]}>
                     <TextInput onChangeText={(text) => {setKeyword(text)}} placeholder={'Search For Room'} style={homeStyle.searchBar} />
                 </View>
-                { user.role == Roles.DOCTOR &&
-                    <View style={{ paddingBottom: 10 }}>
-                        <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
-                            <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
-                            <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
-                        </TouchableOpacity>
-                        
-                    </View>
-                }
-                <View style={{ flex: 4 }}>
+                <View style={{ flex: 9 }}>
                     <ScrollView contentContainerStyle={[homeStyle.body]}>
                         {rooms.length > 0 &&
-                            rooms.filter((room) => {if(room.patientId != '' && room.id.includes(keyword)){return room}}).map((room: Room) => {
+                            rooms.filter((room) => {if(room.patientId != '' && room.id.includes(keyword)){return room}}).sort((a, b) => a.id.localeCompare(b.id)).map((room: Room) => {
                                 return (
-                                    <TouchableOpacity key={'room:' + room.id} style={homeStyle.card}
+                                    <TouchableOpacity key={'room:' + room.id} style={[homeStyle.card, styles.shadow, {overflow:'hidden'}]}
                                     onPress={() => {props.navigation.push('Room', {roomId:room.id})}}>
-                                        <BarChart
-                                            data={{
-                                                labels: ['BL', 'O2', 'HR'],
-                                                datasets: [{
-                                                    data: [room.bloodPressure.length > 0 ? room.bloodPressure[room.bloodPressure.length - 1].value : 0,
-                                                    room.oxygenLevel.length > 0 ? room.oxygenLevel[room.oxygenLevel.length - 1].value : 0,
-                                                    room.heartRate.length > 0 ? room.heartRate[room.heartRate.length - 1].value : 0]
-                                                }]
-                                            }}
-                                            yAxisLabel={''}
-                                            yAxisSuffix={''}
-                                            width={Dimensions.get('window').width * 0.9 / 2}
-                                            height={200}
-                                            chartConfig={{
-                                                backgroundColor: "#FFFFFF",
-                                                backgroundGradientFrom: "#9dd9fb",
-                                                backgroundGradientTo: "#9dd4fb",
-                                                decimalPlaces: 0, // optional, defaults to 2dp
-                                                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                                style: {
-                                                    flex: 2
-                                                },
-                                                barPercentage: 0.5,
-                                                propsForDots: {
-                                                    r: "3",
-                                                    strokeWidth: "1",
-                                                    stroke: "#ffa726"
-                                                }
-                                            }}
-                                            withHorizontalLabels={true}
-                                            fromZero={true}
-                                        />
-                                        <View style={{ flex:9, flexDirection: 'column' }}>
-                                            <Text> Room: {room.id}</Text>
-                                            <Text> Patient: {room.patientId ? room.patientId : 'No Patient'}</Text>
+                                        <View style={{flex:1, padding:10, flexDirection:'row', flexWrap:'wrap'}}>
+                                            <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between'}}>
+                                                <Text>Room: {room.id}</Text>
+                                                <Text>Patient: {room.patientId}</Text>
+                                            </View>
+                                            <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
+                                                <View style={{flexDirection:'row'}}>
+                                                    <Icon size={20} name={'heartbeat'}/>
+                                                    <Text>{room.heartRate[room.heartRate.length - 1].value}</Text>                                                    
+                                                </View>
+                                                <View style={{flexDirection:'row'}}>
+                                                    <Icon size={20} name={'lungs'}/>
+                                                    <Text>{room.heartRate[room.oxygenLevel.length - 1].value}</Text>
+                                                </View>
+                                                <View style={{flexDirection:'row'}}>
+                                                    <Icon size={20} name={'wind'}/>
+                                                    <Text>{room.heartRate[room.bloodPressure.length - 1].value}</Text>
+                                                </View>
+                                            </View>
                                         </View>
-                                        <View style={{flex:1, backgroundColor:['yellow', 'red', 'green'][~~(Math.random()*3)]}}/>
-    
+                                        <View style={{flex:3, marginTop:30}}>
+                                            <LineChart
+                                                withVerticalLabels={false}
+                                                data={{
+                                                    labels:[],
+                                                    datasets:[
+                                                        {
+                                                            data: room.bloodPressure ? extractXAxis(room.bloodPressure).slice(-5) : [],
+                                                            strokeWidth: 2,
+                                                            color: (opacity = 0.1) => `rgba(235, 64, 52,${opacity})`
+                                                        },
+                                                        {
+                                                            data: room.heartRate ? extractXAxis(room.heartRate).slice(-5) : [],
+                                                            strokeWidth:2,
+                                                            color: (opacity = 1) => `rgba(237, 184, 85,${opacity})`
+                                                        }, 
+                                                        {
+                                                            data: room.oxygenLevel ? extractXAxis(room.oxygenLevel).slice(-5) : [],
+                                                            strokeWidth:2,
+                                                            color: (opacity = 1) => `rgba(110, 215, 224,${opacity})`
+                                                        }
+                                                    ],
+                                                    legend: ['BP', 'HR', 'O2']
+                                                }}
+                                                width={Dimensions.get('window').width}
+                                                height={125}
+                                                chartConfig={{
+                                                    useShadowColorFromDataset:true,
+                                                    fillShadowGradientOpacity:0.5,
+                                                    backgroundColor: "#C1E8FD",
+                                                    backgroundGradientFrom: "#C1E8FD",
+                                                    backgroundGradientTo: "#C1E8FD",
+                                                    decimalPlaces: 0, // optional, defaults to 2dp
+                                                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                                    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
+                                                    }
+                                                }
+                                                style={{marginHorizontal:-10}}
+                                            />
+                                        </View>
                                     </TouchableOpacity>
                                 )
                             })
                         }
                     </ScrollView>
+                    {/*
+                    { user.role == Roles.DOCTOR &&
+                    <View style={{ paddingBottom: 10 }}>
+                        <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
+                            <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
+                            <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                        </TouchableOpacity>
+                    </View>
+                    }
+                */}
                 </View>
             </SafeAreaView>
         );
@@ -165,3 +188,13 @@ export const HomeView = (props: HomeScreenProps) => {
         )
     };
 }
+
+export const styles = StyleSheet.create({
+    shadow:{
+        shadowColor: "#000", 
+        shadowOffset: { width: 0,height: 3},
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65, 
+        elevation: 6
+    }
+})

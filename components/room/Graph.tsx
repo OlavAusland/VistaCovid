@@ -34,6 +34,8 @@ export const LineGraph = (props: GraphProps) => {
             xAxisLabel='s'
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
+                useShadowColorFromDataset:true,
+                fillShadowGradientOpacity:0.5,
                 backgroundGradientFrom: props.color,
                 backgroundGradientTo: props.color,
                 decimalPlaces: 1, // optional, defaults to 2dp
