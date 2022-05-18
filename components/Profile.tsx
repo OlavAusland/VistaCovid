@@ -8,11 +8,7 @@ import { updateProfile } from "firebase/auth";
 
 export const ProfileView = () => {
     const [image, setImage] = useState<ImagePicker.ImageInfo>();
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [avatar, setAvatar] = useState<string>();
-    
-
-    const handleCloseModal = () => {setModalVisible(false);}
 
     const handleUpload = () => {
         if(auth.currentUser === null){throw new Error("User is not logged in");}
