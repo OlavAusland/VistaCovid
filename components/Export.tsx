@@ -1,8 +1,7 @@
-import { Text, View, Pressable, Modal } from 'react-native';
+import { Text, View, Pressable, Modal,ScrollView, TouchableOpacity, Touchable  } from 'react-native';
 import { createRef, useEffect, useState } from 'react';
 import Checkbox from "expo-checkbox";
 import { exportStyles } from '../styles/ExportModalStyle';
-import { ScrollView } from 'react-native-gesture-handler';
 import { getOccupiedRooms } from '../api/firebaseAPI';
 import { csvexport } from '../utils/csvexport';
 import { PreviewModal } from './export/previewModal';
@@ -11,6 +10,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
 import DateChooser from './export/DateChooser';
 import { Moment } from 'moment';
+import { styles } from 'react-native-element-dropdown/src/components/TextInput/styles';
 
 type DateState = {
     fromDate: Moment | undefined,
@@ -45,8 +45,8 @@ useEffect(() => {
 }, []);
 
 
-const handleCheckbox = (key: any, isChecked: any) => {
-    setCheckedRooms(new Map(checkedRooms.set(key, isChecked)));
+const handleCheckbox = (key: any) => {
+    setCheckedRooms(new Map(checkedRooms.set(key, !checkedRooms.get(key))));
 }
 
 const handleExport = async () => {
@@ -97,74 +97,53 @@ if (previewVisible) {
     return (<PreviewModal csv={csv} setPreviewVisible={setPreviewVisible} />)
 }
 
-return (
-    <View style={exportStyles.container}>
+return(
+    <View style={{flex:1}}>
         {dateChooser()}
-        <View style={exportStyles.header}>
-            <Text style={exportStyles.headerText}>Export data to file</Text>
+        <View style={[exportStyles.shadow, {flex:2, justifyContent:'center', alignItems:'center', backgroundColor:'#9DD4FB'}]}> 
+            <Text style={{fontSize:35, fontWeight:'bold'}}>Export Data To File</Text>
+            <Text style={{fontSize:20}}>Choose Rooms To Export:</Text>
         </View>
-        <View style={exportStyles.body}>
-            <View style={exportStyles.bodyRoom}>
-                <Text style={exportStyles.bodyText}>
-                    Choose rooms to export
-                </Text>
-                <View style={exportStyles.bodyScroll}>
-                    <ScrollView>
-                        {checkedRooms.size > 0 &&
-                            Array.from(checkedRooms).map(([key, value], index) => {
-                                return (
+        <View style={{flex:6, }}>
+            <ScrollView style={[{}]}>     
+                {checkedRooms.size > 0 &&
+                    Array.from(checkedRooms).map(([key, value], index) => {
+                        return (
+                            <View key={'En key' + index} style={exportStyles.bodyScrollcontent}>
+                                <TouchableOpacity onPress={() => {handleCheckbox(key)}}
+                                style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                                    <Checkbox key={"checkbox-" + key} value={value} onValueChange={() => handleCheckbox(key)} />
+                                    <Text style={exportStyles.bodyScrollText}>{key}</Text>
+                                </TouchableOpacity>
 
-                                    <View key={'En key' + index} style={exportStyles.bodyScrollcontent}>
-                                        <Checkbox key={"checkbox-" + key} value={value} onValueChange={(isChecked) => handleCheckbox(key, isChecked)} />
-                                        <Text style={exportStyles.bodyScrollText}>{key}</Text>
-
-                                    </View>
-                                );
-                            })
-
-                        }
-                    </ScrollView>
+                            </View>
+                        );
+                    })
+                }           
+            </ScrollView>
+        </View>
+        <View style={[exportStyles.shadow, {flex:1, backgroundColor:'#9DD4FB', paddingTop:5}]}>
+            <View style={{flex:1, justifyContent:'center'}}>
+                <View style={{flexDirection:'row', justifyContent:'space-around', alignItems:'center'}}>
+                    <TouchableOpacity onPress={() => setDate({ ...date, showDatePicker: "from"})} 
+                    style={{flexBasis:'45%', justifyContent:'center', alignItems:'center', backgroundColor:'#0274a1', paddingTop:10, paddingBottom:10, borderRadius:10}}>
+                        <Text style={{color:'white'}}>Start Date</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setDate({ ...date, showDatePicker: "to"})} 
+                    style={{flexBasis:'45%', justifyContent:'center', alignItems:'center', backgroundColor:'#0274a1', paddingTop:10, paddingBottom:10, borderRadius:10}}>
+                        <Text style={{color:'white'}}>End Date</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-            <View style={exportStyles.bodyDate}>
-                <Text style={exportStyles.bodyText}>Select date range </Text>
-                <View style={exportStyles.datetext}>
-                    <Text >From</Text>
-                    <Text >To</Text>
-                </View>
-
-                <View style={exportStyles.buttonRows}>
-                    <View style={exportStyles.dateButton}>
-                        <Pressable onPress={() => setDate({ ...date, showDatePicker: "from"})}>
-                            <Text style={exportStyles.buttonText}> From:</Text>
-                        </Pressable>
-                    </View>
-                    <View style={exportStyles.dateButton}>
-                        <Pressable onPress={() => setDate({ ...date, showDatePicker: "to"})}>
-                            <Text >To:</Text>
-                        </Pressable>
-                    </View>
-                </View>
-            </View>
-
-        </View>
-        <View style={exportStyles.footer}>
-            <Pressable
+            <View style={[{flex:1, justifyContent:'center', alignItems:'center'}]}>
+                <TouchableOpacity
                 onPress={() => handleExport()}
-                style={{ flex: 1 }} >
-                <View style={exportStyles.button}>
-                    <Text style={exportStyles.footerText}>Export</Text>
-                </View>
-            </Pressable>
-            <Pressable
-                onPress={() => navigation.navigate('Menu', { screen: 'VistaCovid' })}
-                style={{ flex: 1 }} >
-                <View style={exportStyles.button}>
-                    <Text style={exportStyles.footerText}>Close</Text>
-                </View>
-            </Pressable>
+                style={[{backgroundColor:'#0274a1', width:'95%', alignItems:'center', justifyContent:'center', paddingTop:10, paddingBottom:10, borderRadius:10}]}>
+                    <Text style={{color:'white'}}>Export</Text>
+                </TouchableOpacity>
+            </View>
         </View>
 
     </View>
-);
+)
 }
