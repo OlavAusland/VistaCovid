@@ -29,6 +29,7 @@
     "@types/json2csv": "^5.0.3",
     "expo": "^45.0.4",
     "expo-device": "~4.2.0",
+    "expo-image-picker": "^13.1.1",
     "expo-location": "^14.2.2",
     "expo-media-library": "^14.1.0",
     "expo-notifications": "~0.15.2",
