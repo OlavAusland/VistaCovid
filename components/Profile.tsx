@@ -56,7 +56,7 @@ export const ProfileView = () => {
 
     return (
         <View style={{flex:1}}>
-            <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:"row", backgroundColor:'white', elevation:6}}>
+            <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:"row", backgroundColor:'white'}}>
                 <Image
                     style={{ flex:1, width:200,height:200, borderRadius:100}}
                     source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
