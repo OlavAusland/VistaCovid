@@ -75,11 +75,11 @@ export const profileStyle = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: 7,
         },
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65,
+        shadowOpacity: 0.43,
+        shadowRadius: 9.51,
         
-        elevation: 6,
+        elevation: 15,
     }
 })

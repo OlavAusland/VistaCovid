@@ -55,7 +55,7 @@ export const ProfileView = () => {
 
     return (
         <ScrollView>
-            <View style={profileStyle.body}>
+            <View>
                 <View style={profileStyle.first}>
                     <View >
                         <Text style={profileStyle.header}>PROFILE</Text>
@@ -65,6 +65,7 @@ export const ProfileView = () => {
                             style={profileStyle.imageStyle}
                             source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
                         />
+                        <Text>{}</Text>
                     </View>
                 </View>
                 <View style={profileStyle.second}>
