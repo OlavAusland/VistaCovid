@@ -1,7 +1,7 @@
 import { Text, View, Pressable, Modal } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { saveFile } from '../utils/csvWriter';
-import { previewStyles } from '../styles/PreviewStyles';
+import { saveFile } from '../../utils/csvWriter';
+import { previewStyles } from '../../styles/PreviewStyles';
 
 type previewModalProps = {
     csv: string,

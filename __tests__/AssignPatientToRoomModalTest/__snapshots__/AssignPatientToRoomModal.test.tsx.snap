@@ -52,7 +52,7 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            Patient:
+             Patient: 
           </Text>
           <View
             style={
@@ -116,7 +116,7 @@ exports[`renders correctly 1`] = `
                     }
                   }
                 >
-                  Search
+                  Search 
                 </Text>
               </View>
             </View>
@@ -130,7 +130,7 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            Room:
+             Room:
           </Text>
           <View
             style={
@@ -222,8 +222,8 @@ exports[`renders correctly 1`] = `
           }
         >
           <Text>
-            Responsible: 
-            SHEES
+             Responsible: 
+            User not found
           </Text>
         </View>
         <View

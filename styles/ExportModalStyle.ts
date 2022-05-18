@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from "react-native"
+import { Platform, StyleSheet } from "react-native";
 
 export const exportStyles = StyleSheet.create({
     container: {
@@ -29,26 +29,25 @@ export const exportStyles = StyleSheet.create({
         borderRadius: 10,
     },
     body: {
-        flex: 5,
+        flex: 7,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#ffffff',
     },
     bodyRoom: {
-        flex: 5,
+        flex: 4,
         alignItems: 'center',
         width: '100%',
         backgroundColor: 'red',
     },
     bodyText: {
-        fontSize: 30,
+        fontSize: 20,
         color: '#000000',
         textAlign: 'center',
         marginTop: 20,
-        marginBottom: 20,
     },
     bodyDate: {
-        flex: 2,
+        flex: 3,
         fontSize: 20,
         color: '#000000',
         textAlign: 'center',
@@ -58,7 +57,7 @@ export const exportStyles = StyleSheet.create({
         width: '100%',
     },
     bodyScroll: {
-        flex: 3,
+        flex: 4,
         backgroundColor: 'white',
         width: '80%',
         padding: 10,
@@ -84,6 +83,34 @@ export const exportStyles = StyleSheet.create({
         alignSelf: 'center',
 
     },
+    dateButton: {
+        justifyContent: 'center',
+        backgroundColor: '#0274a1',
+        width: '40%',
+        alignSelf: 'center',
+        height: 40,
+        borderRadius: 10,
+
+
+    },
+    buttonRows: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1,
+        marginLeft: '10%',
+        marginRight: '13%',
+        width: '80%',
+    },
+    datetext: {
+        flexDirection: 'row',
+    },
+    buttonText: {
+        fontSize: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+
 
 
 
