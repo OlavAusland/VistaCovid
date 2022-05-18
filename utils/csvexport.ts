@@ -53,11 +53,11 @@ const mapHealthDataToElement = (
     fromDate: Date | undefined,
     toDate: Date | undefined
 ): CsvData[] => {
-    if (data.bloodPressure === undefined) {
+    if (data.respirationRate === undefined) {
         throw new Error(`Room ${roomNumber} does not have blood pressure data`);
     }
 
-    return (data.bloodPressure.flatMap((e: any, index: number) => {
+    return (data.respirationRate.flatMap((e: any, index: number) => {
         if (data.heartRate === undefined || data.oxygenLevel === undefined) {
             throw new Error(`Room ${roomNumber} does not have health data`);
         }
