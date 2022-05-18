@@ -1,33 +1,40 @@
 import { StyleSheet, Platform} from "react-native";
+//COLORS (light to dark):
+// FFF2EA
+// #E5FDFF
+// #C1E8FD
+// #9DD4FB
+// #0274A1
 
 export const adminStyle = StyleSheet.create({
   body:{
-    // backgroundColor: '#E5FCFF'
+    backgroundColor: '#FFF2EA'
   },
-    container: {
-        // backgroundColor: '#E5FCFF'
-    },
     header: {
         flex: 1,
-        backgroundColor: '#E5FCFF',
+        backgroundColor: '#FFF2EA',
         paddingTop: 30,
+        paddingBottom: 20,
         alignItems: 'center',
     },
     headertext:{
         fontSize: 30,
+        color: '#0274A1',
+        letterSpacing: 5,
+        fontFamily: 'Verdana'
     },
     //-----------------------Buttons in main admin view---------------------------
     mainViewButtons: {
         flex: 2,
-        backgroundColor: '#E5FCFF',
-        padding:50,
+        padding:40,
         alignItems: 'center',
+        backgroundColor: '#FFF2EA'
     },
 
-    addRoom:{
+    TOmain:{
       backgroundColor:'#9DD4FB',
       alignItems: 'center',
-      borderColor: '#0274A1',
+      borderColor: '#C1E8FD',
       borderWidth: 2,
       borderRadius: 10,
       alignSelf: 'flex-start',
@@ -40,29 +47,35 @@ export const adminStyle = StyleSheet.create({
       shadowRadius: 11.14,
       
       elevation: 17,
+      flexDirection: 'row'
     },
-    
-    // manageRoom:{
-    //   backgroundColor:'#9DD4FB',
-    //   alignItems: 'center',
-    //   borderColor: '#0274A1',
-    //   borderWidth: 2,
-    //   borderRadius: 10,
-    //   alignSelf: 'flex-start'
-    // },
-
-    manageUsers:{
-      backgroundColor:'#9DD4FB',
-      alignItems: 'center',
-      borderColor: '#0274A1',
-      borderWidth: 2,
-      borderRadius: 10,
-      alignSelf: 'flex-start'
+    buttonText1:{
+      paddingLeft: 20,
+      paddingRight: 30,
+      paddingBottom: 40,
+      paddingTop: 40,
+      fontSize: 25,
+      color: 'white',
+      fontFamily: 'Verdana'
 
     },
-    buttonText:{
-      padding: 50,
-      fontSize: 25
+    buttonText2:{
+      paddingLeft: 30,
+      paddingRight: 40,
+      paddingBottom: 40,
+      paddingTop: 40,
+      fontSize: 25,
+      color: 'white'
+    },
+    icon:{
+      color: "#0274a1",
+      paddingLeft: 10
+    },
+    arowIcon:{
+      color: "#0274a1",
+      paddingRight: 15,
+      paddingLeft: 30
+
     },
 
     //--------------------add room styling-----------------------------
