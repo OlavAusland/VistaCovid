@@ -111,7 +111,7 @@ export function RoomView({ route, navigation }: Props) {
 
     if (fetching) {
         return (
-            <View style={styles.container}>
+            <View style={roomStyle.container}>
                 <Text style={{ alignSelf: 'center', fontSize: 40 }}>Loading...</Text>
             </View>
         );
@@ -119,8 +119,8 @@ export function RoomView({ route, navigation }: Props) {
     
     } else {
         return (
-            <SafeAreaView style={[styles.container]}>
-                <View style={[styles.header, styles.shadow]}>
+            <SafeAreaView style={[roomStyle.container]}>
+                <View style={[roomStyle.header, roomStyle.shadow]}>
                     <Text style={roomStyle.headerText} >Room: {room?.id}</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                         <Text style={{ fontSize: 20 }}>Patient: {patient?.firstname} {patient?.lastname}</Text>
@@ -128,14 +128,14 @@ export function RoomView({ route, navigation }: Props) {
                             <Icon name='infocirlceo' size={20} style={{ alignSelf: 'center', paddingTop: 5, paddingLeft: 5 }} onPress={() => { handlePress() }} />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.graphButton, styles.shadow]}
+                    <View style={roomStyle.buttonContainer}>
+                        <TouchableOpacity style={[roomStyle.graphButton, roomStyle.shadow]}
                             onPress={() => { setView('graphs') }}>
-                            <Text style={styles.buttonTextSize}>Graphs</Text>
+                            <Text style={roomStyle.buttonTextSize}>Graphs</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.notesButton, styles.shadow]}
+                        <TouchableOpacity style={[roomStyle.notesButton, roomStyle.shadow]}
                             onPress={() => { setView('notes') }}>
-                            <Text style={styles.buttonTextSize}>Notes</Text>
+                            <Text style={roomStyle.buttonTextSize}>Notes</Text>
                         </TouchableOpacity>
                 </View>
                 </View>
@@ -144,55 +144,3 @@ export function RoomView({ route, navigation }: Props) {
         );
     }
 }
-
-export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignSelf:'center', 
-        width: Platform.OS === 'android' ? '100%' : '50%',
-        backgroundColor:'white'
-    },
-    header: {
-        justifyContent:'center',
-        alignItems:'center',
-        paddingTop:10,
-        paddingBottom:10,
-        backgroundColor:'white'
-    },
-    graphButton:{
-        flexBasis: '45%', 
-        justifyContent: 'center', 
-        backgroundColor: '#9DD4FB', 
-        height: 60,
-        borderRadius:10
-    },
-    notesButton:{
-        flexBasis: '45%', 
-        justifyContent: 'center',
-        backgroundColor: '#9DD4FB',
-        height: 60,
-        borderRadius:10
-    },
-    buttonContainer:{
-        flexDirection: 'row', 
-        flexWrap: 'wrap', 
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        marginBottom: 10,
-        paddingTop:20,
-        width:'100%'
-    },
-    buttonTextSize:{
-        fontSize:20,
-        alignSelf: 'center', 
-        fontWeight: 'bold' 
-    },
-    shadow:{
-        shadowColor: "#000", 
-        shadowOffset: { width: 0,height: 3},
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65, 
-        elevation: 6
-    }
-});
