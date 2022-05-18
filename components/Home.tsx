@@ -14,7 +14,7 @@ import { ErrorType } from '../domain/Errortype';
 import { auth, db } from '../firebase-config';
 import { AdminView } from './Admin';
 import { collection, doc, onSnapshot, query, where} from 'firebase/firestore';
-import { Exportmodal } from './exportModal';
+import { Export } from './Export';
 
 type  HomeScreenProps = NativeStackScreenProps<TabParameters, 'Home'>
 
@@ -71,7 +71,6 @@ export const HomeView = (props: HomeScreenProps) => {
     if(modalVisible){
         return (
             <AssignPatientModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} user={user} />
-            //<Exportmodal handleRequestClose={handleRequestClose}/>
         )
     }
 

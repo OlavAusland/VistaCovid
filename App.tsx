@@ -14,7 +14,7 @@ import { ManageRoom } from './components/adminView/manageRoom';
 import { HomeView } from './components/Home';
 import { ManageRoles } from './components/adminView/manageRoles';
 import { CreateUser } from './components/adminView/registerUser';
-
+import { Export } from './components/Export';
 
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -22,6 +22,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { auth } from './firebase-config';
+import { getRole } from './api/firebaseAPI';
+import { useEffect, useState } from 'react';
+
+
 
 const Stack = createNativeStackNavigator<StackParameters>();
 const Tab = createMaterialTopTabNavigator<TabParameters>();
@@ -29,20 +33,36 @@ const Drawer = createDrawerNavigator<DrawerParameters>();
 
 
 function Menu() {
+const [role, setRole] = useState<string>();
+
+  useEffect(() => {
+    const getFirebaseRole = async() => {
+      if(auth.currentUser){ 
+        const role = await getRole(auth.currentUser?.uid);
+        setRole(role?.toLowerCase());
+      }
+    }; getFirebaseRole();
+  }, []);
+
+
+
+
   return (
     <Drawer.Navigator  screenOptions={{headerTitle:''}} drawerContent={props => {
       return (
         <DrawerContentScrollView>
-          <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
+         {role === "doctor" && <DrawerItem label="Export" onPress={() => {props.navigation.navigate("Export");}} />}
           <DrawerContentScrollView>
             {[1,2,3,4,5,6].map((i) => {return (<DrawerItem style={{backgroundColor:''}}label={`Tab ${i}`} key={i} onPress={() => {}}/>)})}
           </DrawerContentScrollView>
+          <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
         </DrawerContentScrollView>
       )
     }}>
       <Drawer.Screen name="VistaCovid" component={VistaCovid}/>
     </Drawer.Navigator>
   );
+  
 }
 
 function VistaCovid(){
@@ -54,7 +74,6 @@ function VistaCovid(){
     </Tab.Navigator>
   );
 }
-
 
 export default function App() {
   return (
@@ -69,7 +88,7 @@ export default function App() {
         <Stack.Screen name="ManageRoom" component={ManageRoom}/>
         <Stack.Screen name="ManageRoles" component={ManageRoles}/>
         <Stack.Screen name="CreateUser" component={CreateUser}/>
-
+        <Stack.Screen name="Export" component={Export}/>
         <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
         {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
       </Stack.Navigator>
