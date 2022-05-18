@@ -23,5 +23,14 @@ export const profileStyle = StyleSheet.create({
         shadowOpacity: 0.27,
         shadowRadius: 4.65, 
         elevation: 6
-    }
+    },
+    imgStyle: { 
+        flex:1, 
+        width:200,
+        height:200, 
+        borderRadius:100
+    },
+    singleFlex: {
+        flex:1
+    },
 })

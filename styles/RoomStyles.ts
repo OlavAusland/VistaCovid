@@ -72,5 +72,11 @@ export const roomStyle = StyleSheet.create({
         height: 60,
         borderRadius:10
     },
+    body: {
+        flexDirection:'row',
+        justifyContent:'center',
+        flexWrap:'wrap',
+        backgroundColor:'rgba(0, 0, 0, 0)'
+    },
    
 });
