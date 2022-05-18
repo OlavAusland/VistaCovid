@@ -1,36 +1,54 @@
-import 'react-native-gesture-handler';
-import { DrawerParameters, StackParameters, TabParameters } from './domain/NavigationTypes';
-
-import Icon from 'react-native-vector-icons/Fontisto';
-
-//Views
-import { RegisterView } from './components/Register';
-import { ProfileView } from './components/Profile';
-import { LoginView } from './components/Login';
-import { RoomView } from './components/Room';
-import { AdminView } from './components/Admin';
-import { AddRoom } from './components/adminView/addRoomView';
-import { ManageRoom } from './components/adminView/manageRoom';
-import { HomeView } from './components/Home';
-import { ManageRoles } from './components/adminView/manageRoles';
-import { CreateUser } from './components/adminView/registerUser';
-import { Export } from './components/Export';
-
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
-import { auth } from './firebase-config';
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { useEffect, useRef, useState } from 'react';
+import { Platform } from 'react-native';
+import 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Fontisto';
 import { getRole } from './api/firebaseAPI';
-import { useEffect, useState } from 'react';
-
+import { AdminView } from './components/Admin';
+import { AddRoom } from './components/adminView/addRoomView';
+import { ManageRoles } from './components/adminView/manageRoles';
+import { ManageRoom } from './components/adminView/manageRoom';
+import { CreateUser } from './components/adminView/registerUser';
+import { Export } from './components/Export';
+import { HomeView } from './components/Home';
+import { LoginView } from './components/Login';
+import { ProfileView } from './components/Profile';
+//Views
+import { RegisterView } from './components/Register';
+import { RoomView } from './components/Room';
+import { DrawerParameters, StackParameters, TabParameters } from './domain/NavigationTypes';
+import { GraphData, Room } from './domain/RoomType';
+import { auth, db } from './firebase-config';
 
 
 const Stack = createNativeStackNavigator<StackParameters>();
 const Tab = createMaterialTopTabNavigator<TabParameters>();
 const Drawer = createDrawerNavigator<DrawerParameters>();
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldFlash:true,
+    shouldSetBadge: true,
+
+  }),
+});
+
+const DetectDanger = (min:number, max:number, data:GraphData[]) => {
+  const values = data.length > 0 ? data.map((res: GraphData) => {return res.value}) : [];
+  const danger = values.filter((res: number) => {return res > max || res < min});
+  return danger.some((res: number) => {return res > max || res < min});
+}
+
+// APP
 
 function Menu() {
 const [role, setRole] = useState<string>();
@@ -53,7 +71,11 @@ const [role, setRole] = useState<string>();
         <DrawerContentScrollView>
          {role === "doctor" && <DrawerItem label="Export" onPress={() => {props.navigation.navigate("Export");}} />}
           <DrawerContentScrollView>
-            {[1,2,3,4,5,6].map((i) => {return (<DrawerItem style={{backgroundColor:''}}label={`Tab ${i}`} key={i} onPress={() => {}}/>)})}
+            {[1,2,3,4,5,6].map((i) => {
+              return (
+                <DrawerItem style={{backgroundColor:''}}label={`Tab ${i}`} key={i} onPress={() => {}}/>
+              )
+              })}
           </DrawerContentScrollView>
           <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
         </DrawerContentScrollView>
@@ -66,6 +88,49 @@ const [role, setRole] = useState<string>();
 }
 
 function VistaCovid(){
+  const [expoPushToken, setExpoPushToken] = useState<string>('');
+  const [notification, setNotification] = useState<any>(false);
+  const notificationListener = useRef<any>();
+  const responseListener = useRef<any>();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token: string | undefined) => {if(token !== undefined){setExpoPushToken(token)}});
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const q = query(collection(db, 'Rooms'), where('patientId', '!=', ''));
+    onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach(async(doc) => {
+          const room = {...doc.data(), id:doc.id} as Room;
+          
+          if(DetectDanger(10, 100, room.heartRate))
+            await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}: 
+            Blood Pressure = ${room.respirationRate[room.respirationRate.length -1].value}`}).then(() => console.log('sent'));
+          if(DetectDanger(10, 100, room.respirationRate))
+            await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}: 
+            Heart Rate = ${room.heartRate[room.heartRate.length -1].value}`}).then(() => console.log('sent'));
+          if(DetectDanger(10, 100, room.oxygenLevel))
+            await sendPushNotification(expoPushToken, {to:expoPushToken, sound:'default', title:`${room.id}:\n
+            Oxygen Level = ${room.oxygenLevel[room.oxygenLevel.length -1].value}`}).then(() => console.log('sent'));
+        });
+    });
+  }, []);
+
   return(
     <Tab.Navigator tabBarPosition='bottom'>
       <Tab.Screen name="Home" component={HomeView} options={{tabBarIcon:() => <Icon name='home' size={23}/>}}/>
@@ -73,6 +138,50 @@ function VistaCovid(){
       <Tab.Screen name="Profile" component={ProfileView} options={{tabBarIcon:() => <Icon name='person' size={25}/>}}/>
     </Tab.Navigator>
   );
+}
+
+// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
+async function sendPushNotification(expoPushToken: string, message: object) {
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
 }
 
 export default function App() {
