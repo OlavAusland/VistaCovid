@@ -31,6 +31,7 @@ export function RoomView({ route, navigation }: Props) {
     const [modal, setModal] = useState(false);
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
     const [csv, setCsv] = useState<string>("");
+    const [view, setView] = useState<string>('graphs')
 
  
 
@@ -41,7 +42,6 @@ export function RoomView({ route, navigation }: Props) {
         setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
     }
 
-    const [view, setView] = useState<string>('graphs')
     useEffect(() => {
         const getRoomData = async () => {
             await getRoom(props?.roomId).then(async (res) => {
@@ -150,7 +150,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignSelf:'center', 
-        width: Platform.OS === 'android' ? '100%' : '50%',
+        width: Platform.OS === ('android' || 'IOS') ? '100%' : '100%',
         backgroundColor:'white'
     },
     header: {

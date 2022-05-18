@@ -30,7 +30,7 @@ const Drawer = createDrawerNavigator<DrawerParameters>();
 
 function Menu() {
   return (
-    <Drawer.Navigator  screenOptions={{headerTitle:''}} drawerContent={props => {
+    <Drawer.Navigator  screenOptions={{headerTitle:'VistaCovid'}} drawerContent={props => {
       return (
         <DrawerContentScrollView>
           <DrawerItem label="LogOut"onPress={() => {auth.signOut(); props.navigation.navigate("Login");}} />
@@ -48,7 +48,7 @@ function Menu() {
 function VistaCovid(){
   return(
     <Tab.Navigator tabBarPosition='bottom'>
-      <Tab.Screen name="Home" component={HomeView} options={{tabBarIcon:() => <Icon name='nav-icon-list-a' size={20}/>}}/>
+      <Tab.Screen name="Home" component={HomeView} options={{tabBarIcon:() => <Icon name='home' size={23}/>}}/>
       {/*<Tab.Screen name="Register" component={RegisterView} options={{tabBarIcon:() => <Icon name='ticket-alt' size={25}/>}}/>*/}
       <Tab.Screen name="Profile" component={ProfileView} options={{tabBarIcon:() => <Icon name='person' size={25}/>}}/>
     </Tab.Navigator>
