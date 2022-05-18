@@ -6,7 +6,6 @@ export type GraphProps = {
     data: GraphData[] | undefined,
     name: string,
     setModal: (modal: boolean) => void,
-    modal: boolean,
     color: string
 }
 
