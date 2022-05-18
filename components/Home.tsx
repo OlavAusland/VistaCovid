@@ -90,9 +90,9 @@ export const HomeView = (props: HomeScreenProps) => {
                 </View>
                 { user.role == Roles.DOCTOR &&
                     <View style={{ paddingBottom: 10 }}>
-                        <TouchableOpacity onPress={() => { setModalVisible(true) }} style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD' }}>
-                            <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
-                            <Icon name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                        <TouchableOpacity onPress={() => { setModalVisible(true) }} style={homeStyle.visibleModal}>
+                            <Text style={homeStyle.assignPatient}>Assign Patient</Text>
+                            <Icon name='bed-patient' size={40} style={homeStyle.bedPatient} onPress={() => { setModalVisible(true) }} />
                         </TouchableOpacity>
                         
                     </View>
@@ -137,11 +137,11 @@ export const HomeView = (props: HomeScreenProps) => {
                                             withHorizontalLabels={true}
                                             fromZero={true}
                                         />
-                                        <View style={{ flex:9, flexDirection: 'column' }}>
+                                        <View style={homeStyle.roomPatient}>
                                             <Text> Room: {room.id}</Text>
                                             <Text> Patient: {room.patientId ? room.patientId : 'No Patient'}</Text>
                                         </View>
-                                        <View style={{flex:1, backgroundColor:['yellow', 'red', 'green'][~~(Math.random()*3)]}}/>
+                                        <View style={homeStyle.patientStatus}/>
     
                                     </TouchableOpacity>
                                 )

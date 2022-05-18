@@ -5,6 +5,7 @@ import { addNote, getRole } from '../../api/firebaseAPI';
 import { NoteData, Room } from '../../domain/RoomType';
 import { auth } from '../../firebase-config';
 import { Roles } from '../../domain/UserType';
+import { noteModalStyle } from '../../styles/NoteModalStyles';
 
 type NoteModalType = {
     isVisible: boolean,
@@ -27,8 +28,8 @@ export const NoteModal = (props: NoteModalType) => {
             visible={props.isVisible}
             onRequestClose={() => {props.handleRequestClose()}}
         >
-            <View style={{flex:1, justifyContent:'center'}}>
-                <View style={{ alignSelf:'center', width:'90%', height:300, backgroundColor:'white', borderRadius:10}}>
+            <View style={noteModalStyle.container}>
+                <View style={noteModalStyle.notes}>
                     <View style={{flex:1}}>
                         <TextInput
                             style={{justifyContent:'flex-start'}}

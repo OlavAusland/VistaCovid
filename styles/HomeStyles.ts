@@ -40,5 +40,26 @@ export const homeStyle = StyleSheet.create({
         shadowRadius:2,
         elevation:1,
         marginBottom:25
+    }, 
+    visibleModal: { 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        backgroundColor: '#C1E8FD' 
+    },
+    assignPatient: { 
+        fontSize: 20, 
+        paddingTop: 5 
+    },
+    bedPatient: { 
+        alignSelf: 'center', 
+        paddingLeft: 10 
+    },
+    roomPatient: { 
+        flex:9, 
+        flexDirection: 'column' 
+    },
+    patientStatus: {
+        flex:1, 
+        backgroundColor:['yellow', 'red', 'green'][~~(Math.random()*3)]
     }
 });
