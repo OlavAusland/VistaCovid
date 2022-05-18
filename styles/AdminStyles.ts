@@ -1,37 +1,88 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform} from "react-native";
+//COLORS (light to dark):
+// FFF2EA
+// #E5FDFF
+// #C1E8FD
+// #9DD4FB
+// #0274A1
 
 export const adminStyle = StyleSheet.create({
-    container: {
-        //marginTop: 20,
-        backgroundColor: '#E5FCFF'
-    },
+  body:{
+    backgroundColor: 'white'
+  },
     header: {
         flex: 1,
-        backgroundColor: 'powderblue',
-        padding: 30,
+        backgroundColor: 'white',
+        paddingTop: 30,
+        paddingBottom: 20,
         alignItems: 'center',
     },
     headertext:{
         fontSize: 30,
+        color: '#0274A1',
+        letterSpacing: 5,
     },
     //-----------------------Buttons in main admin view---------------------------
-    addRoom: {
+    mainViewButtons: {
         flex: 2,
-        backgroundColor: 'powderblue',
-        padding:50,
-        // marginTop:3,
-        // marginBottom:3,
-        // marginLeft:3,
-        // marginRight:3
+        padding:40,
+        alignItems: 'center',
+        backgroundColor: 'white'
     },
-    manageRoom: {
-        flex: 3,
-        backgroundColor:'powderblue',
-        padding: 50,
-        // marginBottom:3,
-        // marginLeft:3,
-        // marginRight:3
+
+    TOmain:{
+      backgroundColor:'#9DD4FB',
+      alignItems: 'center',
+      borderColor: '#C1E8FD',
+      borderWidth: 2,
+      borderRadius: 10,
+      alignSelf: 'flex-start',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 8,
+      },
+      shadowOpacity: 0.46,
+      shadowRadius: 11.14,
+      
+      elevation: 17,
+      flexDirection: 'row'
     },
+    buttonText1:{
+      paddingLeft: 20,
+      paddingRight: 30,
+      paddingBottom: 40,
+      paddingTop: 40,
+      fontSize: 25,
+      color: 'white',
+
+    },
+    buttonText2:{
+      paddingLeft: 30,
+      paddingRight: 40,
+      paddingBottom: 40,
+      paddingTop: 40,
+      fontSize: 25,
+      color: 'white'
+    },
+    buttonText3:{
+      paddingLeft: 50,
+      paddingRight: 60,
+      paddingBottom: 40,
+      paddingTop: 40,
+      fontSize: 25,
+      color: 'white'
+    },
+    buttonIcon:{
+      color: "#0274a1",
+      paddingLeft: 10
+    },
+    arrowIcon:{
+      color: "#0274a1",
+      paddingRight: 15,
+      paddingLeft: 30
+    },
+
     //--------------------add room styling-----------------------------
     addRoomContainer: {
         //marginTop: 20,
@@ -116,9 +167,6 @@ export const adminStyle = StyleSheet.create({
       elevation:1, 
       padding: 20
   },
-  body:{
-    alignItems: "center"
-  },
     //--------------modal styling------------------------------
     centeredView: {
         flex: 1,
@@ -140,11 +188,6 @@ export const adminStyle = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
-      },
-      button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
       },
       buttonOpen: {
         backgroundColor: "#F194FF",
