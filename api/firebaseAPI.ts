@@ -1,6 +1,6 @@
 import { auth, db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query, arrayUnion} from 'firebase/firestore'
-import { User } from "../domain/UserType";
+import { SimpleUser, User } from "../domain/UserType";
 import { NoteData, Room } from "../domain/RoomType";
 import { Patient } from "../domain/PatientType";
 import { getAuth, deleteUser} from "firebase/auth";
@@ -16,7 +16,6 @@ export const addUser = async(user: User, id:string) => {
 }
 
 export const deleteUserById = async(id: string) => {
-    await 
     await deleteDoc(doc(db, 'Users', id)).then((res) => {
         console.log(res);
     }).catch((err) => {
@@ -24,7 +23,14 @@ export const deleteUserById = async(id: string) => {
     });
 }
 
+export const getUser = async(id: string): Promise<SimpleUser | undefined> => {
+    await getDoc(doc(db, 'Users', id)).then((doc) => {
+        return {...doc.data()} as SimpleUser;
+    }).catch((err) => {throw new Error('Could Get User!')})
+    return undefined
+}
 
+/*
 export const getUsers = async(): Promise<User[]> => {
     return await getDocs(collection(db, 'User')).then((res) =>{
         return res.docs.map((doc) => <User>({...doc.data(), id: doc.id}));
@@ -32,6 +38,7 @@ export const getUsers = async(): Promise<User[]> => {
         throw err;
     });
 }
+*/
 
 export const addNote = async(id: string, note: NoteData) => {
     await setDoc(doc(db, 'Rooms', id), {notes:arrayUnion(note)}, {merge: true}).then((res) => {
@@ -196,7 +203,9 @@ export const addPatientToRoom = async (roomId: string, patientId: string) => {
     
 }
 
-
+export const removePatientFromRoom = (room: Room) => {
+    setDoc(doc(db, 'Rooms', room.id), {patientId: '', respirationRate:[], heartRate:[], oxygenLevel:[]}, {merge: true});
+}
 
 
 // ASSIGNMENTS - 

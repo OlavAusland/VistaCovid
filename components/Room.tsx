@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { LogBox, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { getPatient, getRoom } from '../api/firebaseAPI';
+import { getPatient, getRoom, removePatientFromRoom } from '../api/firebaseAPI';
 import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
 import { ErrorType } from '../domain/Errortype';
 import { StackParameters } from '../domain/NavigationTypes';
@@ -97,6 +97,13 @@ export function RoomView({ route, navigation }: Props) {
         setModalVisible(true);
     }
 
+    const handleDissmiss = () => {
+        if(room !== undefined){
+            removePatientFromRoom(room)
+            navigation.goBack();
+        }
+    }
+
     if (modalVisible) {
         return <PatientInfoModal
             handleRequestClose={handleRequestClose}
@@ -137,7 +144,11 @@ export function RoomView({ route, navigation }: Props) {
                             onPress={() => { setView('notes') }}>
                             <Text style={roomStyle.buttonTextSize}>Notes</Text>
                         </TouchableOpacity>
-                </View>
+                        <TouchableOpacity style={[roomStyle.dismissButton, roomStyle.shadow]}
+                            onPress={() => { handleDissmiss() }}>
+                            <Text style={roomStyle.buttonTextSize}>Dissmiss</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 {(view === 'graphs' && room !== undefined) ? <GraphView room={room}/> : <NotesView room={room} />}
             </SafeAreaView>

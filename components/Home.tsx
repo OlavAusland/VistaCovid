@@ -111,58 +111,60 @@ export const HomeView = (props: HomeScreenProps) => {
                                             <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
                                                 <View style={{flexDirection:'row'}}>
                                                     <Icon size={20} name={'heartbeat'}/>
-                                                    <Text>{room.heartRate[room.heartRate.length - 1].value}</Text>                                                    
+                                                    <Text>{room.heartRate.length > 0 ? room.heartRate[room.heartRate.length - 1].value : '?'}</Text>                                                    
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
                                                     <Icon size={20} name={'lungs'}/>
-                                                    <Text>{room.respirationRate[room.respirationRate.length - 1].value}</Text>
+                                                    <Text>{room.respirationRate.length > 0 ? room.respirationRate[room.respirationRate.length - 1].value : '?'}</Text>
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
                                                     <Icon size={20} name={'wind'}/>
-                                                    <Text>{room.oxygenLevel[room.oxygenLevel.length - 1].value}</Text>
+                                                    <Text>{room.oxygenLevel.length > 0 ? room.oxygenLevel[room.oxygenLevel.length - 1].value : '?'}</Text>
                                                 </View>
                                             </View>
                                         </View>
-                                        <View style={{flex:3, marginTop:30}}>
-                                            <LineChart
-                                                withVerticalLabels={false}
-                                                data={{
-                                                    labels:[],
-                                                    datasets:[
-                                                        {
-                                                            data: room.heartRate ? extractXAxis(room.heartRate).slice(-5) : [],
-                                                            strokeWidth:2,
-                                                            color: (opacity = 0.1) => `rgba(235, 64, 52,${opacity})`
-                                                        }, 
-                                                        {
-                                                            data: room.respirationRate ? extractXAxis(room.respirationRate).slice(-5) : [],
-                                                            strokeWidth: 2,
-                                                            color: (opacity = 1) => `rgba(237, 184, 85,${opacity})`
-                                                        },
-                                                        {
-                                                            data: room.oxygenLevel ? extractXAxis(room.oxygenLevel).slice(-5) : [],
-                                                            strokeWidth:2,
-                                                            color: (opacity = 1) => `rgba(110, 215, 224,${opacity})`
+                                        {room.heartRate.length > 0 && room.oxygenLevel.length > 0 && room.respirationRate.length > 0 &&
+                                            <View style={{flex:3, marginTop:30}}>
+                                                <LineChart
+                                                    withVerticalLabels={false}
+                                                    data={{
+                                                        labels:[],
+                                                        datasets:[
+                                                            {
+                                                                data: room.heartRate.length > 0 ? extractXAxis(room.heartRate).slice(-5) : [],
+                                                                strokeWidth:2,
+                                                                color: (opacity = 0.1) => `rgba(235, 64, 52,${opacity})`
+                                                            }, 
+                                                            {
+                                                                data: room.respirationRate.length > 0 ? extractXAxis(room.respirationRate).slice(-5) : [],
+                                                                strokeWidth: 2,
+                                                                color: (opacity = 1) => `rgba(237, 184, 85,${opacity})`
+                                                            },
+                                                            {
+                                                                data: room.oxygenLevel.length > 0 ? extractXAxis(room.oxygenLevel).slice(-5) : [],
+                                                                strokeWidth:2,
+                                                                color: (opacity = 1) => `rgba(110, 215, 224,${opacity})`
+                                                            }
+                                                        ],
+                                                        legend: ['HR', 'RR', 'O₂']
+                                                    }}
+                                                    width={Dimensions.get('window').width}
+                                                    height={125}
+                                                    chartConfig={{
+                                                        useShadowColorFromDataset:true,
+                                                        fillShadowGradientOpacity:0.5,
+                                                        backgroundColor: "#C1E8FD",
+                                                        backgroundGradientFrom: "#C1E8FD",
+                                                        backgroundGradientTo: "#C1E8FD",
+                                                        decimalPlaces: 0, // optional, defaults to 2dp
+                                                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                                        labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
                                                         }
-                                                    ],
-                                                    legend: ['HR', 'RR', 'O₂']
-                                                }}
-                                                width={Dimensions.get('window').width}
-                                                height={125}
-                                                chartConfig={{
-                                                    useShadowColorFromDataset:true,
-                                                    fillShadowGradientOpacity:0.5,
-                                                    backgroundColor: "#C1E8FD",
-                                                    backgroundGradientFrom: "#C1E8FD",
-                                                    backgroundGradientTo: "#C1E8FD",
-                                                    decimalPlaces: 0, // optional, defaults to 2dp
-                                                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                                    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
                                                     }
-                                                }
-                                                style={{marginHorizontal:-10}}
-                                            />
-                                        </View>
+                                                    style={{marginHorizontal:-10}}
+                                                />
+                                            </View>
+                                        }
                                     </TouchableOpacity>
                                 )
                             })
