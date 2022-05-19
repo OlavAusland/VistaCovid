@@ -53,44 +53,42 @@ export const ProfileView = () => {
     }, []);
 
     return (
-        <ScrollView>
-            <View>
-                <View style={profileStyle.first}>
-                    <View >
-                        <Text style={profileStyle.header}>PROFILE</Text>
-                    </View>
-                    <View style={profileStyle.row1}>
-                        <Image
-                            style={profileStyle.imageStyle}
-                            source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
-                        />
-                        <Text>{}</Text>
-                    </View>
+        <View style={{flex:1}}>
+            <View style={[profileStyle.first, profileStyle.shadow]}>
+                <View >
+                    <Text style={profileStyle.header}>PROFILE</Text>
                 </View>
-                <View style={profileStyle.second}>
-                    <View style={profileStyle.userStyle}>
-                        <View style={profileStyle.box}>
-                            <Icon name='user' size={30}></Icon>
-                            <Text style={profileStyle.textStyle}>Name: {auth.currentUser?.displayName}</Text>
-                        </View>
-                        <View style={profileStyle.box}>
-                            <Icon name='mail'size={30}></Icon>
-                            <Text style={profileStyle.textStyle}>Email: {auth.currentUser?.email}</Text>
-                        </View>
-                        <View style={profileStyle.box}>
-                            <Icon name='phone'size={30}></Icon>
-                            <Text style={profileStyle.textStyle}>Tlf:{auth.currentUser?.phoneNumber}</Text>
-                        </View>
-                    </View>
-                    <View style={profileStyle.uploadImageButtonStyle}>
-                            <TouchableOpacity style={[profileStyle.upload, profileStyle.shadow]}
-                            onPress={() => {pickImage();handleUpload();}}>
-                                <Text style={profileStyle.buttonTextStyle}>Upload Image</Text>
-                            </TouchableOpacity>
-                    </View>
+                <View style={profileStyle.row1}>
+                    <Image
+                        style={profileStyle.imageStyle}
+                        source={avatar ? {uri: avatar} : require('../assets/favicon.png')}
+                    />
+                    <Text>{}</Text>
                 </View>
             </View>
-        </ScrollView>
+            <View style={profileStyle.second}>
+                <View style={profileStyle.userStyle}>
+                    <View style={profileStyle.box}>
+                        <Icon name='user' size={30}></Icon>
+                        <Text style={profileStyle.textStyle}>Name: {auth.currentUser?.displayName}</Text>
+                    </View>
+                    <View style={profileStyle.box}>
+                        <Icon name='mail'size={30}></Icon>
+                        <Text style={profileStyle.textStyle}>Email: {auth.currentUser?.email}</Text>
+                    </View>
+                    <View style={profileStyle.box}>
+                        <Icon name='phone'size={30}></Icon>
+                        <Text style={profileStyle.textStyle}>Tlf:{auth.currentUser?.phoneNumber}</Text>
+                    </View>
+                </View>
+                <View style={profileStyle.uploadImageButtonStyle}>
+                    <TouchableOpacity style={[profileStyle.upload, profileStyle.shadow]}
+                    onPress={() => {pickImage();handleUpload();}}>
+                        <Text style={profileStyle.buttonTextStyle}>Upload Image</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </View>
     )
 }
 
