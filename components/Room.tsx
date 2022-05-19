@@ -14,6 +14,7 @@ import { db } from '../firebase-config';
 import { roomStyle } from '../styles/RoomStyles';
 import { csvexport } from '../utils/csvexport';
 import { Errormodal } from './ErrorModal';
+import { PreviewModal } from './export/previewModal';
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
 import { PatientInfoModal } from './room/PatientInfoModal';
@@ -30,6 +31,7 @@ export function RoomView({ route, navigation }: Props) {
     const [fetching, setFetching] = useState<boolean>(true)
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
     const [csv, setCsv] = useState<string>("");
+    const [previewVisible, setPreviewVisible] = useState(false);
     const [view, setView] = useState<string>('graphs')
 
  
@@ -84,10 +86,13 @@ export function RoomView({ route, navigation }: Props) {
         if(room){
             const response = await csvexport([room?.id], undefined, undefined);
             setCsv(response);
+            setPreviewVisible(true);
         }
-        
+    
     }
-
+    if (previewVisible) {
+        return (<PreviewModal csv={csv} setPreviewVisible={setPreviewVisible} />)
+    }
 
     useEffect(() => { const data = room?.heartRate?.map((res) => { return res.value }); }, [room]);
 
