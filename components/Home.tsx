@@ -110,19 +110,19 @@ export const HomeView = (props: HomeScreenProps) => {
                                             <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
                                                 <View style={{flexDirection:'row'}}>
                                                     <Icon size={20} name={'heartbeat'}/>
-                                                    <Text>{room.heartRate.length > 0 ? room.heartRate[room.heartRate.length - 1].value : '?'}</Text>                                                    
+                                                    {room.heartRate?.length > 0 && <Text>{room.heartRate.slice(-1)[0].value}</Text>}                                                  
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
                                                     <Icon size={20} name={'lungs'}/>
-                                                    <Text>{room.respirationRate.length > 0 ? room.respirationRate[room.respirationRate.length - 1].value : '?'}</Text>
+                                                    {room.respirationRate?.length > 0 && <Text>{room.respirationRate.slice(-1)[0].value}</Text>}
                                                 </View>
                                                 <View style={{flexDirection:'row'}}>
                                                     <Icon size={20} name={'wind'}/>
-                                                    <Text>{room.oxygenLevel.length > 0 ? room.oxygenLevel[room.oxygenLevel.length - 1].value : '?'}</Text>
+                                                    {room.oxygenLevel?.length > 0 && <Text>{room.oxygenLevel.slice(-1)[0].value}</Text>}        
                                                 </View>
                                             </View>
                                         </View>
-                                        {room.heartRate.length > 0 && room.oxygenLevel.length > 0 && room.respirationRate.length > 0 &&
+                                        {room.heartRate?.length > 0 && room.oxygenLevel?.length > 0 && room.respirationRate?.length > 0 &&
                                             <View style={{flex:3, marginTop:30}}>
                                                 <LineChart
                                                     withVerticalLabels={false}

@@ -117,15 +117,15 @@ function VistaCovid(){
           const room = {...doc.data(), id:doc.id} as Room;
           console.log(room.id)
           
-          if(room.heartRate !== undefined && DetectDanger(10, 100, room.heartRate))
+          if(DetectDanger(10, 100, room.heartRate))
             sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}: 
-            Heart Rate = ${room.heartRate.length > 0 ? room.heartRate[room.heartRate.length -1].value : ''}`}).then(() => console.log('sent'));
-          if(room.respirationRate != undefined && DetectDanger(10, 100, room.respirationRate))
-            sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}: 
-            Respiration Rate = ${room.respirationRate.length > 0 ? room.respirationRate[room.respirationRate.length -1].value : ''}`}).then(() => console.log('sent'));
-          if(room.oxygenLevel !== undefined && DetectDanger(10, 100, room.oxygenLevel))
+            Heart Rate = ${room.heartRate?.length > 0 ? room.heartRate[room.heartRate.length -1].value : ''}`}).then(() => console.log('sent'));
+          if(DetectDanger(10, 100, room.respirationRate))
+            sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}:  
+            Respiration Rate = ${room.respirationRate?.length > 0 ? room.respirationRate[room.respirationRate.length -1].value : ''}`}).then(() => console.log('sent'));
+          if(DetectDanger(10, 100, room.oxygenLevel))
             sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}:\n
-            Oxygen Level = ${room.oxygenLevel.length > 0 ? room.oxygenLevel[room.oxygenLevel.length -1].value : ''}`}).then(() => console.log('sent'));
+            Oxygen Level = ${room.oxygenLevel?.length > 0 ? room.oxygenLevel[room.oxygenLevel.length -1].value : ''}`}).then(() => console.log('sent'));
         });
     });
   }, []);
@@ -149,8 +149,7 @@ async function sendPushNotification(message: object) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(message),
-  });
-  Vibration.vibrate(1000);
+  }).then(() => {Vibration.vibrate(1000);});
 }
 
 async function registerForPushNotificationsAsync() {
