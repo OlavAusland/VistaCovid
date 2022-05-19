@@ -1,6 +1,6 @@
-import { act, render } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import { AddRoom } from '../../components/adminView/addRoomView';
-import { GraphData, Room } from '../../domain/RoomType';
+import { Room } from '../../domain/RoomType';
 
 
 

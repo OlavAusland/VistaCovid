@@ -1,9 +1,9 @@
-import { auth, db } from "../firebase-config";
-import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query, arrayUnion} from 'firebase/firestore'
-import { User } from "../domain/UserType";
-import { NoteData, Room } from "../domain/RoomType";
+import { getAuth } from "firebase/auth";
+import { addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { Patient } from "../domain/PatientType";
-import { getAuth, deleteUser} from "firebase/auth";
+import { NoteData, Room } from "../domain/RoomType";
+import { User } from "../domain/UserType";
+import { db } from "../firebase-config";
 
 // USERS
 
@@ -40,34 +40,6 @@ export const addNote = async(id: string, note: NoteData) => {
         console.log(err);
     });
 }
-/*
-export const getAllUsers = async() => {
-    adminApp.auth().getUsers().then((users: any) => {
-        console.log(users)
-    })
-}
-*/
-// auth
-// .getUsers([
-//     { uid: 'uid1' },
-//     { email: 'user2@example.com' },
-//     { phoneNumber: '+15555550003' },
-//     { providerId: 'google.com', providerUid: 'google_uid4' },
-//   ])
-//   .then((getUsersResult) => {
-//     console.log('Successfully fetched user data:');
-//     getUsersResult.users.forEach((userRecord) => {
-//       console.log(userRecord);
-//     });
-
-//     console.log('Unable to find users corresponding to these identifiers:');
-//     getUsersResult.notFound.forEach((userIdentifier) => {
-//       console.log(userIdentifier);
-//     });
-//   })
-//   .catch((error) => {
-//     console.log('Error fetching user data:', error);
-//   });
 
 
 export const getLoggedInUser = () => {
@@ -197,14 +169,3 @@ export const addPatientToRoom = async (roomId: string, patientId: string) => {
 }
 
 
-
-
-// ASSIGNMENTS - 
-// ! DISCHARGE PATIENT
-/*
-export const assignRoom = async(room_id: string, patient_id: string){
-    await setDoc(doc(db, 'Rooms', room_id), {
-        patientId: patient_id,
-
-}
-*/

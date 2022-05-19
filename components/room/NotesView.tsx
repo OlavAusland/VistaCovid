@@ -1,12 +1,12 @@
 
-import { notesViewStyle } from '../../styles/NotesViewStyles';
-
 import { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { NoteData } from '../../domain/RoomType';
 import { auth } from '../../firebase-config';
+import { notesViewStyle } from '../../styles/NotesViewStyles';
 import { NoteModal } from './NoteModal';
+
 
 export const NotesView = (props: any) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -14,9 +14,7 @@ export const NotesView = (props: any) => {
         setModalVisible(false);
     }
 
-    const handleDelete = () => {
 
-    }
 
     return (
         <View testID='NoteView' style={notesViewStyle.container}>

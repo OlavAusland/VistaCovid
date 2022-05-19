@@ -15,33 +15,33 @@ type NoteModalType = {
 
 export const NoteModal = (props: NoteModalType) => {
 
-    const [note, setNote] = useState<NoteData>({author: auth.currentUser ? auth.currentUser.uid : '' , note: '', date: Date.now()});
+    const [note, setNote] = useState<NoteData>({ author: auth.currentUser ? auth.currentUser.uid : '', note: '', date: Date.now() });
     const handleSubmit = () => {
-        setNote({...note, date: Date.now()});
+        setNote({ ...note, date: Date.now() });
         addNote(props.room.id, note);
     }
 
-    return(
+    return (
         <Modal
             transparent={true}
             animationType="slide"
             visible={props.isVisible}
-            onRequestClose={() => {props.handleRequestClose()}}
+            onRequestClose={() => { props.handleRequestClose() }}
         >
             <View style={noteModalStyle.container}>
                 <View style={noteModalStyle.notes}>
-                    <View style={{flex:1}}>
+                    <View style={{ flex: 1 }}>
                         <TextInput
-                            style={{justifyContent:'flex-start'}}
+                            style={{ justifyContent: 'flex-start' }}
                             numberOfLines={10}
                             multiline={true}
                             placeholder="Note"
-                            onChangeText={(text: string) => {setNote({...note, note: text})}}
+                            onChangeText={(text: string) => { setNote({ ...note, note: text }) }}
                         />
                     </View>
                     <View>
-                        <Button title={'Add'} onPress={() => {handleSubmit();props.handleRequestClose()}}/>
-                        <Button title={'Close'} onPress={() => {props.handleRequestClose()}}/>
+                        <Button title={'Add'} onPress={() => { handleSubmit(); props.handleRequestClose() }} />
+                        <Button title={'Close'} onPress={() => { props.handleRequestClose() }} />
                     </View>
                 </View>
             </View>

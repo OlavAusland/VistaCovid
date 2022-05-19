@@ -1,13 +1,10 @@
 
 // navigation
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { deleteUserById, getUsers } from "../../api/firebaseAPI";
 import { ErrorType } from "../../domain/Errortype";
-import { StackParameters } from '../../domain/NavigationTypes';
 import { User } from "../../domain/UserType";
 import { manageRolesStyles } from '../../styles/ManageRolesStyles';
 import { Errormodal } from "../ErrorModal";
@@ -16,8 +13,6 @@ import { Errormodal } from "../ErrorModal";
 
 
 export function ManageRoles(){
-
-    const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
 
     const [users, setUsers] = useState<User[]>([])
     const [search, setSearch] = useState<string>('');

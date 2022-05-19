@@ -1,5 +1,5 @@
 import { useState } from "react";
-import React, { Alert, Button, SafeAreaView, ScrollView, Text, TextInput, View } from "react-native";
+import  { Alert, Button, SafeAreaView, ScrollView, Text, TextInput, View } from "react-native";
 import { addRoom } from "../../api/firebaseAPI";
 import { Room } from "../../domain/RoomType";
 import { adminStyle } from "../../styles/AdminStyles";
@@ -57,8 +57,8 @@ export function AddRoom() {
                     <Text style={adminStyle.headertext}>Add Room</Text>
                 </View>
                 <View>
-                    <TextInput 
-                        testID="roomNumber" 
+                    <TextInput
+                        testID="roomNumber"
                         style={adminStyle.addRoomInput}
                         onChangeText={setRoomNumber}
                         placeholder="room number" />

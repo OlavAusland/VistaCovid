@@ -28,7 +28,6 @@ export function RoomView({ route, navigation }: Props) {
     const [patient, setPatient] = useState<Patient>()
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
-    const [modal, setModal] = useState(false);
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
     const [csv, setCsv] = useState<string>("");
     const [view, setView] = useState<string>('graphs')

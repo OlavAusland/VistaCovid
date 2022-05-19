@@ -103,3 +103,211 @@ exports[`renders correctly 1`] = `
   </View>
 </RCTScrollView>
 `;
+
+exports[`renders correctly 2`] = `
+<RCTScrollView
+  style={
+    Object {
+      "backgroundColor": "powderblue",
+    }
+  }
+>
+  <View>
+    <RCTSafeAreaView
+      emulateUnlessSupported={true}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "powderblue",
+            "flex": 1,
+            "padding": 30,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#0274A1",
+              "fontSize": 30,
+              "letterSpacing": 5,
+            }
+          }
+        >
+          Add Room
+        </Text>
+      </View>
+      <View>
+        <TextInput
+          onChangeText={[Function]}
+          placeholder="room number"
+          style={
+            Object {
+              "borderWidth": 1,
+              "height": 40,
+              "margin": 12,
+              "padding": 10,
+            }
+          }
+          testID="roomNumber"
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "powderblue",
+              "padding": 20,
+            }
+          }
+        >
+          <View
+            accessibilityRole="button"
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {},
+                ]
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#007AFF",
+                      "fontSize": 18,
+                      "margin": 8,
+                      "textAlign": "center",
+                    },
+                  ]
+                }
+              >
+                Add Room
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTSafeAreaView>
+  </View>
+</RCTScrollView>
+`;
+
+exports[`renders correctly 3`] = `
+<RCTScrollView
+  style={
+    Object {
+      "backgroundColor": "powderblue",
+    }
+  }
+>
+  <View>
+    <RCTSafeAreaView
+      emulateUnlessSupported={true}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "powderblue",
+            "flex": 1,
+            "padding": 30,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#0274A1",
+              "fontSize": 30,
+              "letterSpacing": 5,
+            }
+          }
+        >
+          Add Room
+        </Text>
+      </View>
+      <View>
+        <TextInput
+          onChangeText={[Function]}
+          placeholder="room number"
+          style={
+            Object {
+              "borderWidth": 1,
+              "height": 40,
+              "margin": 12,
+              "padding": 10,
+            }
+          }
+          testID="roomNumber"
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "powderblue",
+              "padding": 20,
+            }
+          }
+        >
+          <View
+            accessibilityRole="button"
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {},
+                ]
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#007AFF",
+                      "fontSize": 18,
+                      "margin": 8,
+                      "textAlign": "center",
+                    },
+                  ]
+                }
+              >
+                Add Room
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTSafeAreaView>
+  </View>
+</RCTScrollView>
+`;
