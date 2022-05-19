@@ -41,6 +41,7 @@ Notifications.setNotificationHandler({
 });
 
 const DetectDanger = (min:number, max:number, data:GraphData[]) => {
+  if(data === undefined || data === null){return false}
   const values = data.length > 0 ? data.map((res: GraphData) => {return res.value}) : [];
   return values.some((res: number) => {return res > max || res < min});
 }
@@ -118,7 +119,7 @@ function VistaCovid(){
           
           if(DetectDanger(10, 100, room.heartRate))
             sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}: 
-            Heart Rate = ${room.heartRate[room.heartRate.length -1].value}`}).then(() => console.log('sent'));
+            Heart Rate = ${room.heartRate.length > 0 ? room.heartRate[room.heartRate.length -1].value : ''}`}).then(() => console.log('sent'));
           if(DetectDanger(10, 100, room.respirationRate))
             sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}: 
             Respiration Rate = ${room.respirationRate[room.respirationRate.length -1].value}`}).then(() => console.log('sent'));
