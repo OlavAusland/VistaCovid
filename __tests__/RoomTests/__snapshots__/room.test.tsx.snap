@@ -21,7 +21,6 @@ exports[`GraphView renders correctly 1`] = `
           "justifyContent": "center",
         }
       }
-      testID="HR"
     >
       <View
         accessible={true}
@@ -783,7 +782,6 @@ exports[`GraphView renders correctly 1`] = `
           "justifyContent": "center",
         }
       }
-      testID="RR"
     >
       <View
         accessible={true}
@@ -1545,7 +1543,6 @@ exports[`GraphView renders correctly 1`] = `
           "justifyContent": "center",
         }
       }
-      testID="O2"
     >
       <View
         accessible={true}
@@ -2522,7 +2519,7 @@ exports[`NoteModal renders correctly 2`] = `
           }
         >
           <Text>
-            Created By:
+            Created By: 
           </Text>
         </View>
       </View>

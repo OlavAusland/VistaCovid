@@ -6,6 +6,7 @@ import { NoteData } from '../../domain/RoomType';
 import { auth } from '../../firebase-config';
 import { notesViewStyle } from '../../styles/NotesViewStyles';
 import { NoteModal } from './NoteModal';
+;
 
 
 export const NotesView = (props: any) => {
@@ -20,13 +21,13 @@ export const NotesView = (props: any) => {
         <View testID='NoteView' style={notesViewStyle.container}>
             <NoteModal room={props.room} isVisible={modalVisible} handleRequestClose={handleRequestClose} />
             <ScrollView contentContainerStyle={notesViewStyle.notes}>
-                {props.room?.notes?.map((res: NoteData, index:number) => {                    
+                {props.room?.notes?.map((res: NoteData, index:number) => {            
                     return(
                         <View key={'note: ' + index} style={[notesViewStyle.card, notesViewStyle.shadow]}>
                             <Text style={{fontWeight:'bold', fontSize:25}}>Note: {new Date(res.date).toDateString()} </Text>
                             <Text testID='Notetest' style={{paddingBottom:10}} >{res.note}</Text>
                             <View style={{flexDirection:'row', borderTopWidth:1, justifyContent:'space-between'}}>
-                                <Text>Created By:</Text>
+                                <Text>Created By: {}</Text>
                                 {auth.currentUser?.uid == res.author &&
                                     <TouchableOpacity onPress={() =>{}} style={[notesViewStyle.delete, notesViewStyle.shadow]}>
                                         <Icon style={{alignSelf:'center'}} name='trash-2' color={'white'} size={20}/>

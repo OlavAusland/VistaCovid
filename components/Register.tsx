@@ -39,22 +39,20 @@ export function RegisterView() {
         label: ""
     });
 
-
-    const handleRegister = async () => {
-        await createUserWithEmailAndPassword(auth, user.email, user.password).then(async (res) => {
-            console.log(res.user.uid)
-            await updateProfile(res.user, { displayName: user.firstName + " " + user.lastName }).then((res) => {
+    const handleRegister = async() => {
+        await createUserWithEmailAndPassword(auth, user.email, user.password).then(async(res) => {
+            console.log(res.user.uid    )
+            await updateProfile(res.user, {displayName: user.firstName + " " + user.lastName}).then(async() => {
                 console.log('Profile Updated');
-            }).catch((err) => { });
+                await setDoc(doc(db, 'User', res.user.uid), {displayName: `${user.firstName} ${user.lastName}`, role: Roles[parseInt(user.role.toString())]}).then((res) => {
+                    console.log('Added User Role');
+                }).catch((err) => {console.log(err)});
+                console.log('Successfully Created User!');
+            }).catch((err) => {});
 
-            await setDoc(doc(db, 'User', res.user.uid), { role: Roles[parseInt(user.role.toString())] }).then((res) => {
-                console.log('Added User Role');
-            }).catch((err) => { console.log(err) });
-
-            console.log('Successfully Created User!');
-
-            await signOut(auth).then().catch((err) => { console.log(err) });
-        }).catch((err) => { console.log('Error! Please Try Again!'); setError(err.message) })
+            
+            await signOut(auth).then().catch((err) => {console.log(err)});
+        }).catch((err) => {console.log('Error! Please Try Again!'); setError(err.message)})
 
     }
 

@@ -195,7 +195,6 @@ export default function App() {
         <Stack.Screen name="AddRoom" component={AddRoom}/>
         <Stack.Screen name="ManageRoom" component={ManageRoom}/>
         <Stack.Screen name="ManageRoles" component={ManageRoles}/>
-        
         <Stack.Screen name="Export" component={Export}/>
         <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
         {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
