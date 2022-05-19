@@ -21,7 +21,7 @@ export const Errormodal = (props: ErrorModalProps) => {
         >
             <View style={erroStyle.centeredView}>
                 <View style={erroStyle.modalView}>
-                    <Text style={erroStyle.modalText}>Error: {"\n"}{props.error.errorObject?.message}</Text>
+                    <Text testID="errormessage" style={erroStyle.modalText}>Error: {"\n"}{props.error.errorObject?.message}</Text>
                     
                     <View style={{flex:1}}>
                         <Pressable

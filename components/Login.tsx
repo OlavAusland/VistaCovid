@@ -12,10 +12,6 @@ import { loginStyle } from '../styles/LoginStyles';
 import { Errormodal } from './ErrorModal';
 
 
-
-
-
-
 export function LoginView() {
     const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
 

@@ -33,7 +33,7 @@ export function AdminView()
                                 style={adminStyle.TOmain}
                                 onPress={() => navigation.navigate('AddRoom')}>
                                     <Icon2 name='bed-patient'size={30} style={adminStyle.buttonIcon}></Icon2>
-                                    <Text style={adminStyle.buttonText3}>ADD ROOM</Text>
+                                    <Text testID='addroom' style={adminStyle.buttonText3}>ADD ROOM</Text>
                                     <Icon name='arrowright' size={30} style={adminStyle.arrowIcon}></Icon>
                                 </TouchableOpacity>
                             </View>

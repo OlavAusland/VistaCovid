@@ -57,7 +57,8 @@ export function AddRoom() {
                     <Text style={adminStyle.headertext}>Add Room</Text>
                 </View>
                 <View>
-                    <TextInput
+                    <TextInput 
+                        testID="roomNumber" 
                         style={adminStyle.addRoomInput}
                         onChangeText={setRoomNumber}
                         placeholder="room number" />

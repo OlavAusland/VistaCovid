@@ -9,14 +9,14 @@ export type GraphViewProps = {
 
 export  const GraphView = (props: GraphViewProps) => {
     return (
-        <ScrollView contentContainerStyle={roomStyle.body}>
-            <View style={roomStyle.graphContainer}>
-                <LineGraph color={'#eb4034'} data={props.room?.heartRate} name={'Heart Rate'}/>
+        <ScrollView testID='graphView' contentContainerStyle={roomStyle.body}>
+            <View testID='HR' style={roomStyle.graphContainer}>
+                <LineGraph  color={'#eb4034'} data={props.room?.heartRate} name={'Heart Rate'}/>
             </View>
-            <View style={roomStyle.graphContainer}>
+            <View testID='RR'style={roomStyle.graphContainer}>
                 <LineGraph color={'#edb855'} data={props.room?.respirationRate} name={'Respiration Rate'}/>
             </View>
-            <View style={roomStyle.graphContainer}>
+            <View testID='O2' style={roomStyle.graphContainer}>
                 <LineGraph color={'#6ed7e0'} data={props.room?.oxygenLevel}  name={'Oxygen Level'}/>
             </View>
         </ScrollView>
