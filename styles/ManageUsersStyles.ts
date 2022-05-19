@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 
-export const manageRoomStyles = StyleSheet.create({
+export const manageUsersStyles = StyleSheet.create({
     header:{
         backgroundColor:'white',
         paddingTop:40,
@@ -16,7 +16,9 @@ export const manageRoomStyles = StyleSheet.create({
         shadowOffset: { width: 0,height: 3},
         shadowOpacity: 0.27,
         shadowRadius: 4.65, 
-        elevation: 6
+        elevation: 6,
+        borderTopRightRadius:10,
+        borderBottomRightRadius:10
     },
     cardContainer:{
         width:'90%',
@@ -35,7 +37,7 @@ export const manageRoomStyles = StyleSheet.create({
     card: {
         flexDirection:'row', 
         backgroundColor:'#9DD4FB', 
-        flexBasis:'84%', 
+        flexBasis:'90%', 
         height:100, 
         justifyContent:'center', 
         shadowColor: "#000", 
@@ -61,18 +63,5 @@ export const manageRoomStyles = StyleSheet.create({
         borderWidth: 1,
         borderRadius:10,
         padding: 10,
-    },
-    container: {
-        flex:1, 
-            alignItems:'center'
-    },
-    addRoom: {
-        width:'100%', 
-        height:'100%', 
-        alignItems:'center'
-    },
-    addRoomText: {
-        fontSize:20, 
-        textAlign:'center'
     }
 })

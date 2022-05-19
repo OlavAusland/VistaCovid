@@ -195,7 +195,7 @@ export default function App() {
         <Stack.Screen name="Admin" component={AdminView}/>
         <Stack.Screen name="AddRoom" component={AddRoom}/>
         <Stack.Screen name="ManageRoom" component={ManageRoom}/>
-        <Stack.Screen name="ManageRoles" component={ManageRoles}/>
+        <Stack.Screen name="ManageUsers" component={ManageRoles}/>
         <Stack.Screen name="CreateUser" component={CreateUser}/>
         <Stack.Screen name="Export" component={Export}/>
         <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
