@@ -93,13 +93,7 @@ export function RoomView({ route, navigation }: Props) {
         getUserRole();
     }, []);
 
-
-    if (previewVisible) {
-        return (<PreviewModal csv={csv} setPreviewVisible={setPreviewVisible} />)
-    }
-
     useEffect(() => { const data = room?.heartRate?.map((res) => { return res.value }); }, [room]);
-
 
     const handleExport = async () => {
         if (room) {
@@ -132,6 +126,10 @@ export function RoomView({ route, navigation }: Props) {
         return (
             <Errormodal error={error} handleRequestClose={handleRequestClose} />
         )
+    }
+
+    if (previewVisible) {
+        return (<PreviewModal csv={csv} setPreviewVisible={setPreviewVisible} />)
     }
 
     if (fetching) {
