@@ -1,16 +1,17 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { doc, onSnapshot } from 'firebase/firestore';
+import { async } from 'q';
 import { useEffect, useState } from 'react';
 import { LogBox, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { getPatient, getRoom, removePatientFromRoom } from '../api/firebaseAPI';
+import { getPatient, getRole, getRoom, removePatientFromRoom } from '../api/firebaseAPI';
 import { getPatient as folkeregisterpatient } from '../api/folkeregisterAPI';
 import { ErrorType } from '../domain/Errortype';
 import { StackParameters } from '../domain/NavigationTypes';
 import { Patient } from '../domain/PatientType';
 import { Room } from '../domain/RoomType';
-import { db } from '../firebase-config';
+import { auth, db } from '../firebase-config';
 import { roomStyle } from '../styles/RoomStyles';
 import { csvexport } from '../utils/csvexport';
 import { Errormodal } from './ErrorModal';
@@ -29,18 +30,18 @@ export function RoomView({ route, navigation }: Props) {
     const [patient, setPatient] = useState<Patient>()
     const [room, setRoom] = useState<Room>()
     const [fetching, setFetching] = useState<boolean>(true)
-    const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
+    const [error, setError] = useState<ErrorType>({ errorObject: undefined, errormodalVisible: false });
     const [csv, setCsv] = useState<string>("");
     const [previewVisible, setPreviewVisible] = useState(false);
     const [view, setView] = useState<string>('graphs')
+    const [user, setUser] = useState<string | undefined>('null');
 
- 
 
     const props = route.params;
 
     const handleRequestClose = () => {
         setModalVisible(false);
-        setError((prev) =>({...prev,errorObject:undefined, errormodalVisible:false}));
+        setError((prev) => ({ ...prev, errorObject: undefined, errormodalVisible: false }));
     }
 
     useEffect(() => {
@@ -48,7 +49,7 @@ export function RoomView({ route, navigation }: Props) {
             await getRoom(props?.roomId).then(async (res) => {
                 setRoom(res);
                 setFetching(false);
-            }).catch( (err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
+            }).catch((err) => { setError((prev) => ({ ...prev, errorObject: err, errormodalVisible: true })) });
         };
         getRoomData();
     }, []);
@@ -70,31 +71,44 @@ export function RoomView({ route, navigation }: Props) {
                     setPatient(res);
                 }).catch();
             }
-            
+
             if (!tempPatient && id) {
                 await folkeregisterpatient(id).then((res) => {
                     setPatient(res);
-                }).catch((err) => { setError((prev) =>({...prev, errorObject:err, errormodalVisible:true}))});
+                }).catch((err) => { setError((prev) => ({ ...prev, errorObject: err, errormodalVisible: true })) });
             }
         };
 
         getPatientData();
     }, [room]);
 
+    useEffect(() => {
+        const getUserRole = async () => {
+            const user = auth.currentUser;
+            if (user) {
+                const role = await getRole(user.uid);
+                setUser(role);
+            }
+        };
+        getUserRole();
+    }, []);
 
-    const handleExport = async() => {
-        if(room){
-            const response = await csvexport([room?.id], undefined, undefined);
-            setCsv(response);
-            setPreviewVisible(true);
-        }
-    
-    }
+
     if (previewVisible) {
         return (<PreviewModal csv={csv} setPreviewVisible={setPreviewVisible} />)
     }
 
     useEffect(() => { const data = room?.heartRate?.map((res) => { return res.value }); }, [room]);
+
+
+    const handleExport = async () => {
+        if (room) {
+            const response = await csvexport([room?.id], undefined, undefined);
+            console.log(response);
+            setCsv(response);
+            setPreviewVisible(true);
+        }
+    }
 
     const handlePress = () => {
         console.log("Setting modal to open");
@@ -102,7 +116,7 @@ export function RoomView({ route, navigation }: Props) {
     }
 
     const handleDissmiss = () => {
-        if(room !== undefined){
+        if (room !== undefined) {
             removePatientFromRoom(room)
             navigation.goBack();
         }
@@ -114,7 +128,7 @@ export function RoomView({ route, navigation }: Props) {
             patient={patient}
         />
     }
-    if(error.errormodalVisible){
+    if (error.errormodalVisible) {
         return (
             <Errormodal error={error} handleRequestClose={handleRequestClose} />
         )
@@ -127,7 +141,7 @@ export function RoomView({ route, navigation }: Props) {
             </View>
         );
 
-    
+
     } else {
         return (
             <SafeAreaView style={[roomStyle.container]}>
@@ -148,13 +162,21 @@ export function RoomView({ route, navigation }: Props) {
                             onPress={() => { setView('notes') }}>
                             <Text style={roomStyle.buttonTextSize}>Notes</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity style={[roomStyle.dismissButton, roomStyle.shadow]}
                             onPress={() => { handleDissmiss() }}>
                             <Text style={roomStyle.buttonTextSize}>Dissmiss</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                {(view === 'graphs' && room !== undefined) ? <GraphView room={room}/> : <NotesView room={room} />}
+                {(view === 'graphs' && room !== undefined) ? <GraphView room={room} /> : <NotesView room={room} />}
+                {user === 'doctor' && <View>
+                    <TouchableOpacity style={roomStyle.exportButton} onPress={() => { handleExport() }} >
+                        <Text style={roomStyle.exportButtonText}>Export Room</Text>
+                    </TouchableOpacity>
+                </View>
+                }
+
             </SafeAreaView>
         );
     }

@@ -62,10 +62,6 @@ const mapHealthDataToElement = (
         }
         const time = moment(e.time);
 
-        console.log('csvinside time: ' + time);
-        console.log('csvinside fromdate: ' + fromDate);
-        console.log('csvinside todate: ' + toDate);
-
         if (!isWithinDateRange(time, fromDate, toDate)) {
             return [];
         }
