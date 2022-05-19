@@ -8,7 +8,8 @@ import { StyleSheet, Platform} from "react-native";
 
 export const adminStyle = StyleSheet.create({
   body:{
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    flex:1
   },
     header: {
         flex: 1,
