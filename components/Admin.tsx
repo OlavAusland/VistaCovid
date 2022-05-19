@@ -1,7 +1,4 @@
-import { View, Text, Button, ScrollView, SafeAreaView, VirtualizedList } from 'react-native';
-import { addRoom, deleteRoom } from '../api/firebaseAPI';
-import { Room } from '../domain/RoomType';
-import { User } from '../domain/UserType';
+import { View, Text,  ScrollView, SafeAreaView } from 'react-native';
 import { adminStyle } from '../styles/AdminStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Fontisto';
@@ -14,8 +11,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParameters } from '../domain/NavigationTypes';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export function AdminView()
-{
+export function AdminView() {
 
     const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
 

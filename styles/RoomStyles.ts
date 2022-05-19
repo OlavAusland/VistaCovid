@@ -11,7 +11,14 @@ export const roomStyle = StyleSheet.create({
         flexBasis: '45%',
         justifyContent: 'center',
         backgroundColor: '#9DD4FB',
-        height: 60,
+        height: 40,
+        borderRadius: 10
+    },
+    dismissButton:{
+        flexBasis: '95%',
+        justifyContent: 'center',
+        backgroundColor: '#9DD4FB',
+        height: 40,
         borderRadius: 10
     },
     buttonContainer: {
@@ -69,7 +76,7 @@ export const roomStyle = StyleSheet.create({
         flexBasis: '45%', 
         justifyContent: 'center', 
         backgroundColor: '#9DD4FB', 
-        height: 60,
+        height: 40,
         borderRadius:10
     },
     body: {

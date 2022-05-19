@@ -20,7 +20,7 @@ export const csvexport = async (
     const csvRooms: CsvData[] = [];
     for (const room of rooms) {
         const response = await getRoom(room);
-        
+
         if (!response) {
             throw new Error(`Room ${room} does not exist`);
         }
@@ -62,14 +62,14 @@ const mapHealthDataToElement = (
         }
         const time = moment(e.time);
 
-            console.log('csvinside time: ' + time);
-            console.log('csvinside fromdate: ' + fromDate);
-            console.log('csvinside todate: ' + toDate);
+        console.log('csvinside time: ' + time);
+        console.log('csvinside fromdate: ' + fromDate);
+        console.log('csvinside todate: ' + toDate);
 
         if (!isWithinDateRange(time, fromDate, toDate)) {
             return [];
         }
-            
+
         return ({
             room: roomNumber,
             time: moment(e.time),

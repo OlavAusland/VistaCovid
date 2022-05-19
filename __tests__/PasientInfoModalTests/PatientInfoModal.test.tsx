@@ -1,9 +1,9 @@
 
 import { act, render } from '@testing-library/react-native';
 import { PatientInfoModal } from "../../components/room/PatientInfoModal";
-import { FolkeregisterPerson } from '../../domain/PatientType';
+import { Patient } from '../../domain/PatientType';
 
-const folkeregisterPerson: FolkeregisterPerson = {
+const folkeregisterPerson: Patient = {
     firstname: 'Siri',
     midlename: 'Hanne',
     lastname: 'Olsen',
@@ -26,12 +26,17 @@ test("renders correctly", () => {
 
 //Unit tests
 
+test("shows patient not to be empty when data are fetched", async () => {
+    
+    const { getByTestId } = render(<PatientInfoModal handleRequestClose={jest.fn()} patient={folkeregisterPerson} />);
+    expect(getByTestId("patientInfoModal")).not.toBeNull();
+
+});
+
 
 test("shows patient when data are fetched", async () => {
 
-
     const { getByTestId } = render(<PatientInfoModal handleRequestClose={jest.fn()} patient={folkeregisterPerson} />);
-    expect(getByTestId("patientInfoModal")).not.toBeNull();
 
     const lastnametest = getByTestId("lastname")
     await act(async () => {
@@ -79,8 +84,6 @@ test("shows patient when data are fetched", async () => {
     });
 
 });
-
-
 
 
 

@@ -28,6 +28,7 @@
     "@react-navigation/native-stack": "^6.6.2",
     "@react-navigation/stack": "^6.2.1",
     "@types/json2csv": "^5.0.3",
+    "@types/react": "18.0.8",
     "expo": "^45.0.4",
     "expo-checkbox": "^2.1.0",
     "expo-device": "~4.2.0",
@@ -78,7 +79,7 @@
     "@types/react": "~17.0.21",
     "@types/react-csv": "^1.1.2",
     "@types/react-datepicker": "^4.4.0",
-    "@types/react-native": "~0.64.12",
+    "@types/react-native": "~0.67.6",
     "@types/react-native-vector-icons": "^6.4.10",
     "ts-jest": "26",
     "typescript": "~4.3.5"

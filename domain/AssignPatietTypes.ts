@@ -1,6 +1,6 @@
 import { DropDownType } from "./DropDownType";
 import { Patient } from "./PatientType";
-import { currentUser } from "./UserType";
+
 
 
 export type newPatientProps = {

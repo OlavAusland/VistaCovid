@@ -41,7 +41,7 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             const isFnr = fnrRegex.test(search);
 
             if (!isFnr) {
-                setError((prev) => ({ ...prev, errorObject: new Error('Invalid SSN'), errormodalVisible: true }));
+                setE('Invalid SSN');
             }
 
             const firepatient = firebaseAPI.getPatient(search).then((res) => {

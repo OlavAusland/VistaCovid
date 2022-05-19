@@ -13,14 +13,12 @@ import Icon from 'react-native-vector-icons/Fontisto';
 import { getRole } from './api/firebaseAPI';
 import { AdminView } from './components/Admin';
 import { AddRoom } from './components/adminView/addRoomView';
-import { ManageRoles } from './components/adminView/manageRoles';
 import { ManageRoom } from './components/adminView/manageRoom';
-import { CreateUser } from './components/adminView/registerUser';
 import { Export } from './components/Export';
 import { HomeView } from './components/Home';
 import { LoginView } from './components/Login';
 import { ProfileView } from './components/Profile';
-//Views
+
 import { RegisterView } from './components/Register';
 import { RoomView } from './components/Room';
 import { DrawerParameters, StackParameters, TabParameters } from './domain/NavigationTypes';
@@ -195,8 +193,6 @@ export default function App() {
         <Stack.Screen name="Admin" component={AdminView}/>
         <Stack.Screen name="AddRoom" component={AddRoom}/>
         <Stack.Screen name="ManageRoom" component={ManageRoom}/>
-        <Stack.Screen name="ManageUsers" component={ManageRoles}/>
-        <Stack.Screen name="CreateUser" component={CreateUser}/>
         <Stack.Screen name="Export" component={Export}/>
         <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
         {/*<Stack.Screen name="Register" component={RegisterView}/>*/}

@@ -106,11 +106,7 @@ export const adminStyle = StyleSheet.create({
       padding: 20,
     },
     //---------------manage room styling-----------------------
-    editRoom:{
-      // height: 40,
-      // margin: 12,
-      // padding: 10,
-    },
+    
     editRoomNumber:{
       height: 40,
       margin: 12,
