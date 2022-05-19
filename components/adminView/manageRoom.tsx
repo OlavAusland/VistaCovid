@@ -17,13 +17,15 @@ export function ManageRoom() {
     const [search, setSearch] = useState<string>('')
 
     useEffect(() => {
-        onSnapshot(collection(db, "Rooms"), (snapshot) => {
+        const unsub = onSnapshot(collection(db, "Rooms"), (snapshot) => {
             let _rooms: Room[] = [];
             snapshot.forEach((doc) => {
                 _rooms.push(doc.data() as Room);
             });
             setRooms(_rooms);
         });
+
+        return () => unsub();
     }, []);
 
     useEffect(() => { getRooms().then((rooms: Room[]) => { setRooms(rooms) }); }, []);

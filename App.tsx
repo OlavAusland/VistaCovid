@@ -42,8 +42,7 @@ Notifications.setNotificationHandler({
 
 const DetectDanger = (min:number, max:number, data:GraphData[]) => {
   if(data === undefined || data === null){return false}
-  const values = data.length > 0 ? data.map((res: GraphData) => {return res.value}) : [];
-  return values.some((res: number) => {return res > max || res < min});
+  return data.slice(-1)[0].value < min || data.slice(-1)[0].value > max;
 }
 
 // APP
@@ -108,27 +107,23 @@ function VistaCovid(){
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
+    
   }, []);
-
   useEffect(() => {
     const q = query(collection(db, 'Rooms'), where('patientId', '!=', ''));
-    onSnapshot(q, (querySnapshot) => {
-        querySnapshot.forEach(async(doc) => {
-          const room = {...doc.data(), id:doc.id} as Room;
-          console.log(room.id)
-          
-          if(DetectDanger(10, 100, room.heartRate))
-            sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}: 
-            Heart Rate = ${room.heartRate?.length > 0 ? room.heartRate[room.heartRate.length -1].value : ''}`}).then(() => console.log('sent'));
-          if(DetectDanger(10, 100, room.respirationRate))
-            sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}:  
-            Respiration Rate = ${room.respirationRate?.length > 0 ? room.respirationRate[room.respirationRate.length -1].value : ''}`}).then(() => console.log('sent'));
-          if(DetectDanger(10, 100, room.oxygenLevel))
-            sendPushNotification({to:expoPushToken, sound:'default', title:`${room.id}:\n
-            Oxygen Level = ${room.oxygenLevel?.length > 0 ? room.oxygenLevel[room.oxygenLevel.length -1].value : ''}`}).then(() => console.log('sent'));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const room = doc.data() as Room;
+
+          if(DetectDanger(60, 100, room.heartRate) || DetectDanger(10, 100, room.respirationRate) || DetectDanger(10, 100, room.oxygenLevel)){
+            console.log(room.heartRate.slice(-1)[0].value);
+            sendPushNotification({to:expoPushToken, sound:'default', title:`💀Danger: ${room.id}`, 
+            body:`\r\n❤️Heart Rate:\t${room.heartRate.slice(-1)[0].value}\n🫁Respiration Rate:\t${room.respirationRate.slice(-1)[0].value}\n💨Oxygen Level:\t${room.oxygenLevel.slice(-1)[0].value}` });
+          }
         });
     });
-  }, []);
+    return () => unsubscribe();
+}, []);
 
   return(
     <Tab.Navigator tabBarPosition='bottom'>
@@ -136,6 +131,24 @@ function VistaCovid(){
       {/*<Tab.Screen name="Register" component={RegisterView} options={{tabBarIcon:() => <Icon name='ticket-alt' size={25}/>}}/>*/}
       <Tab.Screen name="Profile" component={ProfileView} options={{tabBarIcon:() => <Icon name='person' size={25}/>}}/>
     </Tab.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'> 
+        <Stack.Screen name="Menu" component={Menu}/>
+        <Stack.Screen name="Login" component={LoginView}/>
+        <Stack.Screen name="Register" component={RegisterView}/>
+        <Stack.Screen name="Admin" component={AdminView}/>
+        <Stack.Screen name="AddRoom" component={AddRoom}/>
+        <Stack.Screen name="ManageRoom" component={ManageRoom}/>
+        <Stack.Screen name="Export" component={Export}/>
+        <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
+        {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -181,22 +194,4 @@ async function registerForPushNotificationsAsync() {
   }
 
   return token;
-}
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'> 
-        <Stack.Screen name="Menu" component={Menu}/>
-        <Stack.Screen name="Login" component={LoginView}/>
-        <Stack.Screen name="Register" component={RegisterView}/>
-        <Stack.Screen name="Admin" component={AdminView}/>
-        <Stack.Screen name="AddRoom" component={AddRoom}/>
-        <Stack.Screen name="ManageRoom" component={ManageRoom}/>
-        <Stack.Screen name="Export" component={Export}/>
-        <Stack.Screen name="Room" component={RoomView} initialParams={{roomId:'A2 021'}}/>
-        {/*<Stack.Screen name="Register" component={RegisterView}/>*/}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
 }

@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { async } from 'q';
 import { useEffect, useState } from 'react';
-import { LogBox, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { LogBox, Platform, StyleSheet, Text, TouchableOpacity, Vibration, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { getPatient, getRole, getRoom, removePatientFromRoom } from '../api/firebaseAPI';
@@ -55,9 +55,11 @@ export function RoomView({ route, navigation }: Props) {
     }, []);
 
     useEffect(() => {
-        onSnapshot(doc(db, "Rooms", props.roomId), (doc) => {
+        const unsub = onSnapshot(doc(db, "Rooms", props.roomId), (doc) => {
             setRoom(doc.data() as Room);
         });
+
+        return() => unsub();
     }, []);
 
     useEffect(() => {
@@ -181,3 +183,15 @@ export function RoomView({ route, navigation }: Props) {
         );
     }
 }
+
+async function sendPushNotification(message: object) {
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    }).then(() => {Vibration.vibrate(1000);});
+  }

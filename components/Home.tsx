@@ -43,13 +43,16 @@ export const HomeView = (props: HomeScreenProps) => {
 
     useEffect(() => {
         const q = query(collection(db, 'Rooms'), where('patientId', '!=', ''));
-        onSnapshot(q, (querySnapshot) => {
+        const unsub = onSnapshot(q, (querySnapshot) => {
             const _rooms: Room[] = [];
             querySnapshot.forEach((doc) => {
                 _rooms.push(doc.data() as Room);
             });
             setRooms(_rooms);
         });
+
+        return() => unsub();
+
     }, []);
 
     useEffect(() => {
