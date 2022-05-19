@@ -2,7 +2,8 @@ import { act, render } from '@testing-library/react-native';
 import moment from 'moment';
 import { GraphView } from '../../components/room/GraphView';
 import { NoteModal } from '../../components/room/NoteModal';
-import { GraphData, Room } from "../../domain/RoomType";
+import { NotesView } from '../../components/room/NotesView';
+import { GraphData, NoteData, Room } from "../../domain/RoomType";
 
 
 const date = moment("2022-05-15T21:11:48.620Z");
@@ -52,14 +53,18 @@ const oxygenLevel: GraphData[] = [
         value: 30
     }
 ]
-
+const noteMock: NoteData[] = [{
+    author: 'Ole olsen',
+    note: 'Hei hei dette er en note',
+    date: date.valueOf()
+}]
 const mockRoom: Room = {
     patientId: "123351",
     lastUpdated: new Date().toISOString(),
     heartRate,
     respirationRate: respirationRate,
     oxygenLevel,
-    notes: undefined,
+    notes: noteMock,
     id: "aaaa"
 }
 
@@ -69,17 +74,38 @@ test("GraphView renders correctly", () => {
     expect(tree).toMatchSnapshot();
 })
 
-test("GraphView renders correctly", () => {
+test("NoteModal renders correctly", () => {
     const tree = render(<NoteModal room={mockRoom} isVisible={true} handleRequestClose={jest.fn()} />).toJSON();
     expect(tree).toMatchSnapshot();
 })
 
 
+test("NoteModal renders correctly", () => {
+    const tree = render(<NotesView room={mockRoom} />).toJSON();
+    expect(tree).toMatchSnapshot();
+})
 
 
-test("shows patient not to be empty when data are fetched", async () => {
+test("shows GraphView not to be empty when data are fetched", async () => {
     
     const { getByTestId } = render(<GraphView room={mockRoom}/>);
     expect(getByTestId("graphView")).not.toBeNull();
 
+});
+
+test("shows NotesView not to be empty when data are fetched", async () => {
+    
+    const { getByTestId } = render(<NotesView room={mockRoom}/>);
+    expect(getByTestId("NoteView")).not.toBeNull();
+
+});
+
+test("shows Notes when data are fetched", async () => {
+
+    const { getByTestId } = render(<NotesView room={mockRoom}/>);
+
+    const notesTest = getByTestId("Notetest")
+    await act(async () => {
+        expect(notesTest.props.children).toContain('Hei hei dette er en note');
+    });
 });
