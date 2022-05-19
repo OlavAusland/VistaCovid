@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { async } from 'q';
+
 import { useEffect, useState } from 'react';
 import { LogBox, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
