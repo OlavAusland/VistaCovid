@@ -2517,11 +2517,7 @@ exports[`NoteModal renders correctly 2`] = `
               "justifyContent": "space-between",
             }
           }
-        >
-          <Text>
-            Created By: 
-          </Text>
-        </View>
+        />
       </View>
     </View>
   </RCTScrollView>

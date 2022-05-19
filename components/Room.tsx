@@ -96,10 +96,7 @@ export function RoomView({ route, navigation }: Props) {
     }, []);
 
 
-    if (previewVisible) {
-        return (<PreviewModal csv={csv} setPreviewVisible={setPreviewVisible} />)
-    }
-
+    
     useEffect(() => { const data = room?.heartRate?.map((res) => { return res.value }); }, [room]);
 
 
@@ -123,6 +120,10 @@ export function RoomView({ route, navigation }: Props) {
             navigation.goBack();
         }
     }
+    if (previewVisible) {
+        return (<PreviewModal csv={csv} setPreviewVisible={setPreviewVisible} />)
+    }
+
 
     if (modalVisible) {
         return <PatientInfoModal
