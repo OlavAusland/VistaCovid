@@ -11,8 +11,16 @@ export const roomStyle = StyleSheet.create({
         flexBasis: '45%',
         justifyContent: 'center',
         backgroundColor: '#9DD4FB',
-        height: 60,
+        height: 40,
         borderRadius: 10
+    },
+    dismissButton:{
+        flexBasis: '95%',
+        justifyContent: 'center',
+        backgroundColor: '#9DD4FB',
+        height: 40,
+        borderRadius: 10,
+        marginTop: 10
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -21,7 +29,7 @@ export const roomStyle = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
         paddingTop: 20,
-        width: '100%'
+        width: '100%',
     },
     buttonTextSize: {
         fontSize: 20,
@@ -69,7 +77,7 @@ export const roomStyle = StyleSheet.create({
         flexBasis: '45%', 
         justifyContent: 'center', 
         backgroundColor: '#9DD4FB', 
-        height: 60,
+        height: 40,
         borderRadius:10
     },
     body: {
@@ -77,6 +85,23 @@ export const roomStyle = StyleSheet.create({
         justifyContent:'center',
         flexWrap:'wrap',
         backgroundColor:'rgba(0, 0, 0, 0)'
+    },
+    exportButton:{
+        
+        justifyContent: 'center',
+        alignContent: 'center',
+        backgroundColor: '#9DD4FB',
+        height: 45,
+        borderRadius: 10,
+        width: '90%',
+        marginLeft: '5%',
+        marginBottom: '2%',
+        marginTop: '3%'
+     
+    },
+    exportButtonText:{
+        alignSelf: 'center',
+        fontSize: 20,
     },
    
 });

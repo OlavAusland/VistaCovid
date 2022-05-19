@@ -1,9 +1,10 @@
 import { auth, db } from "../firebase-config";
 import { getDoc, getDocs, addDoc, setDoc, doc, collection, deleteDoc, query, arrayUnion} from 'firebase/firestore'
-import { User } from "../domain/UserType";
+import { SimpleUser, User } from "../domain/UserType";
 import { NoteData, Room } from "../domain/RoomType";
 import { Patient } from "../domain/PatientType";
-import { getAuth, deleteUser} from "firebase/auth";
+import { getAuth } from "firebase/auth";
+
 
 // USERS
 
@@ -16,7 +17,6 @@ export const addUser = async(user: User, id:string) => {
 }
 
 export const deleteUserById = async(id: string) => {
-    await 
     await deleteDoc(doc(db, 'Users', id)).then((res) => {
         console.log(res);
     }).catch((err) => {
@@ -24,13 +24,11 @@ export const deleteUserById = async(id: string) => {
     });
 }
 
-
-export const getUsers = async(): Promise<User[]> => {
-    return await getDocs(collection(db, 'User')).then((res) =>{
-        return res.docs.map((doc) => <User>({...doc.data(), id: doc.id}));
-    }).catch((err) => {
-        throw err;
-    });
+export const getUser = async(id: string): Promise<SimpleUser | undefined> => {
+    await getDoc(doc(db, 'Users', id)).then((doc) => {
+        return {...doc.data()} as SimpleUser;
+    }).catch((err) => {throw new Error('Could Get User!')})
+    return undefined
 }
 
 export const addNote = async(id: string, note: NoteData) => {
@@ -40,34 +38,6 @@ export const addNote = async(id: string, note: NoteData) => {
         console.log(err);
     });
 }
-/*
-export const getAllUsers = async() => {
-    adminApp.auth().getUsers().then((users: any) => {
-        console.log(users)
-    })
-}
-*/
-// auth
-// .getUsers([
-//     { uid: 'uid1' },
-//     { email: 'user2@example.com' },
-//     { phoneNumber: '+15555550003' },
-//     { providerId: 'google.com', providerUid: 'google_uid4' },
-//   ])
-//   .then((getUsersResult) => {
-//     console.log('Successfully fetched user data:');
-//     getUsersResult.users.forEach((userRecord) => {
-//       console.log(userRecord);
-//     });
-
-//     console.log('Unable to find users corresponding to these identifiers:');
-//     getUsersResult.notFound.forEach((userIdentifier) => {
-//       console.log(userIdentifier);
-//     });
-//   })
-//   .catch((error) => {
-//     console.log('Error fetching user data:', error);
-//   });
 
 
 export const getLoggedInUser = () => {
@@ -196,15 +166,7 @@ export const addPatientToRoom = async (roomId: string, patientId: string) => {
     
 }
 
-
-
-
-// ASSIGNMENTS - 
-// ! DISCHARGE PATIENT
-/*
-export const assignRoom = async(room_id: string, patient_id: string){
-    await setDoc(doc(db, 'Rooms', room_id), {
-        patientId: patient_id,
-
+export const removePatientFromRoom = (room: Room) => {
+    setDoc(doc(db, 'Rooms', room.id), {patientId: '', respirationRate:[], heartRate:[], oxygenLevel:[]}, {merge: true});
 }
-*/
+

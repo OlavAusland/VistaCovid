@@ -22,14 +22,14 @@ export const DeleteRoomModal = (props: DeleteRoomModal) => {
                         <Text style={adminStyle.modalText}>Are you sure you want to delete this room?</Text>
                         
                         <Pressable
-                        style={[adminStyle.button, adminStyle.buttonClose]}
+                        style={[adminStyle.buttonClose, adminStyle.buttonClose]}
                         onPress={()=> props.deleteRoomAndClose()}
                         >
                             <Text style={adminStyle.textStyle}>Yes, delete room</Text>
                         </Pressable>
 
                         <Pressable
-                        style={[adminStyle.button, adminStyle.buttonClose]}
+                        style={[adminStyle.buttonClose, adminStyle.buttonClose]}
                         onPress={()=> props.handleRequestClose()}
                         >
                             <Text style={adminStyle.textStyle}>No, close modal</Text>

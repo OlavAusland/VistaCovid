@@ -11,63 +11,58 @@ import { db } from "../../firebase-config";
 import { manageRoomStyles } from '../../styles/ManageRoomStyles';
 
 
-export function ManageRoom()
-{
-    const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
-
+export function ManageRoom() {
+   
     const [rooms, setRooms] = useState<Room[]>([]);
-
-    const [delRoomNumber, setDelRoomNumber] = useState('')
-
-    const [modalVisible, setModalVisible] = useState(false);
-    
     const [search, setSearch] = useState<string>('')
 
     useEffect(() => {
-        onSnapshot(collection(db, "Rooms"), (snapshot) => {
+        const unsub = onSnapshot(collection(db, "Rooms"), (snapshot) => {
             let _rooms: Room[] = [];
             snapshot.forEach((doc) => {
                 _rooms.push(doc.data() as Room);
             });
             setRooms(_rooms);
         });
+
+        return () => unsub();
     }, []);
 
-    useEffect(() => { getRooms().then((rooms: Room[]) => {setRooms(rooms)});}, []);
+    useEffect(() => { getRooms().then((rooms: Room[]) => { setRooms(rooms) }); }, []);
 
-    const getRoomsBySearch = (): Room[] => {return rooms.filter((room) => {if(room.id.includes(search)){return room}})}
+    const getRoomsBySearch = (): Room[] => { return rooms.filter((room) => { if (room.id.includes(search)) { return room } }) }
 
-    return(
-        <SafeAreaView style={{flex:1}}>
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
             <View style={[manageRoomStyles.header, manageRoomStyles.shadow]}>
                 <TextInput
                     placeholder="room number"
-                    onChangeText={(text) => {setSearch(text)}}
-                    style={manageRoomStyles.search}/>
+                    onChangeText={(text) => { setSearch(text) }}
+                    style={manageRoomStyles.search} />
             </View>
             <ScrollView contentContainerStyle={manageRoomStyles.container}>
                 {getRoomsBySearch().length > 0 && getRoomsBySearch().map((room: Room) => {
-                    return(
-                        <View  key={room.id} style={manageRoomStyles.cardContainer}>
+                    return (
+                        <View key={room.id} style={manageRoomStyles.cardContainer}>
                             <View style={manageRoomStyles.card}>
-                                <Icon style={{alignSelf:'center'}} name='clipboard' size={80}/>
-                                <Text style={{flex:1}}>Room: {room.id}</Text>
-                                <Text style={{flex:1}}>Patient: {room.patientId}</Text>
+                                <Icon style={{ alignSelf: 'center' }} name='clipboard' size={80} />
+                                <Text style={{ flex: 1 }}>Room: {room.id}</Text>
+                                <Text style={{ flex: 1 }}>Patient: {room.patientId}</Text>
                             </View>
-                            <TouchableOpacity onPress={() =>{deleteRoom(room.id)}} style={manageRoomStyles.delete}>
-                                <Icon name='trash-2' color={'white'} size={40}/>
+                            <TouchableOpacity onPress={() => { deleteRoom(room.id) }} style={manageRoomStyles.delete}>
+                                <Icon name='trash-2' color={'white'} size={40} />
                             </TouchableOpacity>
                         </View>
                     );
                 })}
                 {getRoomsBySearch().length == 0 &&
-                <View style={manageRoomStyles.addRoom}>  
-                    <TouchableOpacity style={[manageRoomStyles.add, manageRoomStyles.shadow]} onPress={() => {addEmptyRoom(search)}}>
-                        <Text style={manageRoomStyles.addRoomText}>Add Room: {"\n"}{search}</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={manageRoomStyles.addRoom}>
+                        <TouchableOpacity style={[manageRoomStyles.add, manageRoomStyles.shadow]} onPress={() => { addEmptyRoom(search) }}>
+                            <Text style={manageRoomStyles.addRoomText}>Add Room: {"\n"}{search}</Text>
+                        </TouchableOpacity>
+                    </View>
                 }
-                
+
             </ScrollView>
         </SafeAreaView>
     );

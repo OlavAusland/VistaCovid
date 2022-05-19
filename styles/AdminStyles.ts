@@ -8,7 +8,8 @@ import { StyleSheet, Platform} from "react-native";
 
 export const adminStyle = StyleSheet.create({
   body:{
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    flex:1
   },
     header: {
         flex: 1,
@@ -105,11 +106,7 @@ export const adminStyle = StyleSheet.create({
       padding: 20,
     },
     //---------------manage room styling-----------------------
-    editRoom:{
-      // height: 40,
-      // margin: 12,
-      // padding: 10,
-    },
+    
     editRoomNumber:{
       height: 40,
       margin: 12,

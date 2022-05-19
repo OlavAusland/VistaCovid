@@ -11,7 +11,6 @@ export type StackParameters = {
     AddRoom : object | undefined,
     DeleteRoom : object | undefined,
     ManageRoom : object | undefined,
-    ManageRoles : object | undefined,
     Room: {roomId: string},
     CreateUser: object | undefined
     Export: object | undefined,

@@ -18,6 +18,11 @@ export type User = {
     id: string
 }
 
+export type SimpleUser = {
+    displayName:string,
+    role: Roles
+}
+
 export type LoginInfo = {
     email: string,
     password: string,

@@ -1,6 +1,6 @@
 
 import { SearchBar } from 'react-native-elements';
-import { manageRolesStyles } from '../../styles/ManageRolesStyles';
+import { manageUsersStyles } from '../../styles/ManageUsersStyles';
 
 
 // navigation
@@ -16,13 +16,8 @@ import { User } from "../../domain/UserType";
 import { Errormodal } from "../ErrorModal";
 
 
-export function ManageRoles(){
-
-    const navigation = useNavigation<NativeStackNavigationProp<StackParameters>>();
-
-    const [searchWord, setSearchWord] = useState("");
+export function ManageUsers(){
     const [users, setUsers] = useState<User[]>([])
-    const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<ErrorType>({errorObject:undefined, errormodalVisible:false});
 
     const handleRequestClose = () => {
@@ -46,23 +41,20 @@ export function ManageRoles(){
 
     return(
         <SafeAreaView style={{flex:1}}>
-            <View style={[manageRolesStyles.header, manageRolesStyles.shadow]}>
+            <View style={[manageUsersStyles.header, manageUsersStyles.shadow]}>
                 <TextInput
                     placeholder="room number"
-                    onChangeText={(text) => {setSearch(text)}}
-                    style={manageRolesStyles.search}/>
+                    style={manageUsersStyles.search}/>
             </View>
-            <ScrollView contentContainerStyle={{flex:1, alignItems:'center'}}>
+            <ScrollView contentContainerStyle={{alignItems:'center'}}>
                 {users.map((user) => {
                     return(
-                        <View  key={'users' + user.id} style={manageRolesStyles.cardContainer}>
-                            <View style={manageRolesStyles.card}>
+                        <View  key={'users' + user.id} style={manageUsersStyles.cardContainer}>
+                            <View style={manageUsersStyles.card}>
                                 <Icon style={{alignSelf:'center'}} name='clipboard' size={80}/>
-                                <Text style={{flex:1}}>Patient: {user.id}</Text>
+                                <Text style={{flex:1}}>User: {user.firstName} {user.lastName}</Text>
+                                <Text style={{flex:1}}>ID: {user.id}</Text>
                             </View>
-                            <TouchableOpacity onPress={() =>{deleteUserById(user.id)}} style={manageRolesStyles.delete}>
-                                <Icon name='trash-2' color={'white'} size={40}/>
-                            </TouchableOpacity>
                         </View>
                     );
                 })}
