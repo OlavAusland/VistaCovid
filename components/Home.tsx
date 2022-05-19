@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon3 from 'react-native-vector-icons/Fontisto';
 import { getRole, getRooms } from '../api/firebaseAPI';
 import { ErrorType } from '../domain/Errortype';
 import { TabParameters } from '../domain/NavigationTypes';
@@ -91,7 +92,7 @@ export const HomeView = (props: HomeScreenProps) => {
                             <View style={{ paddingBottom: 10, width: '90%', paddingTop: 10 }}>
                                 <TouchableOpacity onPress={() => { setModalVisible(true) }} style={[homeStyle.shadow, { flexDirection: 'row', justifyContent: 'center', backgroundColor: '#C1E8FD', borderRadius: 10 }]}>
                                     <Text style={{ fontSize: 20, paddingTop: 5 }}>Assign Patient</Text>
-                                    <Icon name='address-book' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                                    <Icon3 name='bed-patient' size={40} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                                 </TouchableOpacity>
                             </View>
                         }
