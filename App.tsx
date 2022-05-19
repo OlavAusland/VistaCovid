@@ -153,11 +153,11 @@ function VistaCovid() {
                         sound: "default",
                         title: `💀Danger: ${room.id}`,
                         body: `\r\n❤️Heart Rate:\t${
-                            room.heartRate.slice(-1)[0].value
+                            room.heartRate?.slice(-1)[0].value
                         }\n🫁Respiration Rate:\t${
-                            room.respirationRate.slice(-1)[0].value
+                            room.respirationRate?.slice(-1)[0].value
                         }\n💨Oxygen Level:\t${
-                            room.oxygenLevel.slice(-1)[0].value
+                            room.oxygenLevel?.slice(-1)[0].value
                         }`,
                     });
                 }
