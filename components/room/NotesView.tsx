@@ -27,8 +27,8 @@ export const NotesView = (props: any) => {
                             <Text style={{fontWeight:'bold', fontSize:25}}>Note: {new Date(res.date).toDateString()} </Text>
                             <Text testID='Notetest' style={{paddingBottom:10}} >{res.note}</Text>
                             <View style={{flexDirection:'row', borderTopWidth:1, justifyContent:'space-between'}}>
-                                <Text>Created By: {}</Text>
-                                {auth.currentUser?.uid == res.author &&
+                                {auth.currentUser?.uid == res.author && false &&
+                                    <Text>Created By: {}</Text> &&
                                     <TouchableOpacity onPress={() =>{}} style={[notesViewStyle.delete, notesViewStyle.shadow]}>
                                         <Icon style={{alignSelf:'center'}} name='trash-2' color={'white'} size={20}/>
                                     </TouchableOpacity>
