@@ -51,15 +51,7 @@ export function AdminView() {
                                 <Icon name='arrowright' size={30} style={adminStyle.arrowIcon}></Icon>
                             </TouchableOpacity>
                         </View>
-                        <View style={adminStyle.mainViewButtons}>
-                            <TouchableOpacity
-                                style={adminStyle.TOmain}
-                                onPress={() => { navigation.navigate('ManageRoles') }}>
-                                <Icon name='addusergroup' size={30} style={adminStyle.buttonIcon} ></Icon>
-                                <Text style={adminStyle.buttonText2}>MANAGE USERS</Text>
-                                <Icon name='arrowright' size={30} style={adminStyle.arrowIcon}></Icon>
-                            </TouchableOpacity>
-                        </View>
+                        
                     </View>
                 </View>
             </ScrollView>
