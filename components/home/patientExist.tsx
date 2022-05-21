@@ -1,12 +1,12 @@
-import {Text, View, TextInput, Pressable, TouchableOpacity,} from "react-native";
-import { dropdownStyles } from "../../styles/dropdownStyle";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-
+import { Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import { DropDownType } from "../../domain/DropDownType";
-import { assignPatientStyle } from "../../styles/AssignPatientStyle";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { existingPatientProps } from "../../domain/AssignPatietTypes";
+import { DropDownType } from "../../domain/DropDownType";
 import { auth } from "../../firebase-config";
+import { assignPatientStyle } from "../../styles/AssignPatientStyle";
+import { dropdownStyles } from "../../styles/dropdownStyle";
+
 
 export const ExistingPatient = (props: existingPatientProps) => {
     return (

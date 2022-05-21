@@ -4,7 +4,6 @@ import { TextInput } from 'react-native-gesture-handler';
 import { addNote } from '../../api/firebaseAPI';
 import { NoteData, Room } from '../../domain/RoomType';
 import { auth } from '../../firebase-config';
-import { Roles } from '../../domain/UserType';
 import { noteModalStyle } from '../../styles/NoteModalStyles';
 
 type NoteModalType = {

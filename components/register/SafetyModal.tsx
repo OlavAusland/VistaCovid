@@ -1,7 +1,7 @@
 import { useState } from "react";
+import React, { Button, Modal, TextInput, View } from "react-native";
+import { auth } from '../../firebase-config';
 import { safetyModalStyle } from '../../styles/SafetyModalStyles';
-import React, { Modal, View, Text, Button, TextInput } from "react-native";
-import { auth } from '../../firebase-config'
 
 type SafetyModalProps = {
     modalVisible: boolean,

@@ -1,8 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { async } from 'q';
 import { useEffect, useState } from 'react';
-import { LogBox, Platform, StyleSheet, Text, TouchableOpacity, Vibration, View } from 'react-native';
+import { LogBox, Text, TouchableOpacity, Vibration, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { getPatient, getRole, getRoom, removePatientFromRoom } from '../api/firebaseAPI';
@@ -19,6 +18,7 @@ import { PreviewModal } from './export/previewModal';
 import { GraphView } from './room/GraphView';
 import { NotesView } from './room/NotesView';
 import { PatientInfoModal } from './room/PatientInfoModal';
+import { DismissPatientModal } from './room/DismissPatientModal';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -35,6 +35,7 @@ export function RoomView({ route, navigation }: Props) {
     const [previewVisible, setPreviewVisible] = useState(false);
     const [view, setView] = useState<string>('graphs')
     const [user, setUser] = useState<string | undefined>('null');
+    const [dismissModal, setDismissModal] = useState(false);
 
 
     const props = route.params;
@@ -99,6 +100,9 @@ export function RoomView({ route, navigation }: Props) {
     
     useEffect(() => { const data = room?.heartRate?.map((res) => { return res.value }); }, [room]);
 
+    const handleDismissClose = () => {
+        setDismissModal(false);
+    }
 
     const handleExport = async () => {
         if (room) {
@@ -148,12 +152,13 @@ export function RoomView({ route, navigation }: Props) {
     } else {
         return (
             <SafeAreaView style={[roomStyle.container]}>
+                <DismissPatientModal modalVisible={dismissModal} dismissAndClose={handleDissmiss} handleRequestClose={handleDismissClose} />
                 <View style={[roomStyle.header, roomStyle.shadow]}>
                     <Text style={roomStyle.headerText} >Room: {room?.id}</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                         <Text style={{ fontSize: 20 }}>Patient: {patient?.firstname} {patient?.lastname}</Text>
                         <TouchableOpacity>
-                            <Icon name='infocirlceo' size={20} style={{ alignSelf: 'center', paddingTop: 5, paddingLeft: 5 }} onPress={() => { handlePress() }} />
+                            <Icon name='infocirlceo' size={20} style={{ alignSelf:'center', paddingTop: 5, paddingLeft: 5 }} onPress={() => { handlePress() }} />
                         </TouchableOpacity>
                     </View>
                     <View style={roomStyle.buttonContainer}>
@@ -165,11 +170,12 @@ export function RoomView({ route, navigation }: Props) {
                             onPress={() => { setView('notes') }}>
                             <Text style={roomStyle.buttonTextSize}>Notes</Text>
                         </TouchableOpacity>
-
+                        {user === 'doctor' &&
                         <TouchableOpacity style={[roomStyle.dismissButton, roomStyle.shadow]}
-                            onPress={() => { handleDissmiss() }}>
-                            <Text style={roomStyle.buttonTextSize}>Dissmiss</Text>
+                            onPress={() => { setDismissModal(true) }}>
+                            <Text style={roomStyle.buttonTextSize}>Dissmiss Patient </Text>
                         </TouchableOpacity>
+                        }
                     </View>
                 </View>
                 {(view === 'graphs' && room !== undefined) ? <GraphView room={room} /> : <NotesView room={room} />}
@@ -184,15 +190,3 @@ export function RoomView({ route, navigation }: Props) {
         );
     }
 }
-
-async function sendPushNotification(message: object) {
-    await fetch('https://exp.host/--/api/v2/push/send', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Accept-encoding': 'gzip, deflate',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    }).then(() => {Vibration.vibrate(1000);});
-  }

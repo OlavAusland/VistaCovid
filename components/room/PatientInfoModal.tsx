@@ -1,8 +1,8 @@
-import { Text, View, Pressable, Modal } from 'react-native';
 import { useEffect } from 'react';
-import { patientInfoStyle } from '../../styles/PatientInfoStyle';
-import { PatientInfoModalProps } from '../../domain/patientInfoType';
+import { Modal, Pressable, Text, View } from 'react-native';
 import Gender from 'react-native-vector-icons/Ionicons';
+import { PatientInfoModalProps } from '../../domain/patientInfoType';
+import { patientInfoStyle } from '../../styles/PatientInfoStyle';
 
 
 

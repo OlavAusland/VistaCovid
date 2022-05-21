@@ -1,7 +1,7 @@
 import {
     createDrawerNavigator,
     DrawerContentScrollView,
-    DrawerItem,
+    DrawerItem
 } from "@react-navigation/drawer";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 //Navigation
@@ -22,16 +22,16 @@ import { Export } from "./components/Export";
 import { HomeView } from "./components/Home";
 import { LoginView } from "./components/Login";
 import { ProfileView } from "./components/Profile";
-
 import { RegisterView } from "./components/Register";
 import { RoomView } from "./components/Room";
 import {
     DrawerParameters,
     StackParameters,
-    TabParameters,
+    TabParameters
 } from "./domain/NavigationTypes";
 import { GraphData, Room } from "./domain/RoomType";
 import { auth, db } from "./firebase-config";
+
 
 const Stack = createNativeStackNavigator<StackParameters>();
 const Tab = createMaterialTopTabNavigator<TabParameters>();
@@ -50,6 +50,8 @@ const DetectDanger = (min: number, max: number, data: GraphData[]) => {
     if (data === undefined || data === null) {
         return false;
     }
+    if(data.length == 0){return false}
+
     return data.slice(-1)[0].value < min || data.slice(-1)[0].value > max;
 };
 

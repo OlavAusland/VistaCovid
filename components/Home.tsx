@@ -5,7 +5,7 @@ import { Dimensions, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity
 import { LineChart } from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon3 from 'react-native-vector-icons/Fontisto';
-import { getRole, getRooms, getUser } from '../api/firebaseAPI';
+import { getRole, getRooms } from '../api/firebaseAPI';
 import { ErrorType } from '../domain/Errortype';
 import { TabParameters } from '../domain/NavigationTypes';
 import { GraphData, Room } from '../domain/RoomType';

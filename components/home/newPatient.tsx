@@ -1,12 +1,12 @@
-import { Text, View, TextInput, Pressable, TouchableOpacity } from 'react-native';
-import { Patient } from '../../domain/PatientType';
-import { assignPatientStyle } from '../../styles/AssignPatientStyle';
-import { dropdownStyles } from '../../styles/dropdownStyle';
+import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { DropDownType } from '../../domain/DropDownType';
 import { newPatientProps } from '../../domain/AssignPatietTypes';
+import { DropDownType } from '../../domain/DropDownType';
+import { Patient } from '../../domain/PatientType';
 import { auth } from '../../firebase-config';
+import { assignPatientStyle } from '../../styles/AssignPatientStyle';
+import { dropdownStyles } from '../../styles/dropdownStyle';
 
 
 

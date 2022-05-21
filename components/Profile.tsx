@@ -1,9 +1,9 @@
-import { View, TouchableOpacity, Text, Image, StyleSheet, ScrollView } from "react-native"
-import Icon from 'react-native-vector-icons/AntDesign';
 import * as ImagePicker from 'expo-image-picker';
 import { updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import Icon from 'react-native-vector-icons/AntDesign';
 import { auth, storage } from "../firebase-config";
 import { profileStyle } from '../styles/ProfileStyles';
 
