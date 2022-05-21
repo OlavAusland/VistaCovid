@@ -1,6 +1,6 @@
+import "react-native-gesture-handler";
 import {createDrawerNavigator,DrawerContentScrollView,DrawerItem} from "@react-navigation/drawer";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-//Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Device from "expo-device";
@@ -8,12 +8,10 @@ import * as Notifications from "expo-notifications";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { Platform, Vibration } from "react-native";
-import "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Fontisto";
 import { getRole } from "./api/firebaseAPI";
 import { AdminView, AddRoom, ManageRoom, Export, HomeView, LoginView, ProfileView, RoomView, RegisterView } from './components/';
-import { DrawerParameters, StackParameters, TabParameters
-} from "./domain/NavigationTypes";
+import { DrawerParameters, StackParameters, TabParameters} from "./domain/NavigationTypes";
 import { GraphData, Room } from "./domain/RoomType";
 import { auth, db } from "./firebase-config";
 
