@@ -33,11 +33,9 @@ export function ManageRoom() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={[manageRoomStyles.header, manageRoomStyles.shadow]}>
-               
 <               View style={manageRoomStyles.headerText}>
-                        <Icon3 name='search' size={20} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                        <Icon3 name='search' size={20} style={{ alignSelf: 'center', paddingLeft: 10 }} />
                         <TextInput  placeholder="room number"  onChangeText={(text) => { setSearch(text) }}style={manageRoomStyles.search} />
-
                     </View>
             </View>
             <ScrollView contentContainerStyle={manageRoomStyles.container}>

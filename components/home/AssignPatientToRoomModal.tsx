@@ -39,22 +39,27 @@ export const AssignPatientModal = (props: AssignPatientModalProps) => {
             const fnrRegex = new RegExp(/^(0[1-9]|[1-2][0-9]|31(?!(?:0[2469]|11))|30(?!02))(0[1-9]|1[0-2])\d{7}$/g);
             const isFnr = fnrRegex.test(search);
 
+            console.log('isfnr: ' + isFnr);
             if (!isFnr) {
-                setE('Invalid SSN');
-            }
+                setError((prev) => ({ ...prev, errorObject: new Error('Invalid SSN'), errormodalVisible: true }));
+           }
+          
 
             const firepatient = firebaseAPI.getPatient(search).then((res) => {
                 setPatient(res)
             }).catch(err => { console.log(err) })
-
-            if (!firepatient) {
+            console.log('firepas: ', firepatient);
+            firepatient.then((res) => {
+                console.log('firepas: ', res);
+                if (res === undefined) {
                 folkeregisterAPI.getPatient(search).then(result => {
                     setPatient(result)
                 }).catch(err => { setE(err.message) });
             }
 
-        }
+        });
     }
+}
 
     const handleAddPatient = () => {
         if (patient && dropdown.label) {
