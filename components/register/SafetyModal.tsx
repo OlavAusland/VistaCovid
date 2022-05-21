@@ -29,7 +29,7 @@ export const SafetyModal = (props: SafetyModalProps) => {
                 <View style={safetyModalStyle.div}>
                     <View style={safetyModalStyle.inputSection}>
                         <TextInput editable={false} value={admin.email} placeholder="Email" style={safetyModalStyle.input}/>
-                        <TextInput placeholder="Password" onChangeText={text => setAdmin(prev => ({...prev, password:text}))}
+                        <TextInput secureTextEntry={true} placeholder="Password" onChangeText={text => setAdmin(prev => ({...prev, password:text}))}
                          style={safetyModalStyle.input}/>
                     </View>
                     <View style={safetyModalStyle.options}>

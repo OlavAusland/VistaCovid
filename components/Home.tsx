@@ -51,7 +51,7 @@ export const HomeView = (props: HomeScreenProps) => {
             setRooms(_rooms);
         });
 
-        return() => unsub();
+        return () => unsub();
 
     }, []);
 
@@ -87,8 +87,10 @@ export const HomeView = (props: HomeScreenProps) => {
         return (
             <SafeAreaView style={homeStyle.container}>
                 <View style={[homeStyle.header, homeStyle.shadow, { backgroundColor: 'white' }]}>
-                    <Icon3 name='search' size={20} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
-                    <TextInput onChangeText={(text) => { setKeyword(text) }} placeholder={'Search For Room'} style={homeStyle.searchBar} />
+                    <View style={homeStyle.headerText}>
+                        <Icon3 name='search' size={20} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                        <TextInput onChangeText={(text) => { setKeyword(text) }} placeholder={'Search For Room'} style={homeStyle.searchBar} />
+                    </View>
                 </View>
                 <View style={{ flex: 9 }}>
                     <ScrollView contentContainerStyle={[homeStyle.body]}>
@@ -112,33 +114,33 @@ export const HomeView = (props: HomeScreenProps) => {
                                                 <Text>Room: {room.id}</Text>
                                                 <Text>Patient: {room.patientId}</Text>
                                             </View>
-                                            <View style={{flexBasis:'100%', flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
-                                                <View style={{flexDirection:'row'}}>
-                                                    <Icon size={20} name={'heartbeat'}/>
-                                                    {room.heartRate?.length > 0 && <Text>{room.heartRate.slice(-1)[0].value}</Text>}                                                  
+                                            <View style={{ flexBasis: '100%', flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Icon size={20} name={'heartbeat'} />
+                                                    {room.heartRate?.length > 0 && <Text>{room.heartRate.slice(-1)[0].value}</Text>}
                                                 </View>
-                                                <View style={{flexDirection:'row'}}>
-                                                    <Icon size={20} name={'lungs'}/>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Icon size={20} name={'lungs'} />
                                                     {room.respirationRate?.length > 0 && <Text>{room.respirationRate.slice(-1)[0].value}</Text>}
                                                 </View>
-                                                <View style={{flexDirection:'row'}}>
-                                                    <Icon size={20} name={'wind'}/>
-                                                    {room.oxygenLevel?.length > 0 && <Text>{room.oxygenLevel.slice(-1)[0].value}</Text>}        
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Icon size={20} name={'wind'} />
+                                                    {room.oxygenLevel?.length > 0 && <Text>{room.oxygenLevel.slice(-1)[0].value}</Text>}
                                                 </View>
                                             </View>
                                         </View>
                                         {room.heartRate?.length > 0 && room.oxygenLevel?.length > 0 && room.respirationRate?.length > 0 &&
-                                            <View style={{flex:3, marginTop:30}}>
+                                            <View style={{ flex: 3, marginTop: 30 }}>
                                                 <LineChart
                                                     withVerticalLabels={false}
                                                     data={{
-                                                        labels:[],
-                                                        datasets:[
+                                                        labels: [],
+                                                        datasets: [
                                                             {
                                                                 data: room.heartRate.length > 0 ? extractXAxis(room.heartRate).slice(-5) : [],
-                                                                strokeWidth:2,
+                                                                strokeWidth: 2,
                                                                 color: (opacity = 0.1) => `rgba(235, 64, 52,${opacity})`
-                                                            }, 
+                                                            },
                                                             {
                                                                 data: room.respirationRate.length > 0 ? extractXAxis(room.respirationRate).slice(-5) : [],
                                                                 strokeWidth: 2,
@@ -146,7 +148,7 @@ export const HomeView = (props: HomeScreenProps) => {
                                                             },
                                                             {
                                                                 data: room.oxygenLevel.length > 0 ? extractXAxis(room.oxygenLevel).slice(-5) : [],
-                                                                strokeWidth:2,
+                                                                strokeWidth: 2,
                                                                 color: (opacity = 1) => `rgba(110, 215, 224,${opacity})`
                                                             }
                                                         ],
@@ -155,17 +157,17 @@ export const HomeView = (props: HomeScreenProps) => {
                                                     width={Dimensions.get('window').width}
                                                     height={125}
                                                     chartConfig={{
-                                                        useShadowColorFromDataset:true,
-                                                        fillShadowGradientOpacity:0.5,
+                                                        useShadowColorFromDataset: true,
+                                                        fillShadowGradientOpacity: 0.5,
                                                         backgroundColor: "#C1E8FD",
                                                         backgroundGradientFrom: "#C1E8FD",
                                                         backgroundGradientTo: "#C1E8FD",
                                                         decimalPlaces: 0, // optional, defaults to 2dp
                                                         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                                                         labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
-                                                        }
                                                     }
-                                                    style={{marginHorizontal:-10}}
+                                                    }
+                                                    style={{ marginHorizontal: -10 }}
                                                 />
                                             </View>
                                         }

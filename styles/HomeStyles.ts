@@ -13,11 +13,16 @@ export const homeStyle = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        flexdirection:'row'
+       
+    },
+    headerText: {
+        backgroundColor:'#C1E8FD',
+        flexDirection:'row',
+        borderRadius:5,
     },
     searchBar: {
         backgroundColor:'#C1E8FD',
-        width: '90%',
+        width: '80%',
         height: 30,
         borderRadius:5,
         shadowColor:'rgba(0, 0, 0, 0.2)',

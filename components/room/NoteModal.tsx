@@ -14,7 +14,7 @@ type NoteModalType = {
 
 export const NoteModal = (props: NoteModalType) => {
 
-    const [note, setNote] = useState<NoteData>({ author: auth.currentUser ? auth.currentUser.uid : '', note: '', date: Date.now() });
+    const [note, setNote] = useState<NoteData>({ author: auth.currentUser?.displayName ? auth.currentUser.displayName : '', note: '', date: Date.now() });
     const handleSubmit = () => {
         setNote({ ...note, date: Date.now() });
         addNote(props.room.id, note);

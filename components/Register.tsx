@@ -76,8 +76,8 @@ export function RegisterView() {
             <SafetyModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} handleConfirmation={handleConfirmation} />
             <Text>Register</Text>
             <TextInput onChangeText={text => setUser(prev => ({ ...prev, email: text }))} placeholder="Email" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput onChangeText={text => setUser(prev => ({ ...prev, password: text }))} placeholder="Password" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput onChangeText={text => setUser(prev => ({ ...prev, confirmedPassword: text }))} placeholder="Confirm Password" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
+            <TextInput secureTextEntry={true} onChangeText={text => setUser(prev => ({ ...prev, password: text }))} placeholder="Password" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
+            <TextInput secureTextEntry={true} onChangeText={text => setUser(prev => ({ ...prev, confirmedPassword: text }))} placeholder="Confirm Password" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
             <TextInput onChangeText={text => setUser(prev => ({ ...prev, firstName: text }))} placeholder="First Name" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
             <TextInput onChangeText={text => setUser(prev => ({ ...prev, lastName: text }))} placeholder="Last Name" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
             <TextInput onChangeText={text => setUser(prev => ({ ...prev, phone: text }))} placeholder="Phone Number" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
