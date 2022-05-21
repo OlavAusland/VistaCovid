@@ -1,7 +1,6 @@
 import { View, Text,  ScrollView, SafeAreaView } from 'react-native';
 import { adminStyle } from '../styles/AdminStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Fontisto';
 import Icon3 from 'react-native-vector-icons/MaterialIcons';
 
 

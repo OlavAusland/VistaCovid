@@ -11,13 +11,7 @@ import { Platform, Vibration } from 'react-native';
 import 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Fontisto';
 import { getRole } from './api/firebaseAPI';
-import { AdminView } from './components/Admin';
-import { AddRoom } from './components/adminView/addRoomView';
-import { ManageRoom } from './components/adminView/manageRoom';
-import { Export } from './components/Export';
-import { HomeView } from './components/Home';
-import { LoginView } from './components/Login';
-import { ProfileView } from './components/Profile';
+import { AdminView, AddRoom, ManageRoom, Export, HomeView, LoginView, ProfileView } from './components/';
 
 import { RegisterView } from './components/Register';
 import { RoomView } from './components/Room';

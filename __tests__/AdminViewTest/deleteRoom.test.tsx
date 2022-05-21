@@ -1,4 +1,4 @@
-import { DeleteRoomModal } from "../../components/adminView/deleteModal";
+import { DeleteRoomModal } from "../../components/adminView/DeleteModal";
 import {render } from '@testing-library/react-native';
 
 

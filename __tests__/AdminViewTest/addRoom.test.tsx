@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react-native';
-import { AddRoom } from '../../components/adminView/addRoomView';
+import { AddRoom } from '../../components/adminView/AddRoomView';
 import { Room } from '../../domain/RoomType';
 
 
