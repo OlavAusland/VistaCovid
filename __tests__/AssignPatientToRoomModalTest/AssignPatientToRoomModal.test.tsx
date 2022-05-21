@@ -2,10 +2,10 @@ import {AssignPatientModal} from '../../components/home/AssignPatientToRoomModal
 import { render } from '@testing-library/react-native';
 import { Roles } from '../../domain/UserType';
 import { auth } from '../../firebase-config';
-import { NewPatient } from '../../components/home/newPatient';
+import { NewPatient } from '../../components/home/NewPatient';
 import { DropDownType } from '../../domain/DropDownType';
 import { Patient } from '../../domain/PatientType';
-import { ExistingPatient } from '../../components/home/patientExist';
+import { ExistingPatient } from '../../components/home/PatientExist';
 import { ErrorType } from '../../domain/Errortype';
 
 const currentUser = {

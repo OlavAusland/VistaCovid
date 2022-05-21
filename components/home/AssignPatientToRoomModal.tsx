@@ -1,18 +1,17 @@
-import { Text, View, Modal } from 'react-native';
 import { useEffect, useState } from 'react';
-import * as folkeregisterAPI from '../../api/folkeregisterAPI';
+import { Modal, Text, View } from 'react-native';
 import * as firebaseAPI from '../../api/firebaseAPI';
-import { Patient } from '../../domain/PatientType';
-import { assignPatientStyle } from '../../styles/AssignPatientStyle';
-import { addPatient, getAvailableRooms } from '../../api/firebaseAPI';
-import { Room } from '../../domain/RoomType';
-import { addPatientToRoom } from '../../api/firebaseAPI';
-import { DropDownType, ItemType } from '../../domain/DropDownType';
-import { ExistingPatient } from './patientExist'
-import { NewPatient } from './newPatient'
+import { addPatient, addPatientToRoom, getAvailableRooms } from '../../api/firebaseAPI';
+import * as folkeregisterAPI from '../../api/folkeregisterAPI';
 import { AssignPatientModalProps } from '../../domain/AssignPatietTypes';
+import { DropDownType, ItemType } from '../../domain/DropDownType';
 import { ErrorType } from '../../domain/Errortype';
+import { Patient } from '../../domain/PatientType';
+import { Room } from '../../domain/RoomType';
+import { assignPatientStyle } from '../../styles/AssignPatientStyle';
 import { Errormodal } from '../ErrorModal';
+import { NewPatient } from './NewPatient';
+import { ExistingPatient } from './PatientExist';
 
 
 export const AssignPatientModal = (props: AssignPatientModalProps) => {

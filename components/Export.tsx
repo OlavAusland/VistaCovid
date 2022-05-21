@@ -9,8 +9,7 @@ import { StackParameters } from '../domain/NavigationTypes';
 import { exportStyles } from '../styles/ExportModalStyle';
 import { csvexport } from '../utils/csvexport';
 import DateChooser from './export/DateChooser';
-import { PreviewModal } from './export/previewModal';
-
+import { PreviewModal } from './export/PreviewModal';
 type DateState = {
     fromDate: Moment | undefined,
     toDate: Moment | undefined

@@ -1,8 +1,8 @@
-import { Text, View, Pressable, Modal } from 'react-native';
 import { useEffect } from 'react';
-import { patientInfoStyle } from '../../styles/PatientInfoStyle';
-import { PatientInfoModalProps } from '../../domain/patientInfoType';
+import { Modal, Pressable, Text, View } from 'react-native';
 import Gender from 'react-native-vector-icons/Ionicons';
+import { PatientInfoModalProps } from '../../domain/patientInfoType';
+import { patientInfoStyle } from '../../styles/PatientInfoStyle';
 
 
 
@@ -39,9 +39,9 @@ export const PatientInfoModal = (props: PatientInfoModalProps) => {
                         <Text style={patientInfoStyle.text}>
                             <Text style={patientInfoStyle.explainText}>Gender: </Text>
                             <Text testID='gender'>{props.patient?.gender}</Text>
-                            {(props.patient?.gender === 'female' || props.patient?.gender === 'kvinne') &&
+                            {(props.patient?.gender === 'female' || props.patient?.gender === 'kvinne'|| props.patient?.gender === 'Female' || props.patient?.gender === 'Kvinne') &&
                                 <Gender name="female" size={18} color="#0274a1" />}
-                            {(props.patient?.gender === 'male' || props.patient?.gender === 'mann') &&
+                            {(props.patient?.gender === 'male' || props.patient?.gender === 'mann' || props.patient?.gender === 'Male' || props.patient?.gender === 'Mann') &&
                                 <Gender name="male" size={18} color="#0274a1" />}
                         </Text>
                         <Text style={patientInfoStyle.text}>

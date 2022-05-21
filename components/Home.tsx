@@ -43,13 +43,16 @@ export const HomeView = (props: HomeScreenProps) => {
 
     useEffect(() => {
         const q = query(collection(db, 'Rooms'), where('patientId', '!=', ''));
-        onSnapshot(q, (querySnapshot) => {
+        const unsub = onSnapshot(q, (querySnapshot) => {
             const _rooms: Room[] = [];
             querySnapshot.forEach((doc) => {
                 _rooms.push(doc.data() as Room);
             });
             setRooms(_rooms);
         });
+
+        return() => unsub();
+
     }, []);
 
     useEffect(() => {
@@ -84,6 +87,7 @@ export const HomeView = (props: HomeScreenProps) => {
         return (
             <SafeAreaView style={homeStyle.container}>
                 <View style={[homeStyle.header, homeStyle.shadow, { backgroundColor: 'white' }]}>
+                    <Icon3 name='search' size={20} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
                     <TextInput onChangeText={(text) => { setKeyword(text) }} placeholder={'Search For Room'} style={homeStyle.searchBar} />
                 </View>
                 <View style={{ flex: 9 }}>

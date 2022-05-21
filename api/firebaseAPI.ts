@@ -149,7 +149,7 @@ export const getAvailableRooms = async (): Promise<Room[]> => {
 
 export const getOccupiedRooms = async (): Promise<Room[]> => {
     const rooms: Room[] = await getRooms();
-    const occupiedRooms = rooms.filter(room => room.patientId !== null || room.patientId !== undefined || room.patientId !== '');
+    const occupiedRooms = rooms.filter(room => room.patientId !== '' && room.patientId !== null && room.patientId !== undefined);
     return occupiedRooms;
 }
 

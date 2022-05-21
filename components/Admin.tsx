@@ -1,14 +1,14 @@
-import { View, Text,  ScrollView, SafeAreaView } from 'react-native';
-import { adminStyle } from '../styles/AdminStyles';
-import Icon from 'react-native-vector-icons/AntDesign';
-import Icon3 from 'react-native-vector-icons/MaterialIcons';
-
-
 // navigation
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParameters } from '../domain/NavigationTypes';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/AntDesign';
+import Icon3 from 'react-native-vector-icons/MaterialIcons';
+import { StackParameters } from '../domain/NavigationTypes';
+import { adminStyle } from '../styles/AdminStyles';
+
+
 
 export function AdminView() {
 

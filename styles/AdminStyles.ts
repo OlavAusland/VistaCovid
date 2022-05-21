@@ -1,4 +1,4 @@
-import { StyleSheet, Platform} from "react-native";
+import { StyleSheet } from "react-native";
 //COLORS (light to dark):
 // FFF2EA
 // #E5FDFF
@@ -185,6 +185,11 @@ export const adminStyle = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
+      },
+      button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
       },
       buttonOpen: {
         backgroundColor: "#F194FF",

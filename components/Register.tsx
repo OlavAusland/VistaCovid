@@ -1,5 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 // * AUTH
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -9,7 +7,6 @@ import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { DropDownType } from '../domain/DropDownType';
 import { ErrorType } from '../domain/Errortype';
-import { StackParameters } from '../domain/NavigationTypes';
 import { Roles, User } from '../domain/UserType';
 import { auth, db } from '../firebase-config';
 import { dropdownStyles } from '../styles/dropdownStyle';

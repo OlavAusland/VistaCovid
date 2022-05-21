@@ -12,7 +12,8 @@ export const homeStyle = StyleSheet.create({
     header: {
         flex:1,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        flexdirection:'row'
     },
     searchBar: {
         backgroundColor:'#C1E8FD',

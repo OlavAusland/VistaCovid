@@ -18,7 +18,7 @@ export * from './home/AssignPatientToRoomModal'
 export * from './home/NewPatient'
 export * from './home/PatientExist'
 
-export * from './register/safetyModal'
+export * from './register/SafetyModal'
 
 export * from './room/Graph'
 export * from './room/GraphView'

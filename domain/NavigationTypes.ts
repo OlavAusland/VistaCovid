@@ -1,4 +1,3 @@
-import { Modal } from "react-native"
 
 export type StackParameters = {
     Menu : object,

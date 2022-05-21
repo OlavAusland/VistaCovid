@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const manageRoomStyles = StyleSheet.create({
     header:{
@@ -63,8 +63,9 @@ export const manageRoomStyles = StyleSheet.create({
         padding: 10,
     },
     container: {
-        flex:1, 
-            alignItems:'center'
+        height: '100%',
+        width:'100%',
+        alignItems:'center'
     },
     addRoom: {
         width:'100%', 

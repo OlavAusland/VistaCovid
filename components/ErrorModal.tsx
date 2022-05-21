@@ -1,4 +1,4 @@
-import { Modal, View, Text, Pressable } from "react-native";
+import { Modal, Pressable, Text, View } from "react-native";
 import { ErrorType } from "../domain/Errortype";
 import { erroStyle } from "../styles/ErrorStyle";
 
