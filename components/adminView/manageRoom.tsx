@@ -1,11 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
+import Icon3 from 'react-native-vector-icons/Fontisto';
 import { addEmptyRoom, deleteRoom, getRooms } from "../../api/firebaseAPI";
-import { StackParameters } from "../../domain/NavigationTypes";
 import { Room } from "../../domain/RoomType";
 import { db } from "../../firebase-config";
 import { manageRoomStyles } from '../../styles/ManageRoomStyles';
@@ -35,10 +33,12 @@ export function ManageRoom() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={[manageRoomStyles.header, manageRoomStyles.shadow]}>
-                <TextInput
-                    placeholder="room number"
-                    onChangeText={(text) => { setSearch(text) }}
-                    style={manageRoomStyles.search} />
+               
+<               View style={manageRoomStyles.headerText}>
+                        <Icon3 name='search' size={20} style={{ alignSelf: 'center', paddingLeft: 10 }} onPress={() => { setModalVisible(true) }} />
+                        <TextInput  placeholder="room number"  onChangeText={(text) => { setSearch(text) }}style={manageRoomStyles.search} />
+
+                    </View>
             </View>
             <ScrollView contentContainerStyle={manageRoomStyles.container}>
                 {getRoomsBySearch().length > 0 && getRoomsBySearch().map((room: Room) => {

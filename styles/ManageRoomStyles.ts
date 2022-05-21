@@ -57,13 +57,13 @@ export const manageRoomStyles = StyleSheet.create({
     },
     search:{
         height: 40,
-        margin: 12,
-        borderWidth: 1,
+    
+        width: '60%',
         borderRadius:10,
         padding: 10,
     },
     container: {
-        height: '100%',
+       
         width:'100%',
         alignItems:'center'
     },
@@ -75,5 +75,15 @@ export const manageRoomStyles = StyleSheet.create({
     addRoomText: {
         fontSize:20, 
         textAlign:'center'
-    }
+    },
+    headerText: {
+        backgroundColor:'white',
+        flexDirection:'row',
+        borderRadius:5,
+        borderWidth: 1,
+        width:'80%',
+        height:40,
+        marginLeft:'10%',
+
+    },
 })

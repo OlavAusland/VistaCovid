@@ -2,7 +2,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, Pressable, Text, TextInput, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { DropDownType } from '../domain/DropDownType';
@@ -74,17 +74,17 @@ export function RegisterView() {
     return (
         <View style={registerStyle.container}>
             <SafetyModal modalVisible={modalVisible} handleRequestClose={handleRequestClose} handleConfirmation={handleConfirmation} />
-            <Text>Register</Text>
-            <TextInput onChangeText={text => setUser(prev => ({ ...prev, email: text }))} placeholder="Email" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput secureTextEntry={true} onChangeText={text => setUser(prev => ({ ...prev, password: text }))} placeholder="Password" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput secureTextEntry={true} onChangeText={text => setUser(prev => ({ ...prev, confirmedPassword: text }))} placeholder="Confirm Password" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput onChangeText={text => setUser(prev => ({ ...prev, firstName: text }))} placeholder="First Name" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput onChangeText={text => setUser(prev => ({ ...prev, lastName: text }))} placeholder="Last Name" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput onChangeText={text => setUser(prev => ({ ...prev, phone: text }))} placeholder="Phone Number" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput onChangeText={text => setUser(prev => ({ ...prev, address: text }))} placeholder="Address" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
-            <TextInput onChangeText={text => setUser(prev => ({ ...prev, city: text }))} placeholder="City" style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} />
+            <Text style={registerStyle.headertext}>Register</Text>
+            <TextInput onChangeText={text => setUser(prev => ({ ...prev, email: text }))} placeholder="Email" style={registerStyle.Inputfields} />
+            <TextInput secureTextEntry={true} onChangeText={text => setUser(prev => ({ ...prev, password: text }))} placeholder="Password" style={registerStyle.Inputfields} />
+            <TextInput secureTextEntry={true} onChangeText={text => setUser(prev => ({ ...prev, confirmedPassword: text }))} placeholder="Confirm Password" style={registerStyle.Inputfields} />
+            <TextInput onChangeText={text => setUser(prev => ({ ...prev, firstName: text }))} placeholder="First Name" style={registerStyle.Inputfields} />
+            <TextInput onChangeText={text => setUser(prev => ({ ...prev, lastName: text }))} placeholder="Last Name" style={registerStyle.Inputfields} />
+            <TextInput onChangeText={text => setUser(prev => ({ ...prev, phone: text }))} placeholder="Phone Number" style={registerStyle.Inputfields} />
+            <TextInput onChangeText={text => setUser(prev => ({ ...prev, address: text }))} placeholder="Address" style={registerStyle.Inputfields} />
+            <TextInput onChangeText={text => setUser(prev => ({ ...prev, city: text }))} placeholder="City" style={registerStyle.Inputfields} />
             <Dropdown
-                style={dropdownStyles.dropdown}
+                style={[dropdownStyles.dropdown, registerStyle.Inputfields, {marginBottom: 30}]}
                 placeholderStyle={dropdownStyles.placeholderStyle}
                 selectedTextStyle={dropdownStyles.selectedTextStyle}
                 inputSearchStyle={dropdownStyles.inputSearchStyle}
@@ -103,7 +103,9 @@ export function RegisterView() {
                     <FontAwesome5 style={dropdownStyles.icon} color="black" name="hospital-user" size={20} />
                 )}
             />
-            <Button title="Create" onPress={() => { setModalVisible(true) }} />
+            <Pressable onPress={() => { setModalVisible(true) }} >
+                <Text style={registerStyle.button}>Create</Text>
+            </Pressable>
         </View>
     );
 }
