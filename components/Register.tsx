@@ -9,7 +9,7 @@ import { DropDownType } from '../domain/DropDownType';
 import { ErrorType } from '../domain/Errortype';
 import { Roles, User } from '../domain/UserType';
 import { auth, db } from '../firebase-config';
-import { dropdownStyles } from '../styles/dropdownStyle';
+import { dropdownStyles } from '../styles/DropdownStyle';
 import { registerStyle } from '../styles/RegisterStyles';
 import { SafetyModal } from './register/SafetyModal';
 

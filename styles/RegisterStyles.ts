@@ -7,6 +7,6 @@ export const registerStyle = StyleSheet.create({
         alignContent:'center',
         alignSelf:'center',
         width: Platform.OS === 'android' ? '100%' : '40%',
-        backgroundColor:'rgba(0, 0, 0, 0)'
+        backgroundColor:'#9DD4FB'
     }
 })

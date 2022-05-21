@@ -5,7 +5,7 @@ import { existingPatientProps } from "../../domain/AssignPatietTypes";
 import { DropDownType } from "../../domain/DropDownType";
 import { auth } from "../../firebase-config";
 import { assignPatientStyle } from "../../styles/AssignPatientStyle";
-import { dropdownStyles } from "../../styles/dropdownStyle";
+import { dropdownStyles } from "../../styles/DropdownStyle";
 
 
 export const ExistingPatient = (props: existingPatientProps) => {
